@@ -19,9 +19,9 @@
             --border-dark: #111111;
             --box-shadow: rgba(0, 0, 0, 0.05);
             --invert-value: 0;
+            --sidebar-width: 290px;
         }
 
-        /* Dark Mode Override Rules */
         body.dark-theme {
             --bg-primary: #121212;
             --bg-secondary: #1c1c1c;
@@ -43,6 +43,10 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-primary);
             color: var(--text-main);
@@ -50,6 +54,7 @@
             display: flex;
             min-height: 100vh;
             transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
         }
 
         /* Persistent Legal Warning Header */
@@ -67,14 +72,39 @@
             top: 0;
             left: 0;
             width: 100%;
+            z-index: 2000;
+        }
+
+        /* Mobile Top Header (Hidden on Desktop) */
+        .mobile-nav-header {
+            display: none;
+            position: fixed;
+            top: 33px;
+            left: 0;
+            width: 100%;
+            height: 55px;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
             z-index: 1000;
+            padding: 0 20px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-menu-trigger {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
         }
 
         /* ==========================================================================
-           2. SIDEBAR NAVIGATION WITH THEME CONTROLS & BRAND LOGO
+           2. EXPANDABLE / COLLAPSIBLE SIDEBAR DASHBOARD
            ========================================================================== */
         aside {
-            width: 280px;
+            width: var(--sidebar-width);
             background-color: var(--bg-primary);
             border-right: 1px solid var(--border-color);
             position: fixed;
@@ -85,8 +115,48 @@
             flex-direction: column;
             justify-content: space-between;
             padding: 30px 24px;
-            z-index: 100;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
+            z-index: 1500;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+        }
+
+        /* Collapsed Sidebar State Rules */
+        body.sidebar-collapsed aside {
+            transform: translateX(-100%);
+        }
+
+        /* Sidebar Toggle Tab Button */
+        .sidebar-collapse-tab {
+            position: absolute;
+            top: 40px;
+            right: -24px;
+            width: 24px;
+            height: 48px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            box-shadow: 4px 0 8px rgba(0,0,0,0.03);
+            transition: background-color 0.2s, color 0.2s;
+            z-index: 10;
+        }
+
+        .sidebar-collapse-tab:hover {
+            background-color: var(--bg-secondary);
+            color: var(--text-main);
+        }
+
+        .sidebar-collapse-tab::after {
+            content: "◀";
+        }
+
+        body.sidebar-collapsed .sidebar-collapse-tab::after {
+            content: "▶";
         }
 
         .brand-header-block {
@@ -97,7 +167,7 @@
         }
 
         .sidebar-logo-img {
-            width: 65px;
+            width: 60px;
             height: auto;
             display: block;
             object-fit: contain;
@@ -106,7 +176,7 @@
         }
 
         .brand-title {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 800;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -122,7 +192,7 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
             flex-grow: 1;
             margin-top: 15px;
             overflow-y: auto;
@@ -130,11 +200,11 @@
 
         .nav-item a {
             display: block;
-            padding: 8px 12px;
+            padding: 10px 12px;
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-size: 0.85rem;
+            font-weight: 600;
             border-radius: 4px;
             transition: all 0.15s ease;
         }
@@ -147,10 +217,9 @@
         .nav-item.active a {
             background-color: var(--text-main);
             color: var(--bg-primary);
-            font-weight: 600;
+            font-weight: 700;
         }
 
-        /* Theme Toggle Element */
         .theme-toggle-panel {
             padding: 12px 0;
             border-top: 1px solid var(--border-color);
@@ -163,7 +232,7 @@
             border: 1px solid var(--border-color);
             color: var(--text-main);
             padding: 10px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -181,28 +250,45 @@
             color: var(--bg-primary);
         }
 
+        /* Overlay Background for Mobile Drawer view */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.4);
+            z-index: 1400;
+        }
+
         /* ==========================================================================
-           3. MAIN CONTAINER & TOP-RIGHT LOGO ACCENT
+           3. MAIN CONTAINER & DASHBOARD WORKSPACE
            ========================================================================== */
         main {
-            margin-left: 280px;
+            margin-left: var(--sidebar-width);
             margin-top: 33px;
             flex-grow: 1;
-            padding: 60px 40px;
-            max-width: 900px;
+            padding: 60px 50px 120px 50px;
+            max-width: 1200px;
             position: relative;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.sidebar-collapsed main {
+            margin-left: 0;
         }
 
         .top-right-logo-container {
             position: absolute;
             top: 55px;
-            right: 40px;
+            right: 50px;
             text-align: right;
             z-index: 10;
         }
 
         .top-right-logo-img {
-            width: 85px;
+            width: 80px;
             height: auto;
             display: block;
             object-fit: contain;
@@ -211,12 +297,12 @@
         }
 
         section {
-            margin-bottom: 70px;
-            scroll-margin-top: 80px;
+            margin-bottom: 90px;
+            scroll-margin-top: 90px;
         }
 
         h1 {
-            font-size: 2.4rem;
+            font-size: 2.5rem;
             font-weight: 800;
             letter-spacing: -0.5px;
             margin-bottom: 20px;
@@ -224,18 +310,18 @@
         }
 
         .lead-paragraph {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: var(--text-muted);
             margin-bottom: 35px;
         }
 
         h2 {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 25px;
-            padding-bottom: 6px;
+            padding-bottom: 8px;
             border-bottom: 2px solid var(--border-dark);
             transition: border-color 0.3s ease;
         }
@@ -254,7 +340,7 @@
         .bullet-list li {
             position: relative;
             padding-left: 25px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             font-size: 1.05rem;
         }
 
@@ -303,7 +389,6 @@
             margin-bottom: 12px;
         }
 
-        /* Anomaly Entry Vault Block Styling */
         .anomaly-vault-card {
             display: flex;
             justify-content: space-between;
@@ -509,7 +594,7 @@
         .accordion-content-inner { padding: 5px 10px 20px 10px; font-size: 1rem; color: var(--text-muted); }
 
         /* ==========================================================================
-           5. SYSTEM INTAKE INTERFACE (RE-ARCHITECTED FIX FROM IMAGE_84CD9E.PNG)
+           5. SYSTEM INTAKE INTERFACE
            ========================================================================== */
         .intake-vertical-stack {
             display: flex;
@@ -519,7 +604,6 @@
             margin-top: 20px;
         }
 
-        .form-group { margin-bottom: 0; }
         .form-group label {
             display: block;
             font-size: 0.8rem;
@@ -565,7 +649,6 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Fixed Full-Width Linear Action Panel for Discord */
         .discord-channel-action-block {
             margin-top: 10px;
             text-align: center;
@@ -608,45 +691,66 @@
         }
 
         /* ==========================================================================
-           6. STRICTOR RESPONSIVE DESIGN (MOBILE SCREEN SUITE)
+           6. COMPREHENSIVE MOBILE MEDIA QUERY SUITE
            ========================================================================== */
-        @media (max-width: 900px) {
+        @media (max-width: 960px) {
+            .mobile-nav-header {
+                display: flex;
+            }
+
+            /* Transform Sidebar into a Slide-out Drawer Panel */
             aside {
-                width: 100%;
-                position: relative;
-                height: auto;
-                top: 33px;
-                border-right: none;
-                border-bottom: 1px solid var(--border-color);
-                padding: 20px;
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                height: 100vh;
+                transform: translateX(-100%);
+                box-shadow: 4px 0 25px rgba(0,0,0,0.15);
+                border-right: 1px solid var(--border-color);
+                border-bottom: none;
+                width: 280px;
+                padding: 40px 24px 24px 24px;
             }
-            .nav-menu {
-                flex-direction: row;
-                flex-wrap: wrap;
-                margin-top: 15px;
-                gap: 5px;
+
+            /* Hide Sidebar toggle option on mobile devices */
+            .sidebar-collapse-tab {
+                display: none;
             }
+
+            body.mobile-menu-active aside {
+                transform: translateX(0);
+            }
+
+            body.mobile-menu-active .mobile-overlay {
+                display: block;
+            }
+
             main {
-                margin-left: 0;
-                margin-top: 0;
-                padding: 30px 20px;
+                margin-left: 0 !important;
+                margin-top: 88px; /* Offset for global warning + mobile top-bar combo */
+                padding: 30px 20px 80px 20px;
             }
+
             .top-right-logo-container {
                 position: static;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
                 text-align: left;
             }
+
             .top-right-logo-img { width: 70px; }
-            h1 { max-width: 100%; }
-            .grid-two-col { grid-template-columns: 1fr; }
-            .avatar-node.left-1 { transform: translateX(-85px) scale(0.85); opacity: 0.6; }
-            .avatar-node.right-1 { transform: translateX(85px) scale(0.85); opacity: 0.6; }
-            .avatar-node.left-2 { transform: translateX(-160px) scale(0.65); opacity: 0.15; }
-            .avatar-node.right-2 { transform: translateX(160px) scale(0.65); opacity: 0.15; }
+            h1 { font-size: 2rem; max-width: 100%; }
+            .grid-two-col { grid-template-columns: 1fr; gap: 15px; }
+
+            /* Roster nodes structural contraction for narrow viewport limits */
+            .avatar-node.left-1 { transform: translateX(-75px) scale(0.85); opacity: 0.6; }
+            .avatar-node.right-1 { transform: translateX(75px) scale(0.85); opacity: 0.6; }
+            .avatar-node.left-2 { transform: translateX(-140px) scale(0.65); opacity: 0.15; }
+            .avatar-node.right-2 { transform: translateX(140px) scale(0.65); opacity: 0.15; }
             .avatar-node.center { transform: translateX(0) scale(1.15); }
-            .carousel-arrow-btn { width: 34px; height: 34px; font-size: 0.95rem; }
-            .arrow-prev { left: 5px; }
-            .arrow-next { right: 5px; }
+            .carousel-arrow-btn { width: 36px; height: 36px; font-size: 0.95rem; }
+            .arrow-prev { left: 10px; }
+            .arrow-next { right: 10px; }
         }
     </style>
 </head>
@@ -657,10 +761,22 @@
         ⚠️ OUT-OF-CHARACTER NOTICE: This is a purely fictional community lore page. No real services or facilities exist.
     </div>
 
-    <!-- SIDEBAR ELEMENT -->
-    <aside>
+    <!-- MOBILE DASHBOARD NAVIGATION BAR -->
+    <div class="mobile-nav-header">
+        <button class="mobile-menu-trigger" onclick="toggleMobileMenu()">☰</button>
+        <div class="brand-title" style="font-size: 0.9rem; letter-spacing: 1px;">The Laboratory</div>
+        <div style="width: 24px;"></div> <!-- Balancing spacer node -->
+    </div>
+
+    <!-- BACKGROUND DISMISSAL LAYER -->
+    <div class="mobile-overlay" onclick="toggleMobileMenu()"></div>
+
+    <!-- MAIN SIDEBAR DASHBOARD MODULE -->
+    <aside id="dashboardSidebar">
+        <!-- COLLAPSIBLE CONTROLLER TAB -->
+        <button class="sidebar-collapse-tab" onclick="toggleSidebarCollapse()" title="Toggle Workspace View"></button>
+
         <div class="brand-header-block">
-            <!-- LOGO LOCATION 1: SIDEBAR TOP -->
             <img src="1773232611901.png" alt="The Laboratory Logo" class="sidebar-logo-img">
             <div>
                 <div class="brand-title">The Laboratory</div>
@@ -669,16 +785,15 @@
         </div>
 
         <ul class="nav-menu">
-            <li class="nav-item"><a href="#introduction">01. Facility Profile</a></li>
-            <li class="nav-item"><a href="#access-terms">02. Access Requirements</a></li>
-            <li class="nav-item"><a href="#security-ops">03. Security Architecture</a></li>
-            <li class="nav-item"><a href="#directory">04. Personnel Hierarchy</a></li>
-            <li class="nav-item"><a href="#anomalies">05. Containment Vault</a></li>
-            <li class="nav-item"><a href="#liability-waiver">06. Legal Obligations</a></li>
-            <li class="nav-item"><a href="#intake-portal">07. Intake Form</a></li>
+            <li class="nav-item" id="nav-introduction"><a href="#introduction" onclick="closeMobileOnNav()">01. Facility Profile</a></li>
+            <li class="nav-item" id="nav-access-terms"><a href="#access-terms" onclick="closeMobileOnNav()">02. Access Requirements</a></li>
+            <li class="nav-item" id="nav-security-ops"><a href="#security-ops" onclick="closeMobileOnNav()">03. Security Architecture</a></li>
+            <li class="nav-item" id="nav-directory"><a href="#directory" onclick="closeMobileOnNav()">04. Personnel Hierarchy</a></li>
+            <li class="nav-item" id="nav-anomalies"><a href="#anomalies" onclick="closeMobileOnNav()">05. Containment Vault</a></li>
+            <li class="nav-item" id="nav-liability-waiver"><a href="#liability-waiver" onclick="closeMobileOnNav()">06. Legal Obligations</a></li>
+            <li class="nav-item" id="nav-intake-portal"><a href="#intake-portal" onclick="closeMobileOnNav()">07. Intake Form</a></li>
         </ul>
 
-        <!-- THEMATIC ENGINE CONTROL TOGGLE -->
         <div class="theme-toggle-panel">
             <button class="toggle-btn" onclick="toggleThemeManual()">
                 <span>🌓</span> Toggle Light / Dark Mode
@@ -691,10 +806,9 @@
         </div>
     </aside>
 
-    <!-- MAIN INTERFACE -->
+    <!-- WORKSPACE PANEL CONTENT CONTAINER -->
     <main>
         
-        <!-- LOGO LOCATION 2: TOP RIGHT CORNER ACCENT -->
         <div class="top-right-logo-container">
             <img src="1773232611901.png" alt="The Laboratory Logo" class="top-right-logo-img">
         </div>
@@ -745,7 +859,6 @@
             <h2>Internal Personnel Hierarchy</h2>
             <p>The entire laboratory structure is owned, regulated, and managed by a tight-knit core roster. Click on any visible avatar card to spin the roster dashboard and update the tracking node logs below.</p>
 
-            <!-- GAMIFIED DYNAMIC CAROUSEL SECTION -->
             <div class="character-select-system">
                 <div class="roster-carousel-viewport">
                     <button class="carousel-arrow-btn arrow-prev" onclick="shiftRoster(-1)">←</button>
@@ -775,7 +888,7 @@
                 </div>
             </div>
 
-            <!-- DATA STORAGE BLOCKS -->
+            <!-- HIDDEN ROSTER DATABASE SOURCE -->
             <div id="hidden-staff-source" style="display: none;">
                 <div class="staff-data-node" data-name="Founder Z" data-role="Co-Owner / Joint Facility Director" data-img="1773232611901.png" data-summary="Co-owner of the infrastructure who shares ultimate structural command layout choices.">
                     <div class="store-assignment">Manages facility asset acquisitions, processes raw entry registrations, and co-establishes overarching laboratory index rules.</div>
@@ -800,7 +913,7 @@
             </div>
         </section>
 
-        <!-- SECTION 5: CONTAINMENT VAULT -->
+        <!-- SECTION 5 -->
         <section id="anomalies">
             <h2>Containment Vault Index</h2>
             <p>Access our external live database tracking records to audit anomalies currently secured inside the primary sector wings.</p>
@@ -824,13 +937,12 @@
             </div>
         </section>
 
-        <!-- SECTION 7: INTAKE PORTAL (CLEAN FULL-WIDTH STACK VIBE) -->
+        <!-- SECTION 7 -->
         <section id="intake-portal">
             <h2>Secure Intake Form</h2>
             <div class="outline-box" style="background-color: var(--bg-secondary);">
                 <form onsubmit="processRegistration(event)">
                     
-                    <!-- Form Input Fields Grid -->
                     <div class="grid-two-col">
                         <div class="form-group">
                             <label>Legal Identifier</label>
@@ -842,17 +954,14 @@
                         </div>
                     </div>
 
-                    <!-- Linear Action Layout Area -->
                     <div class="intake-vertical-stack">
                         <label class="form-checkbox">
                             <input type="checkbox" required>
                             <span>I confirm I understand this is a fictional lore page. I explicitly accept that the facility has zero liability, maintains no active guards, and will not deploy emergency columns or rescue teams on my behalf.</span>
                         </label>
                         
-                        <!-- Fixed Full-Width Primary Action Button -->
                         <button type="submit" class="submit-btn">Acknowledge Fictional Terms &amp; Submit Profile</button>
                         
-                        <!-- Dedicated Discord Action Segment Below Form Control -->
                         <div class="discord-channel-action-block">
                             <p>Looking for the active community roleplay network?</p>
                             <a href="https://discord.gg/F3WuhctRyP" target="_blank" class="discord-btn-link">
@@ -865,7 +974,7 @@
             </div>
         </section>
 
-        <!-- CREDITS ACCORDING TO SYSTEM INSTRUCTIONS LORE -->
+        <!-- FOOTER CREDITS -->
         <p style="text-align: center; color: var(--text-light); font-size: 0.8rem; margin-top: 60px; line-height: 1.7;">
             Disclaimer: This page is a fictional roleplay/creative writing asset. All names, settings, companies, and anomalies mentioned are entirely made-up.<br>
             <span style="font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.75rem; margin-top: 4px; display: inline-block; color: var(--text-muted);">
@@ -874,9 +983,23 @@
         </p>
     </main>
 
-    <!-- DYNAMIC CONTROLS ENGINE -->
+    <!-- DYNAMIC DASHBOARD ENGINE SCROLL CONTROLS -->
     <script>
-        // THEME ENGINE SWITCHER LOGIC
+        // DESKTOP: TOGGLE EXPAND / COLLAPSE SIDEBAR VIEW
+        function toggleSidebarCollapse() {
+            document.body.classList.toggle('sidebar-collapsed');
+        }
+
+        // MOBILE: OPEN / CLOSE DRAWER NAVIGATION OVERLAY
+        function toggleMobileMenu() {
+            document.body.classList.toggle('mobile-menu-active');
+        }
+
+        function closeMobileOnNav() {
+            document.body.classList.remove('mobile-menu-active');
+        }
+
+        // THEME SELECTION MANAGER
         function initThemeDetection() {
             const currentHour = new Date().getHours();
             if (currentHour < 6 || currentHour >= 18) {
@@ -890,7 +1013,46 @@
             document.body.classList.toggle('dark-theme');
         }
 
-        // CAROUSEL DISPLAY LOGIC
+        // ACCURATE INTERSECTION OBSERVER HIGHLIGHT LOGIC
+        // Fixed old scroll spy issue from image_84c184.png where the bottom item failed to highlight
+        function initHighPrecisionScrollSpy() {
+            const sections = document.querySelectorAll('section');
+            const navItems = document.querySelectorAll('.nav-menu .nav-item');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-20% 0px -40% 0px', // Creates an tracking box in the viewport hub
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.getAttribute('id');
+                        
+                        navItems.forEach(item => {
+                            item.classList.remove('active');
+                            const targetAnchor = item.querySelector('a').getAttribute('href');
+                            if (targetAnchor === `#${activeId}`) {
+                                item.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+
+            // Absolute Fallback Trigger: Force highlights intake form if user hits the bottom limit
+            window.addEventListener('scroll', () => {
+                if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 50) {
+                    navItems.forEach(item => item.classList.remove('active'));
+                    document.getElementById('nav-intake-portal').classList.add('active');
+                }
+            });
+        }
+
+        // CAROUSEL ROSTER CORE LOGIC
         let currentFocusIndex = 0;
         let staffRosterArray = [];
 
@@ -993,18 +1155,7 @@
             initThemeDetection();
             initializeRosterData();
             renderAvatarRoster();
-        });
-
-        window.addEventListener('scroll', () => {
-            let sections = document.querySelectorAll('section');
-            let navLinks = document.querySelectorAll('.nav-item');
-            sections.forEach((section, index) => {
-                let rect = section.getBoundingClientRect();
-                if (rect.top <= 120 && rect.bottom >= 120) {
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    navLinks[index].classList.add('active');
-                }
-            });
+            initHighPrecisionScrollSpy();
         });
     </script>
 </body>
