@@ -43,7 +43,7 @@
         }
 
         /* ==========================================================================
-           2. SIDEBAR NAVIGATION WITH BRAND LOGO
+           2. SIDEBAR NAVIGATION (ADAPTIVE MOBILE)
            ========================================================================== */
         aside {
             width: 280px;
@@ -63,15 +63,8 @@
         .brand-header-block {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 5px;
             margin-bottom: 20px;
-        }
-
-        .brand-logo-img {
-            width: 70px;
-            height: auto;
-            display: block;
-            object-fit: contain;
         }
 
         .brand-title {
@@ -85,7 +78,6 @@
             font-size: 0.75rem;
             color: #888888;
             text-transform: uppercase;
-            margin-top: 2px;
         }
 
         .nav-menu {
@@ -120,7 +112,7 @@
         }
 
         /* ==========================================================================
-           3. MAIN LAYOUT (BALANCED & SCANNABLE)
+           3. MAIN CONTAINER & TOP-RIGHT LOGO ACCENT
            ========================================================================== */
         main {
             margin-left: 280px;
@@ -128,6 +120,22 @@
             flex-grow: 1;
             padding: 60px 40px;
             max-width: 900px;
+            position: relative;
+        }
+
+        .top-right-logo-container {
+            position: absolute;
+            top: 55px;
+            right: 40px;
+            text-align: right;
+            z-index: 10;
+        }
+
+        .top-right-logo-img {
+            width: 85px;
+            height: auto;
+            display: block;
+            object-fit: contain;
         }
 
         section {
@@ -140,13 +148,13 @@
             font-weight: 800;
             letter-spacing: -0.5px;
             margin-bottom: 20px;
+            max-width: 80%; /* Don't hit the logo on desktop */
         }
 
         .lead-paragraph {
             font-size: 1.2rem;
             color: #333333;
             margin-bottom: 35px;
-            font-weight: 400;
         }
 
         h2 {
@@ -165,7 +173,6 @@
             margin-bottom: 20px;
         }
 
-        /* Lists and UI Layout blocks */
         .bullet-list {
             list-style: none;
             margin: 20px 0;
@@ -208,31 +215,6 @@
             margin-bottom: 12px;
         }
 
-        /* Clean Table */
-        .directory-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            font-size: 0.95rem;
-        }
-
-        .directory-table th {
-            background-color: #fafafa;
-            border: 1px solid #e5e5e5;
-            padding: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            text-align: left;
-        }
-
-        .directory-table td {
-            border: 1px solid #e5e5e5;
-            padding: 14px;
-            color: #222222;
-            line-height: 1.5;
-        }
-
-        /* Stark Liability Warning Panel */
         .stark-alert-panel {
             border: 2px solid #111111;
             background-color: #ffffff;
@@ -247,7 +229,158 @@
         }
 
         /* ==========================================================================
-           4. FORM INTEL
+           4. PERSONNEL PROFILE SLIDER & ACCORDIONS (PRECISE SYSTEM)
+           ========================================================================== */
+        .slider-wrapper {
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+            background: #ffffff;
+            overflow: hidden;
+            margin: 30px 0;
+        }
+
+        /* Active profile viewer card */
+        .active-card-display {
+            display: flex;
+            background: #fafafa;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 30px;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .card-avatar-frame {
+            width: 140px;
+            height: 140px;
+            border: 1px solid #cccccc;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        .card-avatar-frame img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .card-meta-info {
+            flex-grow: 1;
+        }
+
+        .card-meta-info h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #111111;
+        }
+
+        .card-meta-info .role-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: #111111;
+            color: #ffffff;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin: 4px 0 12px 0;
+        }
+
+        /* Navigation Controls Below Card */
+        .slider-navigation-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .slider-btn {
+            background: #ffffff;
+            border: 1px solid #111111;
+            color: #111111;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .slider-btn:hover {
+            background: #111111;
+            color: #ffffff;
+        }
+
+        .slider-counter {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #666666;
+            letter-spacing: 1px;
+        }
+
+        /* Interactive Collapsible Information Sections */
+        .collapsible-container {
+            padding: 10px 20px;
+            background: #ffffff;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-trigger {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 16px 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #111111;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-trigger::after {
+            content: "↓";
+            font-weight: 700;
+            transition: transform 0.2s ease;
+        }
+
+        .accordion-item.open .accordion-trigger::after {
+            transform: rotate(-180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.25s ease-out;
+            background: #ffffff;
+        }
+
+        .accordion-content-inner {
+            padding: 5px 10px 20px 10px;
+            font-size: 1rem;
+            color: #333333;
+        }
+
+        /* ==========================================================================
+           5. FORM INTEL
            ========================================================================== */
         .form-group {
             margin-bottom: 20px;
@@ -268,11 +401,6 @@
             background-color: #ffffff;
             border: 1px solid #cccccc;
             border-radius: 4px;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #111111;
         }
 
         .form-checkbox {
@@ -307,12 +435,8 @@
             border-radius: 4px;
         }
 
-        .submit-btn:hover {
-            background-color: #333333;
-        }
-
         /* ==========================================================================
-           5. RESPONSIVE CONTROLS
+           6. RESPONSIVE CONTROLS (STRICT MOBILE SUPPORT)
            ========================================================================== */
         @media (max-width: 900px) {
             aside {
@@ -323,11 +447,6 @@
                 border-right: none;
                 border-bottom: 1px solid #e5e5e5;
                 padding: 20px;
-            }
-            .brand-header-block {
-                flex-direction: row;
-                align-items: center;
-                gap: 20px;
             }
             .nav-menu {
                 flex-direction: row;
@@ -340,35 +459,45 @@
                 margin-top: 0;
                 padding: 30px 20px;
             }
+            .top-right-logo-container {
+                position: static;
+                margin-bottom: 20px;
+                text-align: left;
+            }
+            .top-right-logo-img {
+                width: 70px;
+            }
+            h1 {
+                max-width: 100%;
+            }
             .grid-two-col {
                 grid-template-columns: 1fr;
+            }
+            .active-card-display {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- DISCLAIMER BANNER -->
     <div class="global-disclaimer-banner">
         ⚠️ OUT-OF-CHARACTER NOTICE: This is a purely fictional community lore page. No real services or facilities exist.
     </div>
 
-    <!-- SIDEBAR ELEMENT -->
     <aside>
         <div class="brand-header-block">
-            <!-- Exact file name referenced as given -->
-            <img src="1773232611901.png" alt="The Laboratory Logo" class="brand-logo-img">
-            <div>
-                <div class="brand-title">The Laboratory</div>
-                <div class="brand-subtitle">Overview Portal</div>
-            </div>
+            <div class="brand-title">The Laboratory</div>
+            <div class="brand-subtitle">Overview Portal</div>
         </div>
 
         <ul class="nav-menu">
             <li class="nav-item"><a href="#introduction">01. Facility Profile</a></li>
             <li class="nav-item"><a href="#access-terms">02. Access Requirements</a></li>
             <li class="nav-item"><a href="#security-ops">03. Security Architecture</a></li>
-            <li class="nav-item"><a href="#directory">04. Personnel Directory</a></li>
+            <li class="nav-item"><a href="#directory">04. Personnel Hierarchy</a></li>
             <li class="nav-item"><a href="#liability-waiver">05. Legal Obligations</a></li>
             <li class="nav-item"><a href="#intake-portal">06. Intake Form</a></li>
         </ul>
@@ -379,10 +508,12 @@
         </div>
     </aside>
 
-    <!-- MAIN INTERFACE -->
     <main>
+        
+        <div class="top-right-logo-container">
+            <img src="1773232611901.png" alt="The Laboratory Logo" class="top-right-logo-img">
+        </div>
 
-        <!-- SECTION 1 -->
         <section id="introduction">
             <h1>Facility Introduction</h1>
             <p class="lead-paragraph">Welcome to the official index portal. The Laboratory is a privately owned environment dedicated entirely to the straightforward housing, containment, and unmonitored testing of raw anomalies.</p>
@@ -394,7 +525,6 @@
             </ul>
         </section>
 
-        <!-- SECTION 2 -->
         <section id="access-terms">
             <h2>Operational Access Parameters</h2>
             <p>Admittance to active containment blocks is handled strictly on a commercial basis. Review our non-negotiable operational boundaries below:</p>
@@ -411,7 +541,6 @@
             </div>
         </section>
 
-        <!-- SECTION 3 -->
         <section id="security-ops">
             <h2>Security Architecture</h2>
             <p>The Laboratory approach to operations cuts out the bureaucratic weight of traditional containment networks. Our facility is designed to be highly straightforward:</p>
@@ -424,44 +553,102 @@
             </ul>
         </section>
 
-        <!-- SECTION 4 -->
         <section id="directory">
-            <h2>Internal Personnel Directory</h2>
-            <p>The entire laboratory structure is owned, regulated, and managed by a tight-knit 5-person roster. Our team is approachable, highly capable, and entirely focused on keeping the facility vibing smoothly:</p>
+            <h2>Internal Personnel Hierarchy</h2>
+            <p>The entire laboratory structure is owned, regulated, and managed by a tight-knit core roster. Use the dynamic control module below to inspect staff responsibility parameters and supervisor lines.</p>
 
-            <table class="directory-table">
-                <thead>
-                    <tr>
-                        <th style="width: 30%;">Designation</th>
-                        <th style="width: 70%;">Role &amp; Operational Assignment</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Founder Z</strong></td>
-                        <td><strong>Co-Owner / Joint Facility Director.</strong> Manages asset acquisitions, updates core index registries, and co-establishes all overarching entry guidelines.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Founder Light</strong></td>
-                        <td><strong>Co-Owner / Lead Systems Architect.</strong> Designs containment framework logic, handles interface development, and co-establishes all overarching entry guidelines.</td>
-                    </tr>
-                    <tr>
-                        <td>Professor Ton</td>
-                        <td><strong>Senior Research Analyst.</strong> Coordinates hardware maintenance, validates manual terminal diagnostics, and manages internal log data streams.</td>
-                    </tr>
-                    <tr>
-                        <td>Doctor Galaxy Destroyer</td>
-                        <td><strong>Facility Mental Therapist.</strong> Provides essential behavioral and psychological decompression management. Note: Personnel is a physical feline specimen (Literal Feline Furball).</td>
-                    </tr>
-                    <tr>
-                        <td>Min Kuznetsov</td>
-                        <td><strong>Junior Researcher Intern.</strong> Handles day-to-day general facility sorting, manages laboratory script logic updates, and cleans the archive data logs.</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="slider-wrapper">
+                
+                <div class="active-card-display">
+                    <div class="card-avatar-frame">
+                        <img id="staff-img" src="1773232611901.png" alt="Staff Portrait">
+                    </div>
+                    <div class="card-meta-info">
+                        <h3 id="staff-name">Founder Z</h3>
+                        <span id="staff-role" class="role-badge">Co-Owner / Joint Facility Director</span>
+                        <p id="staff-summary" style="margin: 0; font-size: 0.95rem; color: #555;">Loading description details...</p>
+                    </div>
+                </div>
+
+                <div class="slider-navigation-bar">
+                    <button class="slider-btn" onclick="navigateSlider(-1)">← Prev</button>
+                    <div id="slider-count" class="slider-counter">1 / 5</div>
+                    <button class="slider-btn" onclick="navigateSlider(1)">Next →</button>
+                </div>
+
+                <div class="collapsible-container">
+                    
+                    <div class="accordion-item" id="acc-assignment">
+                        <button class="accordion-trigger" onclick="toggleAccordion('acc-assignment')">Core Assignment &amp; Scope</button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner" id="text-assignment">
+                                Details loaded dynamically.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" id="acc-chain">
+                        <button class="accordion-trigger" onclick="toggleAccordion('acc-chain')">Command &amp; Supervision Hierarchy</button>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner" id="text-chain">
+                                Details loaded dynamically.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="hidden-staff-source" style="display: none;">
+                
+                <div class="staff-data-node" 
+                     data-name="Founder Z" 
+                     data-role="Co-Owner / Joint Facility Director"
+                     data-img="1773232611901.png"
+                     data-summary="Co-owner of the infrastructure who shares ultimate structural command layout choices.">
+                    <div class="store-assignment">Manages facility asset acquisitions, processes raw entry registrations, and co-establishes overarching laboratory index rules.</div>
+                    <div class="store-chain">Holds equal power with Co-Owner Light. Both founders hold absolute veto authorization over operations. Acts as the primary supervisor for Professor Ton and Doctor Galaxy Destroyer.</div>
+                </div>
+
+                <div class="staff-data-node" 
+                     data-name="Founder Light" 
+                     data-role="Co-Owner / Lead Systems Architect"
+                     data-img="1773232611901.png"
+                     data-summary="Co-owner of the infrastructure focusing directly on interface networks and security engineering.">
+                    <div class="store-assignment">Maintains structural containment logic variables, handles development updates, and co-establishes overarching laboratory index rules.</div>
+                    <div class="store-chain">Holds equal power with Co-Owner Z. Both founders hold absolute veto authorization over operations. Acts as the direct immediate supervisor for intern Min Kuznetsov.</div>
+                </div>
+
+                <div class="staff-data-node" 
+                     data-name="Professor Ton" 
+                     data-role="Senior Research Analyst"
+                     data-img="1773232611901.png"
+                     data-summary="Senior engineering asset managing diagnostic evaluation tools and log validation.">
+                    <div class="store-assignment">Coordinates operational terminal equipment, runs automated sector diagnostic passes, and monitors internal digital logs.</div>
+                    <div class="store-chain">Directly positioned under the supervision of Founder Z. Reports tasks and requests permissions to Founder Z. If Z is completely unreachable, Founder Light assumes command profile.</div>
+                </div>
+
+                <div class="staff-data-node" 
+                     data-name="Doctor Galaxy Destroyer" 
+                     data-role="Facility Mental Therapist"
+                     data-img="1773232611901.png"
+                     data-summary="Specialized behavioral advisor managing internal decompression protocols.">
+                    <div class="store-assignment">Provides critical emotional support and baseline trauma calming functions. Note: Profile asset is a physical feline specimen (Literal Feline Furball).</div>
+                    <div class="store-chain">Directly positioned under the supervision of Founder Z. Reports tasks and requests permissions to Founder Z. If Z is completely unreachable, Founder Light assumes command profile.</div>
+                </div>
+
+                <div class="staff-data-node" 
+                     data-name="Min Kuznetsov" 
+                     data-role="Junior Researcher Intern"
+                     data-img="1773232611901.png"
+                     data-summary="Junior level internal support assistant sorting database infrastructure registries.">
+                    <div class="store-assignment">Handles basic file system clearing, manages continuous code modifications for the index ledger, and archives registry files.</div>
+                    <div class="store-chain">Hired directly by Founder Light, who acts as his primary supervisor. Must route permissions and logs directly to Light by default. If Light is out of office, Founder Z holds structural authority.</div>
+                </div>
+
+            </div>
         </section>
 
-        <!-- SECTION 5 -->
         <section id="liability-waiver">
             <h2>Non-Intervention &amp; Liability Obligations</h2>
             <p>Before initializing entry procedures, clients must completely understand their position within the facility parameters:</p>
@@ -474,7 +661,6 @@
             </div>
         </section>
 
-        <!-- SECTION 6 -->
         <section id="intake-portal">
             <h2>Secure Intake Form</h2>
             <p>Fill out the fields below to simulate initialization parameters and finalize entry logging.</p>
@@ -512,13 +698,79 @@
         </p>
     </main>
 
-    <!-- DYNAMIC SCRIPT CONTROLS -->
-    <script {nonce}>
+    <script>
+        // SLIDER ARCHITECTURE LOGIC
+        let currentStaffIndex = 0;
+        let staffDataset = [];
+
+        function compileStaffData() {
+            staffDataset = [];
+            const elements = document.querySelectorAll('.staff-data-node');
+            elements.forEach(node => {
+                staffDataset.push({
+                    name: node.getAttribute('data-name'),
+                    role: node.getAttribute('data-role'),
+                    img: node.getAttribute('data-img'),
+                    summary: node.getAttribute('data-summary'),
+                    assignment: node.querySelector('.store-assignment').innerHTML,
+                    hierarchy: node.querySelector('.store-chain').innerHTML
+                });
+            });
+        }
+
+        function renderCurrentStaff() {
+            if(staffDataset.length === 0) return;
+            const current = staffDataset[currentStaffIndex];
+            
+            document.getElementById('staff-name').innerText = current.name;
+            document.getElementById('staff-role').innerText = current.role;
+            document.getElementById('staff-img').setAttribute('src', current.img);
+            document.getElementById('staff-summary').innerText = current.summary;
+            document.getElementById('text-assignment').innerHTML = current.assignment;
+            document.getElementById('text-chain').innerHTML = current.hierarchy;
+            
+            document.getElementById('slider-count').innerText = `${currentStaffIndex + 1} / ${staffDataset.length}`;
+        }
+
+        function navigateSlider(direction) {
+            currentStaffIndex += direction;
+            if (currentStaffIndex >= staffDataset.length) currentStaffIndex = 0;
+            if (currentStaffIndex < 0) currentStaffIndex = staffDataset.length - 1;
+            renderCurrentStaff();
+            
+            // Close accordions during slide change for smooth presentation
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('open');
+                item.querySelector('.accordion-content').style.maxHeight = null;
+            });
+        }
+
+        // ACCORDION TOGGLE INTERFACE LOGIC
+        function toggleAccordion(elementId) {
+            const el = document.getElementById(elementId);
+            const content = el.querySelector('.accordion-content');
+            
+            if (el.classList.contains('open')) {
+                el.classList.remove('open');
+                content.style.maxHeight = null;
+            } else {
+                el.classList.add('open');
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        // SIMULATED TRANSACTION PROCESSOR
         function processRegistration(event) {
             event.preventDefault();
             const name = document.getElementById('clientName').value;
             alert(`⚠️ FANTASY LORE NOTICE ⚠️\n\nProfile generated for "${name}".\n\nRemember: This is a 100% fictional simulation project. No actual payments, weapons, or entities exist. Thank you for participating in the lore!`);
         }
+
+        // RUN LOGIC INITIALIZERS
+        window.addEventListener('DOMContentLoaded', () => {
+            compileStaffData();
+            renderCurrentStaff();
+        });
 
         window.addEventListener('scroll', () => {
             let sections = document.querySelectorAll('section');
