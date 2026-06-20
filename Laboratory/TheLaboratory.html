@@ -119,7 +119,6 @@
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
         }
 
-        /* Collapsed Sidebar State Rules */
         body.sidebar-collapsed aside {
             transform: translateX(-100%);
         }
@@ -250,7 +249,6 @@
             color: var(--bg-primary);
         }
 
-        /* Overlay Background for Mobile Drawer view */
         .mobile-overlay {
             display: none;
             position: fixed;
@@ -594,7 +592,7 @@
         .accordion-content-inner { padding: 5px 10px 20px 10px; font-size: 1rem; color: var(--text-muted); }
 
         /* ==========================================================================
-           5. SYSTEM INTAKE INTERFACE
+           5. SYSTEM INTAKE & SYSTEM ACTIONS INTERFACE
            ========================================================================== */
         .intake-vertical-stack {
             display: flex;
@@ -698,7 +696,6 @@
                 display: flex;
             }
 
-            /* Transform Sidebar into a Slide-out Drawer Panel */
             aside {
                 position: fixed;
                 top: 0;
@@ -713,7 +710,6 @@
                 padding: 40px 24px 24px 24px;
             }
 
-            /* Hide Sidebar toggle option on mobile devices */
             .sidebar-collapse-tab {
                 display: none;
             }
@@ -728,7 +724,7 @@
 
             main {
                 margin-left: 0 !important;
-                margin-top: 88px; /* Offset for global warning + mobile top-bar combo */
+                margin-top: 88px;
                 padding: 30px 20px 80px 20px;
             }
 
@@ -742,7 +738,6 @@
             h1 { font-size: 2rem; max-width: 100%; }
             .grid-two-col { grid-template-columns: 1fr; gap: 15px; }
 
-            /* Roster nodes structural contraction for narrow viewport limits */
             .avatar-node.left-1 { transform: translateX(-75px) scale(0.85); opacity: 0.6; }
             .avatar-node.right-1 { transform: translateX(75px) scale(0.85); opacity: 0.6; }
             .avatar-node.left-2 { transform: translateX(-140px) scale(0.65); opacity: 0.15; }
@@ -765,7 +760,7 @@
     <div class="mobile-nav-header">
         <button class="mobile-menu-trigger" onclick="toggleMobileMenu()">☰</button>
         <div class="brand-title" style="font-size: 0.9rem; letter-spacing: 1px;">The Laboratory</div>
-        <div style="width: 24px;"></div> <!-- Balancing spacer node -->
+        <div style="width: 24px;"></div>
     </div>
 
     <!-- BACKGROUND DISMISSAL LAYER -->
@@ -773,7 +768,6 @@
 
     <!-- MAIN SIDEBAR DASHBOARD MODULE -->
     <aside id="dashboardSidebar">
-        <!-- COLLAPSIBLE CONTROLLER TAB -->
         <button class="sidebar-collapse-tab" onclick="toggleSidebarCollapse()" title="Toggle Workspace View"></button>
 
         <div class="brand-header-block">
@@ -791,7 +785,8 @@
             <li class="nav-item" id="nav-directory"><a href="#directory" onclick="closeMobileOnNav()">04. Personnel Hierarchy</a></li>
             <li class="nav-item" id="nav-anomalies"><a href="#anomalies" onclick="closeMobileOnNav()">05. Containment Vault</a></li>
             <li class="nav-item" id="nav-liability-waiver"><a href="#liability-waiver" onclick="closeMobileOnNav()">06. Legal Obligations</a></li>
-            <li class="nav-item" id="nav-intake-portal"><a href="#intake-portal" onclick="closeMobileOnNav()">07. Intake Form</a></li>
+            <li class="nav-item" id="nav-operational-faq"><a href="#operational-faq" onclick="closeMobileOnNav()">07. Portal Ledger FAQ</a></li>
+            <li class="nav-item" id="nav-intake-portal"><a href="#intake-portal" onclick="closeMobileOnNav()">08. Intake Form</a></li>
         </ul>
 
         <div class="theme-toggle-panel">
@@ -937,7 +932,62 @@
             </div>
         </section>
 
-        <!-- SECTION 7 -->
+        <!-- SECTION 7: FREQUENTLY ASKED QUESTIONS DIRECT FROM FOUNDER LIGHT -->
+        <section id="operational-faq">
+            <h2>Portal Ledger FAQ</h2>
+            <p>Review the standard facility operations guidelines as authorized directly by Founder Light:</p>
+
+            <div class="collapsible-container" style="border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 15px;">
+                
+                <div class="accordion-item" id="faq-guest">
+                    <button class="accordion-trigger" onclick="toggleAccordion('faq-guest')">Can I bring a guest for the $2M entry fee?</button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            No, it is one person per payment. You can bring as many guests as you want, as long as you pay for all of them. Heck, you can even bring your own security team as long as they understand the rules and regulations and you pay for their entry. In our eyes, they are still a client like you—no different.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item" id="faq-mercenary">
+                    <button class="accordion-trigger" onclick="toggleAccordion('faq-mercenary')">What happens if an AMG mercenary refuses to hand me a weapon?</button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            We will strictly sound the AMG higher-ups immediately, because we pay them for that service.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item" id="faq-ammo">
+                    <button class="accordion-trigger" onclick="toggleAccordion('faq-ammo')">If my sidearm runs out of ammunition inside the containment vault, will the facility provide a resupply?</button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            Of course, magazines can be resupplied. Only the gun itself is not allowed to be replaced since it is one gun per person—unless the AMG mercenaries have a kind heart to provide you with more, of course. How they operate their side gear is not my business, but we do pay for resupply magazines. You just need to walk back and get them yourself... there is no delivery service inside the vaults.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item" id="faq-refund">
+                    <button class="accordion-trigger" onclick="toggleAccordion('faq-refund')">Can I request a partial refund if the specific anomaly I paid to research is asleep or inactive?</button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            No.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item" id="faq-dropped">
+                    <button class="accordion-trigger" onclick="toggleAccordion('faq-dropped')">Is there an official protocol if I accidentally drop a personal item into a containment cage?</button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            Not really. But you can always ask our local facility staff if they will happily fish it out for you. If they don't want to, you are entirely on your own.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 8 -->
         <section id="intake-portal">
             <h2>Secure Intake Form</h2>
             <div class="outline-box" style="background-color: var(--bg-secondary);">
@@ -985,12 +1035,10 @@
 
     <!-- DYNAMIC DASHBOARD ENGINE SCROLL CONTROLS -->
     <script>
-        // DESKTOP: TOGGLE EXPAND / COLLAPSE SIDEBAR VIEW
         function toggleSidebarCollapse() {
             document.body.classList.toggle('sidebar-collapsed');
         }
 
-        // MOBILE: OPEN / CLOSE DRAWER NAVIGATION OVERLAY
         function toggleMobileMenu() {
             document.body.classList.toggle('mobile-menu-active');
         }
@@ -999,7 +1047,6 @@
             document.body.classList.remove('mobile-menu-active');
         }
 
-        // THEME SELECTION MANAGER
         function initThemeDetection() {
             const currentHour = new Date().getHours();
             if (currentHour < 6 || currentHour >= 18) {
@@ -1013,15 +1060,14 @@
             document.body.classList.toggle('dark-theme');
         }
 
-        // ACCURATE INTERSECTION OBSERVER HIGHLIGHT LOGIC
-        // Fixed old scroll spy issue from image_84c184.png where the bottom item failed to highlight
+        // ACCURATE SCROLL SPY TRACKER WITH OBSERVER ENGINE
         function initHighPrecisionScrollSpy() {
             const sections = document.querySelectorAll('section');
             const navItems = document.querySelectorAll('.nav-menu .nav-item');
 
             const observerOptions = {
                 root: null,
-                rootMargin: '-20% 0px -40% 0px', // Creates an tracking box in the viewport hub
+                rootMargin: '-20% 0px -40% 0px',
                 threshold: 0
             };
 
@@ -1043,16 +1089,16 @@
 
             sections.forEach(section => observer.observe(section));
 
-            // Absolute Fallback Trigger: Force highlights intake form if user hits the bottom limit
+            // Absolute Fallback Trigger for page bottom
             window.addEventListener('scroll', () => {
-                if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 50) {
+                if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 60) {
                     navItems.forEach(item => item.classList.remove('active'));
                     document.getElementById('nav-intake-portal').classList.add('active');
                 }
             });
         }
 
-        // CAROUSEL ROSTER CORE LOGIC
+        // CAROUSEL ROSTER ENGINE
         let currentFocusIndex = 0;
         let staffRosterArray = [];
 
@@ -1088,6 +1134,8 @@
         function updateCarouselPositions() {
             const nodes = document.querySelectorAll('.avatar-node');
             const total = staffRosterArray.length;
+
+            if(!nodes.length) return;
 
             nodes.forEach((node, idx) => {
                 node.className = 'avatar-node';
@@ -1140,8 +1188,10 @@
 
         function resetAccordions() {
             document.querySelectorAll('.accordion-item').forEach(item => {
-                item.classList.remove('open');
-                item.querySelector('.accordion-content').style.maxHeight = null;
+                if(!item.id.startsWith('faq-')) { // Avoid collapsing the FAQs when swapping characters
+                    item.classList.remove('open');
+                    item.querySelector('.accordion-content').style.maxHeight = null;
+                }
             });
         }
 
