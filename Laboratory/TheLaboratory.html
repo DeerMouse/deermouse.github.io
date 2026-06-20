@@ -162,7 +162,7 @@
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 8px;
+            padding: 10px;
             font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -271,7 +271,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px;
-            margin: 30px 0;
+            margin: 20px 0;
         }
 
         .outline-box {
@@ -509,9 +509,17 @@
         .accordion-content-inner { padding: 5px 10px 20px 10px; font-size: 1rem; color: var(--text-muted); }
 
         /* ==========================================================================
-           5. SYSTEM INTAKE INTERFACE WITH DUAL-LINK ACCESS
+           5. SYSTEM INTAKE INTERFACE (RE-ARCHITECTED FIX FROM IMAGE_84CD9E.PNG)
            ========================================================================== */
-        .form-group { margin-bottom: 20px; }
+        .intake-vertical-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .form-group { margin-bottom: 0; }
         .form-group label {
             display: block;
             font-size: 0.8rem;
@@ -535,12 +543,12 @@
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            margin-top: 15px;
             cursor: pointer;
+            margin: 5px 0;
         }
 
         .form-checkbox input { margin-top: 4px; }
-        .form-checkbox span { font-size: 0.9rem; color: var(--text-muted); }
+        .form-checkbox span { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
 
         .submit-btn {
             background-color: var(--border-dark);
@@ -550,25 +558,26 @@
             font-size: 0.95rem;
             font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
             cursor: pointer;
             width: 100%;
-            margin-top: 20px;
             border-radius: 4px;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Combined Discord Option Callout Action */
+        /* Fixed Full-Width Linear Action Panel for Discord */
         .discord-channel-action-block {
-            margin-top: 18px;
+            margin-top: 10px;
             text-align: center;
             border-top: 1px dashed var(--border-color);
-            padding-top: 16px;
+            padding-top: 24px;
+            width: 100%;
         }
 
         .discord-channel-action-block p {
             font-size: 0.85rem;
             color: var(--text-light);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -581,17 +590,19 @@
             color: var(--text-main);
             background: var(--bg-secondary);
             border: 1px solid var(--border-dark);
-            padding: 10px 24px;
+            padding: 12px 32px;
             font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
             text-decoration: none;
             border-radius: 4px;
+            width: 100%;
+            max-width: 400px;
             transition: all 0.2s ease;
         }
 
         .discord-btn-link:hover {
-            background: #5865F2; /* Discord brand blue for clean visual shift */
+            background: #5865F2; 
             color: #ffffff;
             border-color: #5865F2;
         }
@@ -764,7 +775,7 @@
                 </div>
             </div>
 
-            <!-- DATA STORAGE BLOCKS (EASY TO EDIT OR COPY-PASTE FOR FUTURE CHARACTERS) -->
+            <!-- DATA STORAGE BLOCKS -->
             <div id="hidden-staff-source" style="display: none;">
                 <div class="staff-data-node" data-name="Founder Z" data-role="Co-Owner / Joint Facility Director" data-img="1773232611901.png" data-summary="Co-owner of the infrastructure who shares ultimate structural command layout choices.">
                     <div class="store-assignment">Manages facility asset acquisitions, processes raw entry registrations, and co-establishes overarching laboratory index rules.</div>
@@ -789,7 +800,7 @@
             </div>
         </section>
 
-        <!-- SECTION 5: NEW ANOMALIES LIST SEGMENT -->
+        <!-- SECTION 5: CONTAINMENT VAULT -->
         <section id="anomalies">
             <h2>Containment Vault Index</h2>
             <p>Access our external live database tracking records to audit anomalies currently secured inside the primary sector wings.</p>
@@ -799,7 +810,6 @@
                     <h4 style="font-size: 1.1rem; font-weight: 700; text-transform: uppercase;">Active Anomaly Inventory Log</h4>
                     <p style="font-size: 0.9rem; margin: 4px 0 0 0; color: var(--text-muted);">View classifications, containment parameters, hazard levels, and logs.</p>
                 </div>
-                <!-- Dynamic external transfer endpoint link -->
                 <a href="anomaly_list.html" class="vault-btn">Open Asset Vault →</a>
             </div>
         </section>
@@ -814,11 +824,13 @@
             </div>
         </section>
 
-        <!-- SECTION 7 -->
+        <!-- SECTION 7: INTAKE PORTAL (CLEAN FULL-WIDTH STACK VIBE) -->
         <section id="intake-portal">
             <h2>Secure Intake Form</h2>
             <div class="outline-box" style="background-color: var(--bg-secondary);">
                 <form onsubmit="processRegistration(event)">
+                    
+                    <!-- Form Input Fields Grid -->
                     <div class="grid-two-col">
                         <div class="form-group">
                             <label>Legal Identifier</label>
@@ -829,27 +841,36 @@
                             <input type="text" class="form-control" placeholder="e.g., Wire Transfer" required>
                         </div>
                     </div>
-                    <div class="form-checkbox">
-                        <input type="checkbox" required>
-                        <span>I confirm I understand this is a fictional lore page. I explicitly accept that the facility has zero liability, maintains no active guards, and will not deploy emergency columns or rescue teams on my behalf.</span>
-                    </label>
-                    
-                    <!-- FAKE SIMULATOR BUTTON (Action 1) -->
-                    <button type="submit" class="submit-btn">Acknowledge Fictional Terms &amp; Submit Profile</button>
-                    
-                    <!-- EXPLICIT DISCORD COMMUNIT LINK REDIRECT (Action 2) -->
-                    <div class="discord-channel-action-block">
-                        <p>Looking for the active community roleplay network?</p>
-                        <a href="https://discord.gg/F3WuhctRyP" target="_blank" class="discord-btn-link">
-                            💬 Join Our Official Discord Server
-                        </a>
+
+                    <!-- Linear Action Layout Area -->
+                    <div class="intake-vertical-stack">
+                        <label class="form-checkbox">
+                            <input type="checkbox" required>
+                            <span>I confirm I understand this is a fictional lore page. I explicitly accept that the facility has zero liability, maintains no active guards, and will not deploy emergency columns or rescue teams on my behalf.</span>
+                        </label>
+                        
+                        <!-- Fixed Full-Width Primary Action Button -->
+                        <button type="submit" class="submit-btn">Acknowledge Fictional Terms &amp; Submit Profile</button>
+                        
+                        <!-- Dedicated Discord Action Segment Below Form Control -->
+                        <div class="discord-channel-action-block">
+                            <p>Looking for the active community roleplay network?</p>
+                            <a href="https://discord.gg/F3WuhctRyP" target="_blank" class="discord-btn-link">
+                                💬 Join Our Official Discord Server
+                            </a>
+                        </div>
                     </div>
+
                 </form>
             </div>
         </section>
 
-        <p style="text-align: center; color: var(--text-light); font-size: 0.8rem; margin-top: 60px;">
-            Disclaimer: This page is a fictional roleplay/creative writing asset. All names, settings, companies, and anomalies mentioned are entirely made-up.
+        <!-- CREDITS ACCORDING TO SYSTEM INSTRUCTIONS LORE -->
+        <p style="text-align: center; color: var(--text-light); font-size: 0.8rem; margin-top: 60px; line-height: 1.7;">
+            Disclaimer: This page is a fictional roleplay/creative writing asset. All names, settings, companies, and anomalies mentioned are entirely made-up.<br>
+            <span style="font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.75rem; margin-top: 4px; display: inline-block; color: var(--text-muted);">
+                System Ledger Interface Version 2.0 // Upgraded &amp; Re-coded by Junior Researcher Min Kuznetsov
+            </span>
         </p>
     </main>
 
@@ -858,7 +879,6 @@
         // THEME ENGINE SWITCHER LOGIC
         function initThemeDetection() {
             const currentHour = new Date().getHours();
-            // Night auto assignment if hour is before 6 AM or after 6 PM
             if (currentHour < 6 || currentHour >= 18) {
                 document.body.classList.add('dark-theme');
             } else {
