@@ -6,8 +6,35 @@
     <title>THE LABORATORY — Facility Index</title>
     <style>
         /* ==========================================================================
-           1. CORE RESET & MONOCHROMATIC STYLING
+           1. VARIABLE LOGIC (THEMING & MONOCHROMATIC STYLING)
            ========================================================================== */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #fafafa;
+            --bg-banner: #f5f5f5;
+            --text-main: #111111;
+            --text-muted: #555555;
+            --text-light: #888888;
+            --border-color: #e5e5e5;
+            --border-dark: #111111;
+            --box-shadow: rgba(0, 0, 0, 0.05);
+            --invert-value: 0;
+        }
+
+        /* Dark Mode Override Rules */
+        body.dark-theme {
+            --bg-primary: #121212;
+            --bg-secondary: #1c1c1c;
+            --bg-banner: #181818;
+            --text-main: #f5f5f5;
+            --text-muted: #b0b0b0;
+            --text-light: #777777;
+            --border-color: #2a2a2a;
+            --border-dark: #ffffff;
+            --box-shadow: rgba(0, 0, 0, 0.4);
+            --invert-value: 1;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -17,18 +44,19 @@
         }
 
         body {
-            background-color: #ffffff;
-            color: #111111;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
             line-height: 1.6;
             display: flex;
             min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         /* Persistent Legal Warning Header */
         .global-disclaimer-banner {
-            background-color: #f5f5f5;
-            color: #666666;
-            border-bottom: 1px solid #e5e5e5;
+            background-color: var(--bg-banner);
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
             padding: 8px 20px;
             font-size: 0.75rem;
             text-transform: uppercase;
@@ -43,12 +71,12 @@
         }
 
         /* ==========================================================================
-           2. SIDEBAR NAVIGATION WITH BRAND LOGO (LOCATION 1)
+           2. SIDEBAR NAVIGATION WITH THEME CONTROLS & BRAND LOGO
            ========================================================================== */
         aside {
             width: 280px;
-            background-color: #ffffff;
-            border-right: 1px solid #e5e5e5;
+            background-color: var(--bg-primary);
+            border-right: 1px solid var(--border-color);
             position: fixed;
             top: 33px;
             bottom: 0;
@@ -58,6 +86,7 @@
             justify-content: space-between;
             padding: 30px 24px;
             z-index: 100;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .brand-header-block {
@@ -72,6 +101,8 @@
             height: auto;
             display: block;
             object-fit: contain;
+            filter: invert(var(--invert-value));
+            transition: filter 0.3s ease;
         }
 
         .brand-title {
@@ -83,7 +114,7 @@
 
         .brand-subtitle {
             font-size: 0.75rem;
-            color: #888888;
+            color: var(--text-light);
             text-transform: uppercase;
         }
 
@@ -94,12 +125,13 @@
             gap: 6px;
             flex-grow: 1;
             margin-top: 15px;
+            overflow-y: auto;
         }
 
         .nav-item a {
             display: block;
             padding: 8px 12px;
-            color: #555555;
+            color: var(--text-muted);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
@@ -108,18 +140,49 @@
         }
 
         .nav-item a:hover {
-            background-color: #fafafa;
-            color: #000000;
+            background-color: var(--bg-secondary);
+            color: var(--text-main);
         }
 
         .nav-item.active a {
-            background-color: #111111;
-            color: #ffffff;
+            background-color: var(--text-main);
+            color: var(--bg-primary);
             font-weight: 600;
         }
 
+        /* Theme Toggle Element */
+        .theme-toggle-panel {
+            padding: 12px 0;
+            border-top: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+
+        .toggle-btn {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn:hover {
+            background: var(--text-main);
+            color: var(--bg-primary);
+        }
+
         /* ==========================================================================
-           3. MAIN CONTAINER & TOP-RIGHT LOGO (LOCATION 2)
+           3. MAIN CONTAINER & TOP-RIGHT LOGO ACCENT
            ========================================================================== */
         main {
             margin-left: 280px;
@@ -143,6 +206,8 @@
             height: auto;
             display: block;
             object-fit: contain;
+            filter: invert(var(--invert-value));
+            transition: filter 0.3s ease;
         }
 
         section {
@@ -160,7 +225,7 @@
 
         .lead-paragraph {
             font-size: 1.2rem;
-            color: #333333;
+            color: var(--text-muted);
             margin-bottom: 35px;
         }
 
@@ -171,12 +236,13 @@
             letter-spacing: 0.5px;
             margin-bottom: 25px;
             padding-bottom: 6px;
-            border-bottom: 2px solid #111111;
+            border-bottom: 2px solid var(--border-dark);
+            transition: border-color 0.3s ease;
         }
 
         p {
             font-size: 1.05rem;
-            color: #222222;
+            color: var(--text-main);
             margin-bottom: 20px;
         }
 
@@ -196,7 +262,7 @@
             content: "▪";
             position: absolute;
             left: 0;
-            color: #111111;
+            color: var(--text-main);
             font-size: 0.8rem;
             top: 2px;
         }
@@ -209,17 +275,26 @@
         }
 
         .outline-box {
-            border: 1px solid #e5e5e5;
+            border: 1px solid var(--border-color);
             padding: 24px;
             border-radius: 4px;
-            background-color: #ffffff;
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .outline-box h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 12px;
         }
 
         .stark-alert-panel {
-            border: 2px solid #111111;
-            background-color: #ffffff;
+            border: 2px solid var(--border-dark);
+            background-color: var(--bg-primary);
             padding: 30px;
             margin: 35px 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .stark-alert-panel h3 {
@@ -228,19 +303,55 @@
             margin-bottom: 12px;
         }
 
+        /* Anomaly Entry Vault Block Styling */
+        .anomaly-vault-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--border-dark);
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            margin-top: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .anomaly-vault-card:hover {
+            transform: translateX(3px);
+            box-shadow: 0 4px 12px var(--box-shadow);
+        }
+
+        .vault-btn {
+            background-color: var(--border-dark);
+            color: var(--bg-primary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 10px 16px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            transition: all 0.15s ease;
+        }
+
+        .vault-btn:hover {
+            opacity: 0.85;
+        }
+
         /* ==========================================================================
-           4. GAMIFIED ROTATING CHARACTER SELECTOR (GAME-UI STYLE)
+           4. GAMIFIED ROTATING CHARACTER SELECTOR
            ========================================================================== */
         .character-select-system {
-            background: #ffffff;
-            border: 1px solid #e5e5e5;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
             overflow: hidden;
             margin: 30px 0;
             padding: 30px 0 20px 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
-        /* The horizontal rotation container track */
         .roster-carousel-viewport {
             position: relative;
             width: 100%;
@@ -249,8 +360,9 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            background: #fafafa;
-            border-bottom: 1px solid #e5e5e5;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .roster-track {
@@ -262,13 +374,12 @@
             align-items: center;
         }
 
-        /* Individual avatar cards in rotation space */
         .avatar-node {
             position: absolute;
             width: 110px;
             height: 110px;
-            border: 2px solid #e5e5e5;
-            background: #ffffff;
+            border: 2px solid var(--border-color);
+            background: var(--bg-primary);
             border-radius: 6px;
             display: flex;
             align-items: center;
@@ -284,55 +395,31 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
+            filter: invert(var(--invert-value));
+            transition: filter 0.3s ease;
         }
 
-        /* Visual states based on dynamic position rules */
         .avatar-node.center {
             transform: translateX(0) scale(1.35);
             opacity: 1;
             z-index: 5;
-            border-color: #111111;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-color: var(--border-dark);
+            box-shadow: 0 10px 20px var(--box-shadow);
         }
 
-        .avatar-node.left-1 {
-            transform: translateX(-140px) scale(0.95);
-            opacity: 0.7;
-            z-index: 3;
-        }
+        .avatar-node.left-1 { transform: translateX(-140px) scale(0.95); opacity: 0.7; z-index: 3; }
+        .avatar-node.right-1 { transform: translateX(140px) scale(0.95); opacity: 0.7; z-index: 3; }
+        .avatar-node.left-2 { transform: translateX(-260px) scale(0.75); opacity: 0.25; z-index: 2; }
+        .avatar-node.right-2 { transform: translateX(260px) scale(0.75); opacity: 0.25; z-index: 2; }
+        .avatar-node.hidden-node { transform: translateX(0) scale(0.5); opacity: 0; z-index: 0; pointer-events: none; }
 
-        .avatar-node.right-1 {
-            transform: translateX(140px) scale(0.95);
-            opacity: 0.7;
-            z-index: 3;
-        }
-
-        .avatar-node.left-2 {
-            transform: translateX(-260px) scale(0.75);
-            opacity: 0.25;
-            z-index: 2;
-        }
-
-        .avatar-node.right-2 {
-            transform: translateX(260px) scale(0.75);
-            opacity: 0.25;
-            z-index: 2;
-        }
-
-        .avatar-node.hidden-node {
-            transform: translateX(0) scale(0.5);
-            opacity: 0;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* Navigation Controls Overlay */
         .carousel-arrow-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: #ffffff;
-            border: 1px solid #111111;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-dark);
+            color: var(--text-main);
             width: 40px;
             height: 40px;
             font-size: 1.1rem;
@@ -347,18 +434,17 @@
         }
 
         .carousel-arrow-btn:hover {
-            background: #111111;
-            color: #ffffff;
+            background: var(--text-main);
+            color: var(--bg-primary);
         }
 
         .arrow-prev { left: 20px; }
         .arrow-next { right: 20px; }
 
-        /* Focused Info Area (Directly updates below your turn) */
         .focused-profile-details {
             padding: 30px 30px 10px 30px;
             text-align: center;
-            border-bottom: 1px solid #e5e5e5;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .focused-profile-details h3 {
@@ -373,33 +459,28 @@
             text-transform: uppercase;
             font-weight: 700;
             letter-spacing: 0.5px;
-            background: #111111;
-            color: #ffffff;
+            background: var(--border-dark);
+            color: var(--bg-primary);
             padding: 3px 10px;
             border-radius: 3px;
             margin: 6px 0 14px 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .focused-profile-details .summary-text {
             font-size: 1.05rem;
-            color: #555555;
+            color: var(--text-muted);
             max-width: 600px;
             margin: 0 auto;
         }
 
-        /* Accordion Structure */
         .collapsible-container {
             padding: 10px 20px;
-            background: #ffffff;
+            background: var(--bg-primary);
         }
 
-        .accordion-item {
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .accordion-item:last-child {
-            border-bottom: none;
-        }
+        .accordion-item { border-bottom: 1px solid var(--border-color); }
+        .accordion-item:last-child { border-bottom: none; }
 
         .accordion-trigger {
             width: 100%;
@@ -410,7 +491,7 @@
             font-size: 0.95rem;
             font-weight: 700;
             text-transform: uppercase;
-            color: #111111;
+            color: var(--text-main);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -423,43 +504,30 @@
             transition: transform 0.2s ease;
         }
 
-        .accordion-item.open .accordion-trigger::after {
-            transform: rotate(-180deg);
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.25s ease-out;
-        }
-
-        .accordion-content-inner {
-            padding: 5px 10px 20px 10px;
-            font-size: 1rem;
-            color: #333333;
-        }
+        .accordion-item.open .accordion-trigger::after { transform: rotate(-180deg); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.25s ease-out; }
+        .accordion-content-inner { padding: 5px 10px 20px 10px; font-size: 1rem; color: var(--text-muted); }
 
         /* ==========================================================================
-           5. FORM INTEL
+           5. SYSTEM INTAKE INTERFACE WITH DUAL-LINK ACCESS
            ========================================================================== */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
+        .form-group { margin-bottom: 20px; }
         .form-group label {
             display: block;
             font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
             margin-bottom: 6px;
+            color: var(--text-main);
         }
 
         .form-control {
             width: 100%;
             padding: 12px 14px;
             font-size: 0.95rem;
-            background-color: #ffffff;
-            border: 1px solid #cccccc;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
             border-radius: 4px;
         }
 
@@ -471,18 +539,12 @@
             cursor: pointer;
         }
 
-        .form-checkbox input {
-            margin-top: 4px;
-        }
-
-        .form-checkbox span {
-            font-size: 0.9rem;
-            color: #444444;
-        }
+        .form-checkbox input { margin-top: 4px; }
+        .form-checkbox span { font-size: 0.9rem; color: var(--text-muted); }
 
         .submit-btn {
-            background-color: #111111;
-            color: #ffffff;
+            background-color: var(--border-dark);
+            color: var(--bg-primary);
             border: none;
             padding: 16px;
             font-size: 0.95rem;
@@ -492,10 +554,50 @@
             width: 100%;
             margin-top: 20px;
             border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Combined Discord Option Callout Action */
+        .discord-channel-action-block {
+            margin-top: 18px;
+            text-align: center;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 16px;
+        }
+
+        .discord-channel-action-block p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .discord-btn-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--text-main);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-dark);
+            padding: 10px 24px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .discord-btn-link:hover {
+            background: #5865F2; /* Discord brand blue for clean visual shift */
+            color: #ffffff;
+            border-color: #5865F2;
         }
 
         /* ==========================================================================
-           6. STRICTOR RESPONSIVE DESIGN (FLAWLESS RUN ON MOBILE SCREEN)
+           6. STRICTOR RESPONSIVE DESIGN (MOBILE SCREEN SUITE)
            ========================================================================== */
         @media (max-width: 900px) {
             aside {
@@ -504,7 +606,7 @@
                 height: auto;
                 top: 33px;
                 border-right: none;
-                border-bottom: 1px solid #e5e5e5;
+                border-bottom: 1px solid var(--border-color);
                 padding: 20px;
             }
             .nav-menu {
@@ -523,16 +625,9 @@
                 margin-bottom: 20px;
                 text-align: left;
             }
-            .top-right-logo-img {
-                width: 70px;
-            }
-            h1 {
-                max-width: 100%;
-            }
-            .grid-two-col {
-                grid-template-columns: 1fr;
-            }
-            /* Scale down translation values to stay within small viewports */
+            .top-right-logo-img { width: 70px; }
+            h1 { max-width: 100%; }
+            .grid-two-col { grid-template-columns: 1fr; }
             .avatar-node.left-1 { transform: translateX(-85px) scale(0.85); opacity: 0.6; }
             .avatar-node.right-1 { transform: translateX(85px) scale(0.85); opacity: 0.6; }
             .avatar-node.left-2 { transform: translateX(-160px) scale(0.65); opacity: 0.15; }
@@ -567,11 +662,19 @@
             <li class="nav-item"><a href="#access-terms">02. Access Requirements</a></li>
             <li class="nav-item"><a href="#security-ops">03. Security Architecture</a></li>
             <li class="nav-item"><a href="#directory">04. Personnel Hierarchy</a></li>
-            <li class="nav-item"><a href="#liability-waiver">05. Legal Obligations</a></li>
-            <li class="nav-item"><a href="#intake-portal">06. Intake Form</a></li>
+            <li class="nav-item"><a href="#anomalies">05. Containment Vault</a></li>
+            <li class="nav-item"><a href="#liability-waiver">06. Legal Obligations</a></li>
+            <li class="nav-item"><a href="#intake-portal">07. Intake Form</a></li>
         </ul>
 
-        <div style="font-size: 0.75rem; color: #999999; border-top: 1px solid #e5e5e5; padding-top: 15px;">
+        <!-- THEMATIC ENGINE CONTROL TOGGLE -->
+        <div class="theme-toggle-panel">
+            <button class="toggle-btn" onclick="toggleThemeManual()">
+                <span>🌓</span> Toggle Light / Dark Mode
+            </button>
+        </div>
+
+        <div style="font-size: 0.75rem; color: var(--text-light); border-top: 1px solid var(--border-color); padding-top: 15px;">
             Document ID: LR-INDEX-2026<br>
             Classification: Public Lore File
         </div>
@@ -604,11 +707,11 @@
             <div class="grid-two-col">
                 <div class="outline-box">
                     <h4>The All-Inclusive Entry Fee</h4>
-                    <p style="font-size: 0.95rem; margin-bottom:0; color:#333;"><strong>$2,000,000 USD per person, per entry.</strong> This flat rate covers authorization profiles and terminal key access to the containment vault. We do not provide hand-holding, guided tours, luxury catering, or dedicated testing advice. You pay strictly for raw access.</p>
+                    <p style="font-size: 0.95rem; margin-bottom:0;"><strong>$2,000,000 USD per person, per entry.</strong> This flat rate covers authorization profiles and terminal key access to the containment vault. We do not provide hand-holding or dedicated testing advice. You pay strictly for raw access.</p>
                 </div>
                 <div class="outline-box">
                     <h4>The Proprietary Boundary Rule</h4>
-                    <p style="font-size: 0.95rem; margin-bottom:0; color:#333;">All contained anomalies, physical specimens, or biological remnants remain the absolute, permanent property of the facility founders. You are strictly prohibited from moving assets outside the physical perimeter of the facility, and you cannot sell them under any circumstances.</p>
+                    <p style="font-size: 0.95rem; margin-bottom:0;">All contained anomalies, physical specimens, or biological remnants remain the absolute, permanent property of the facility founders. You are strictly prohibited from moving assets outside the physical perimeter.</p>
                 </div>
             </div>
         </section>
@@ -619,10 +722,10 @@
             <p>The Laboratory approach to operations cuts out the bureaucratic weight of traditional containment networks. Our facility is designed to be highly straightforward:</p>
             
             <ul class="bullet-list">
-                <li><strong>No Active Security Presence:</strong> The facility maintains absolutely zero armed guards, defense forces, or security patrols. The internal atmosphere is completely casual and operates like a relaxed day at the beach, leaving you to focus entirely on your chosen assets.</li>
-                <li><strong>Passive Isolation Engineering:</strong> Safety is maintained entirely through passive containment chambers. These units are heavy-duty, meticulously structured cages built to ensure anomalies simply cannot escape into transit walkways or public lounges on their own.</li>
-                <li><strong>Self-Defense Asset Allocation:</strong> Because there are no facility guards to step in and protect you if something goes sideways inside a room, all incoming clients are handed a complimentary sidearm weapon immediately upon entry to provide a baseline layer of personal self-defense.</li>
-                <li><strong>The Contractor Role:</strong> This specific firearm handout is managed by agents from the <strong>Anvil Mercenaries Group (AMG)</strong> hired by the owners. They do not protect the facility, they do not patrol checkpoints, and they do not rescue clients; their sole purpose is to process and distribute the equipment.</li>
+                <li><strong>No Active Security Presence:</strong> The facility maintains absolutely zero armed guards, defense forces, or security patrols. The internal atmosphere is completely casual and operates like a relaxed day at the beach.</li>
+                <li><strong>Passive Isolation Engineering:</strong> Safety is maintained entirely through passive containment chambers. These units are heavy-duty, meticulously structured cages built to ensure anomalies simply cannot escape into transit walkways.</li>
+                <li><strong>Self-Defense Asset Allocation:</strong> Because there are no facility guards to step in and protect you, all incoming clients are handed a complimentary sidearm weapon immediately upon entry.</li>
+                <li><strong>The Contractor Role:</strong> This handout is managed by agents from the <strong>Anvil Mercenaries Group (AMG)</strong> hired by the owners. They do not protect the facility; their sole purpose is to process and distribute the equipment.</li>
             </ul>
         </section>
 
@@ -633,123 +736,88 @@
 
             <!-- GAMIFIED DYNAMIC CAROUSEL SECTION -->
             <div class="character-select-system">
-                
-                <!-- Display Rotation viewport area -->
                 <div class="roster-carousel-viewport">
                     <button class="carousel-arrow-btn arrow-prev" onclick="shiftRoster(-1)">←</button>
-                    
-                    <div class="roster-track" id="dynamic-avatar-track">
-                        <!-- Elements rendered dynamically via javascript template pattern below -->
-                    </div>
-
+                    <div class="roster-track" id="dynamic-avatar-track"></div>
                     <button class="carousel-arrow-btn arrow-next" onclick="shiftRoster(1)">→</button>
                 </div>
 
-                <!-- Focused Member Card Metas -->
                 <div class="focused-profile-details">
                     <h3 id="panel-name">Loading Profile...</h3>
                     <span id="panel-role" class="role-badge">Roster Asset</span>
                     <p id="panel-summary" class="summary-text">Loading baseline metadata values...</p>
                 </div>
 
-                <!-- Interactive Accordion Area -->
                 <div class="collapsible-container">
                     <div class="accordion-item" id="acc-assignment">
                         <button class="accordion-trigger" onclick="toggleAccordion('acc-assignment')">Core Assignment &amp; Scope</button>
                         <div class="accordion-content">
-                            <div class="accordion-content-inner" id="text-assignment">
-                                Profile load pending...
-                            </div>
+                            <div class="accordion-content-inner" id="text-assignment">Profile load pending...</div>
                         </div>
                     </div>
-
                     <div class="accordion-item" id="acc-chain">
                         <button class="accordion-trigger" onclick="toggleAccordion('acc-chain')">Command &amp; Supervision Hierarchy</button>
                         <div class="accordion-content">
-                            <div class="accordion-content-inner" id="text-chain">
-                                Profile load pending...
-                            </div>
+                            <div class="accordion-content-inner" id="text-chain">Profile load pending...</div>
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- ==========================================================================
-               STAFF DATA INVENTORY LOG (EASY TO COPY AND PASTE TO ADD NEW CHARACTERS)
-               ========================================================================== */
-               Instructions: To add a new character, simply copy a complete "staff-data-node" 
-               block below, paste it directly at the bottom of this list, and update values.
-               ========================================================================== -->
+            <!-- DATA STORAGE BLOCKS (EASY TO EDIT OR COPY-PASTE FOR FUTURE CHARACTERS) -->
             <div id="hidden-staff-source" style="display: none;">
-                
-                <!-- CHARACTER BLOCK 1: FOUNDER Z -->
-                <div class="staff-data-node" 
-                     data-name="Founder Z" 
-                     data-role="Co-Owner / Joint Facility Director"
-                     data-img="1773232611901.png"
-                     data-summary="Co-owner of the infrastructure who shares ultimate structural command layout choices.">
+                <div class="staff-data-node" data-name="Founder Z" data-role="Co-Owner / Joint Facility Director" data-img="1773232611901.png" data-summary="Co-owner of the infrastructure who shares ultimate structural command layout choices.">
                     <div class="store-assignment">Manages facility asset acquisitions, processes raw entry registrations, and co-establishes overarching laboratory index rules.</div>
                     <div class="store-chain">Holds equal power with Co-Owner Light. Both founders hold absolute veto authorization over operations. Acts as the primary supervisor for Professor Ton and Doctor Galaxy Destroyer.</div>
                 </div>
-
-                <!-- CHARACTER BLOCK 2: FOUNDER LIGHT -->
-                <div class="staff-data-node" 
-                     data-name="Founder Light" 
-                     data-role="Co-Owner / Lead Systems Architect"
-                     data-img="1773232611901.png"
-                     data-summary="Co-owner of the infrastructure focusing directly on interface networks and security engineering.">
+                <div class="staff-data-node" data-name="Founder Light" data-role="Co-Owner / Lead Systems Architect" data-img="1773232611901.png" data-summary="Co-owner of the infrastructure focusing directly on interface networks and security engineering.">
                     <div class="store-assignment">Maintains structural containment logic variables, handles development updates, and co-establishes overarching laboratory index rules.</div>
                     <div class="store-chain">Holds equal power with Co-Owner Z. Both founders hold absolute veto authorization over operations. Acts as the direct immediate supervisor for intern Min Kuznetsov.</div>
                 </div>
-
-                <!-- CHARACTER BLOCK 3: PROFESSOR TON -->
-                <div class="staff-data-node" 
-                     data-name="Professor Ton" 
-                     data-role="Senior Research Analyst"
-                     data-img="1773232611901.png"
-                     data-summary="Senior engineering asset managing diagnostic evaluation tools and log validation.">
+                <div class="staff-data-node" data-name="Professor Ton" data-role="Senior Research Analyst" data-img="1773232611901.png" data-summary="Senior engineering asset managing diagnostic evaluation tools and log validation.">
                     <div class="store-assignment">Coordinates operational terminal equipment, runs automated sector diagnostic passes, and monitors internal digital logs.</div>
                     <div class="store-chain">Directly positioned under the supervision of Founder Z. Reports tasks and requests permissions to Founder Z. If Z is completely unreachable, Founder Light assumes command profile.</div>
                 </div>
-
-                <!-- CHARACTER BLOCK 4: DOCTOR GALAXY DESTROYER -->
-                <div class="staff-data-node" 
-                     data-name="Doctor Galaxy Destroyer" 
-                     data-role="Facility Mental Therapist"
-                     data-img="1773232611901.png"
-                     data-summary="Specialized behavioral advisor managing internal decompression protocols.">
+                <div class="staff-data-node" data-name="Doctor Galaxy Destroyer" data-role="Facility Mental Therapist" data-img="1773232611901.png" data-summary="Specialized behavioral advisor managing internal decompression protocols.">
                     <div class="store-assignment">Provides critical emotional support and baseline trauma calming functions. Note: Profile asset is a physical feline specimen (Literal Feline Furball).</div>
                     <div class="store-chain">Directly positioned under the supervision of Founder Z. Reports tasks and requests permissions to Founder Z. If Z is completely unreachable, Founder Light assumes command profile.</div>
                 </div>
-
-                <!-- CHARACTER BLOCK 5: MIN KUZNETSOV -->
-                <div class="staff-data-node" 
-                     data-name="Min Kuznetsov" 
-                     data-role="Junior Researcher Intern"
-                     data-img="1773232611901.png"
-                     data-summary="Junior level internal support assistant sorting database infrastructure registries.">
+                <div class="staff-data-node" data-name="Min Kuznetsov" data-role="Junior Researcher Intern" data-img="1773232611901.png" data-summary="Junior level internal support assistant sorting database infrastructure registries.">
                     <div class="store-assignment">Handles basic file system clearing, manages continuous code modifications for the index ledger, and archives registry files.</div>
                     <div class="store-chain">Hired directly by Founder Light, who acts as his primary supervisor. Must route permissions and logs directly to Light by default. If Light is out of office, Founder Z holds structural authority.</div>
                 </div>
-
             </div>
         </section>
 
-        <!-- SECTION 5 -->
+        <!-- SECTION 5: NEW ANOMALIES LIST SEGMENT -->
+        <section id="anomalies">
+            <h2>Containment Vault Index</h2>
+            <p>Access our external live database tracking records to audit anomalies currently secured inside the primary sector wings.</p>
+            
+            <div class="anomaly-vault-card">
+                <div>
+                    <h4 style="font-size: 1.1rem; font-weight: 700; text-transform: uppercase;">Active Anomaly Inventory Log</h4>
+                    <p style="font-size: 0.9rem; margin: 4px 0 0 0; color: var(--text-muted);">View classifications, containment parameters, hazard levels, and logs.</p>
+                </div>
+                <!-- Dynamic external transfer endpoint link -->
+                <a href="anomaly_list.html" class="vault-btn">Open Asset Vault →</a>
+            </div>
+        </section>
+
+        <!-- SECTION 6 -->
         <section id="liability-waiver">
             <h2>Non-Intervention &amp; Liability Obligations</h2>
             <div class="stark-alert-panel">
                 <h3>Warning: Ultimate Personal Accountability</h3>
                 <p>The Laboratory functions under absolute non-intervention constraints. The facility holds zero obligation to defend, protect, or launch emergency tactical extractions for you once your testing window begins. By completing the contract, you recognize that your survival is entirely your responsibility.</p>
-                <p style="margin-top: 15px; font-weight: 700; font-size: 1.1rem; border-top: 1px solid #111; padding-top: 12px;">Do not expect us to save you, and we do not expect you to be in need of saving.</p>
+                <p style="margin-top: 15px; font-weight: 700; font-size: 1.1rem; border-top: 1px solid var(--border-dark); padding-top: 12px;">Do not expect us to save you, and we do not expect you to be in need of saving.</p>
             </div>
         </section>
 
-        <!-- SECTION 6 -->
+        <!-- SECTION 7 -->
         <section id="intake-portal">
             <h2>Secure Intake Form</h2>
-            <div class="outline-box" style="background-color: #fafafa;">
+            <div class="outline-box" style="background-color: var(--bg-secondary);">
                 <form onsubmit="processRegistration(event)">
                     <div class="grid-two-col">
                         <div class="form-group">
@@ -763,24 +831,49 @@
                     </div>
                     <div class="form-checkbox">
                         <input type="checkbox" required>
-                        <span>I confirm I understand this is a fictional lore page. I explicitly accept that the facility has zero liability, maintains no active guards, and will not deploy emergency columns or rescue teams on my behalf under any circumstance.</span>
+                        <span>I confirm I understand this is a fictional lore page. I explicitly accept that the facility has zero liability, maintains no active guards, and will not deploy emergency columns or rescue teams on my behalf.</span>
                     </label>
+                    
+                    <!-- FAKE SIMULATOR BUTTON (Action 1) -->
                     <button type="submit" class="submit-btn">Acknowledge Fictional Terms &amp; Submit Profile</button>
+                    
+                    <!-- EXPLICIT DISCORD COMMUNIT LINK REDIRECT (Action 2) -->
+                    <div class="discord-channel-action-block">
+                        <p>Looking for the active community roleplay network?</p>
+                        <a href="https://discord.gg/F3WuhctRyP" target="_blank" class="discord-btn-link">
+                            💬 Join Our Official Discord Server
+                        </a>
+                    </div>
                 </form>
             </div>
         </section>
 
-        <p style="text-align: center; color: #999999; font-size: 0.8rem; margin-top: 60px;">
+        <p style="text-align: center; color: var(--text-light); font-size: 0.8rem; margin-top: 60px;">
             Disclaimer: This page is a fictional roleplay/creative writing asset. All names, settings, companies, and anomalies mentioned are entirely made-up.
         </p>
     </main>
 
     <!-- DYNAMIC CONTROLS ENGINE -->
     <script>
+        // THEME ENGINE SWITCHER LOGIC
+        function initThemeDetection() {
+            const currentHour = new Date().getHours();
+            // Night auto assignment if hour is before 6 AM or after 6 PM
+            if (currentHour < 6 || currentHour >= 18) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        }
+
+        function toggleThemeManual() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        // CAROUSEL DISPLAY LOGIC
         let currentFocusIndex = 0;
         let staffRosterArray = [];
 
-        // Compile information nodes from HTML hidden layout storage
         function initializeRosterData() {
             staffRosterArray = [];
             const dataNodes = document.querySelectorAll('.staff-data-node');
@@ -797,11 +890,9 @@
             });
         }
 
-        // Build HTML visual avatar nodes into track
         function renderAvatarRoster() {
             const track = document.getElementById('dynamic-avatar-track');
             track.innerHTML = '';
-            
             staffRosterArray.forEach((member, idx) => {
                 const node = document.createElement('div');
                 node.className = 'avatar-node';
@@ -812,38 +903,24 @@
             updateCarouselPositions();
         }
 
-        // Calculate dynamic visibility classes to provide 3D selector feel
         function updateCarouselPositions() {
             const nodes = document.querySelectorAll('.avatar-node');
             const total = staffRosterArray.length;
 
             nodes.forEach((node, idx) => {
-                // Clear state styling
                 node.className = 'avatar-node';
-                
-                // Track relative positioning indices looping seamlessly
                 let diff = idx - currentFocusIndex;
-                
-                // Balance circular index wrap boundaries
                 if (diff < -total / 2) diff += total;
                 if (diff > total / 2) diff -= total;
 
-                if (diff === 0) {
-                    node.classList.add('center');
-                } else if (diff === 1) {
-                    node.classList.add('right-1');
-                } else if (diff === -1) {
-                    node.classList.add('left-1');
-                } else if (diff === 2) {
-                    node.classList.add('right-2');
-                } else if (diff === -2) {
-                    node.classList.add('left-2');
-                } else {
-                    node.classList.add('hidden-node');
-                }
+                if (diff === 0) node.classList.add('center');
+                else if (diff === 1) node.classList.add('right-1');
+                else if (diff === -1) node.classList.add('left-1');
+                else if (diff === 2) node.classList.add('right-2');
+                else if (diff === -2) node.classList.add('left-2');
+                else node.classList.add('hidden-node');
             });
 
-            // Update details block
             const data = staffRosterArray[currentFocusIndex];
             document.getElementById('panel-name').innerText = data.name;
             document.getElementById('panel-role').innerText = data.role;
@@ -856,8 +933,6 @@
             currentFocusIndex += direction;
             if (currentFocusIndex >= staffRosterArray.length) currentFocusIndex = 0;
             if (currentFocusIndex < 0) currentFocusIndex = staffRosterArray.length - 1;
-            
-            // Auto close informational drop-downs on rotation update
             resetAccordions();
             updateCarouselPositions();
         }
@@ -869,11 +944,9 @@
             updateCarouselPositions();
         }
 
-        // Accordion functionality controls
         function toggleAccordion(elementId) {
             const el = document.getElementById(elementId);
             const content = el.querySelector('.accordion-content');
-            
             if (el.classList.contains('open')) {
                 el.classList.remove('open');
                 content.style.maxHeight = null;
@@ -893,11 +966,11 @@
         function processRegistration(event) {
             event.preventDefault();
             const name = document.getElementById('clientName').value;
-            alert(`⚠️ FANTASY LORE NOTICE ⚠️\n\nProfile generated for "${name}".`);
+            alert(`⚠️ FANTASY LORE NOTICE ⚠️\n\nProfile simulated for "${name}".\n\nTo formalize this registration setup and engage with other operators, use the Discord button option below the form to enter the server!`);
         }
 
-        // Initialize setup hooks
         window.addEventListener('DOMContentLoaded', () => {
+            initThemeDetection();
             initializeRosterData();
             renderAvatarRoster();
         });
@@ -914,6 +987,5 @@
             });
         });
     </script>
-
 </body>
 </html>
