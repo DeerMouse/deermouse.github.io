@@ -785,8 +785,8 @@
             <li class="nav-item" id="nav-directory"><a href="#directory" onclick="closeMobileOnNav()">04. Personnel Hierarchy</a></li>
             <li class="nav-item" id="nav-anomalies"><a href="#anomalies" onclick="closeMobileOnNav()">05. Containment Vault</a></li>
             <li class="nav-item" id="nav-liability-waiver"><a href="#liability-waiver" onclick="closeMobileOnNav()">06. Legal Obligations</a></li>
-            <li class="nav-item" id="nav-operational-faq"><a href="#operational-faq" onclick="closeMobileOnNav()">07. Portal Ledger FAQ</a></li>
-            <li class="nav-item" id="nav-intake-portal"><a href="#intake-portal" onclick="closeMobileOnNav()">08. Intake Form</a></li>
+            <li class="nav-item" id="nav-intake-portal"><a href="#intake-portal" onclick="closeMobileOnNav()">07. Intake Form</a></li>
+            <li class="nav-item" id="nav-operational-faq"><a href="#operational-faq" onclick="closeMobileOnNav()">08. Portal Ledger FAQ</a></li>
         </ul>
 
         <div class="theme-toggle-panel">
@@ -932,7 +932,44 @@
             </div>
         </section>
 
-        <!-- SECTION 7: FREQUENTLY ASKED QUESTIONS DIRECT FROM FOUNDER LIGHT -->
+        <!-- SECTION 7: INTAKE PORTAL -->
+        <section id="intake-portal">
+            <h2>Secure Intake Form</h2>
+            <div class="outline-box" style="background-color: var(--bg-secondary);">
+                <form onsubmit="processRegistration(event)">
+                    
+                    <div class="grid-two-col">
+                        <div class="form-group">
+                            <label>Legal Identifier</label>
+                            <input type="text" id="clientName" class="form-control" placeholder="e.g., Lightragon" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Transfer Method</label>
+                            <input type="text" class="form-control" placeholder="e.g., Wire Transfer" required>
+                        </div>
+                    </div>
+
+                    <div class="intake-vertical-stack">
+                        <label class="form-checkbox">
+                            <input type="checkbox" required>
+                            <span>I confirm I understand this is a fictional lore page. I explicitly accept that the facility has zero liability, maintains no active guards, and will not deploy emergency columns or rescue teams on my behalf.</span>
+                        </label>
+                        
+                        <button type="submit" class="submit-btn">Acknowledge Fictional Terms &amp; Submit Profile</button>
+                        
+                        <div class="discord-channel-action-block">
+                            <p>Looking for the active community roleplay network?</p>
+                            <a href="https://discord.gg/F3WuhctRyP" target="_blank" class="discord-btn-link">
+                                💬 Join Our Official Discord Server
+                            </a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+        <!-- SECTION 8: PORTAL LEDGER FAQ (NOW AT THE VERY BOTTOM) -->
         <section id="operational-faq">
             <h2>Portal Ledger FAQ</h2>
             <p>Review the standard facility operations guidelines as authorized directly by Founder Light:</p>
@@ -984,43 +1021,6 @@
                     </div>
                 </div>
 
-            </div>
-        </section>
-
-        <!-- SECTION 8 -->
-        <section id="intake-portal">
-            <h2>Secure Intake Form</h2>
-            <div class="outline-box" style="background-color: var(--bg-secondary);">
-                <form onsubmit="processRegistration(event)">
-                    
-                    <div class="grid-two-col">
-                        <div class="form-group">
-                            <label>Legal Identifier</label>
-                            <input type="text" id="clientName" class="form-control" placeholder="e.g., Lightragon" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Transfer Method</label>
-                            <input type="text" class="form-control" placeholder="e.g., Wire Transfer" required>
-                        </div>
-                    </div>
-
-                    <div class="intake-vertical-stack">
-                        <label class="form-checkbox">
-                            <input type="checkbox" required>
-                            <span>I confirm I understand this is a fictional lore page. I explicitly accept that the facility has zero liability, maintains no active guards, and will not deploy emergency columns or rescue teams on my behalf.</span>
-                        </label>
-                        
-                        <button type="submit" class="submit-btn">Acknowledge Fictional Terms &amp; Submit Profile</button>
-                        
-                        <div class="discord-channel-action-block">
-                            <p>Looking for the active community roleplay network?</p>
-                            <a href="https://discord.gg/F3WuhctRyP" target="_blank" class="discord-btn-link">
-                                💬 Join Our Official Discord Server
-                            </a>
-                        </div>
-                    </div>
-
-                </form>
             </div>
         </section>
 
@@ -1093,7 +1093,7 @@
             window.addEventListener('scroll', () => {
                 if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 60) {
                     navItems.forEach(item => item.classList.remove('active'));
-                    document.getElementById('nav-intake-portal').classList.add('active');
+                    document.getElementById('nav-operational-faq').classList.add('active');
                 }
             });
         }
