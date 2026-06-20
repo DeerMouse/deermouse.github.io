@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE LABORATORY — Institutional Archive & Access Portal</title>
+    <title>THE LABORATORY — Facility Index</title>
     <style>
         /* ==========================================================================
            1. CORE RESET & MONOCHROMATIC STYLING
@@ -12,45 +12,45 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
         body {
             background-color: #ffffff;
             color: #111111;
-            line-height: 1.6;
+            line-height: 1.5;
             display: flex;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        /* Custom Scrollbar for sleek administrative texture */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #ffffff;
-            border-left: 1px solid #e5e5e5;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cccccc;
-            border-radius: 0px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #999999;
+        /* Persistent Legal Warning Header */
+        .global-disclaimer-banner {
+            background-color: #f5f5f5;
+            color: #666666;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 8px 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
         /* ==========================================================================
-           2. SIDEBAR NAVIGATION CONTROLS
+           2. SIDEBAR NAVIGATION
            ========================================================================== */
         aside {
             width: 280px;
             background-color: #ffffff;
             border-right: 1px solid #e5e5e5;
             position: fixed;
-            top: 0;
+            top: 33px;
             bottom: 0;
             left: 0;
             display: flex;
@@ -60,23 +60,16 @@
             z-index: 100;
         }
 
-        .brand-zone {
-            margin-bottom: 40px;
-        }
-
         .brand-title {
             font-size: 1.15rem;
             font-weight: 800;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: #000000;
-            margin-bottom: 4px;
         }
 
         .brand-subtitle {
             font-size: 0.75rem;
             color: #888888;
-            letter-spacing: 0.5px;
             text-transform: uppercase;
         }
 
@@ -84,26 +77,25 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             flex-grow: 1;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         .nav-item a {
             display: block;
-            padding: 10px 14px;
+            padding: 8px 12px;
             color: #555555;
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
             border-radius: 4px;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
         }
 
         .nav-item a:hover {
-            background-color: #f5f5f5;
+            background-color: #fafafa;
             color: #000000;
-            padding-left: 18px;
         }
 
         .nav-item.active a {
@@ -112,206 +104,153 @@
             font-weight: 600;
         }
 
-        .sidebar-footer {
-            font-size: 0.75rem;
-            color: #999999;
-            line-height: 1.4;
-            border-top: 1px solid #e5e5e5;
-            padding-top: 20px;
-        }
-
         /* ==========================================================================
-           3. MAIN CONTENT SYSTEM OVERVIEW
+           3. MAIN LAYOUT (CLEAN & SCANNABLE)
            ========================================================================== */
         main {
             margin-left: 280px;
+            margin-top: 33px;
             flex-grow: 1;
-            padding: 80px 60px;
-            max-width: 1100px;
+            padding: 60px 40px;
+            max-width: 900px;
         }
 
         section {
-            margin-bottom: 80px;
+            margin-bottom: 60px;
             scroll-margin-top: 80px;
         }
 
-        /* Typography Hierarchy */
-        .doc-meta {
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #666666;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .doc-meta::before {
-            content: "";
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background-color: #111111;
-        }
-
         h1 {
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             font-weight: 800;
-            letter-spacing: -1px;
-            color: #000000;
-            margin-bottom: 24px;
-            line-height: 1.1;
+            letter-spacing: -0.5px;
+            margin-bottom: 15px;
         }
 
         .lead-paragraph {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: #444444;
-            margin-bottom: 40px;
-            font-weight: 400;
-            line-height: 1.6;
+            margin-bottom: 30px;
         }
 
         h2 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: #000000;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 24px;
-            padding-bottom: 8px;
+            margin-bottom: 20px;
+            padding-bottom: 6px;
             border-bottom: 2px solid #111111;
         }
 
-        h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #000000;
-            margin-top: 30px;
-            margin-bottom: 12px;
-        }
-
         p {
-            font-size: 1.05rem;
+            font-size: 1rem;
             color: #222222;
-            margin-bottom: 20px;
-            text-align: justify;
+            margin-bottom: 15px;
         }
 
-        /* ==========================================================================
-           4. DATA TABLES & STRUCTURAL UI BLOCKS
-           ========================================================================== */
+        /* Lists and UI Layout blocks */
+        .bullet-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .bullet-list li::before {
+            content: "▪";
+            position: absolute;
+            left: 0;
+            color: #111111;
+            font-size: 0.8rem;
+            top: 1px;
+        }
+
         .grid-two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin: 30px 0;
+            gap: 20px;
+            margin: 25px 0;
         }
 
         .outline-box {
             border: 1px solid #e5e5e5;
-            padding: 24px;
+            padding: 20px;
             border-radius: 4px;
             background-color: #ffffff;
         }
 
         .outline-box h4 {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 10px;
-            color: #000000;
+            margin-bottom: 8px;
         }
 
-        .plain-list {
-            list-style: none;
-            margin: 20px 0;
-        }
-
-        .plain-list li {
-            position: relative;
-            padding-left: 24px;
-            margin-bottom: 14px;
-            font-size: 1rem;
-            color: #222222;
-        }
-
-        .plain-list li::before {
-            content: "—";
-            position: absolute;
-            left: 0;
-            color: #888888;
-        }
-
-        /* Administrative Table Layout */
+        /* Clean Table */
         .directory-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 30px 0;
+            margin: 20px 0;
+            font-size: 0.95rem;
         }
 
         .directory-table th {
             background-color: #fafafa;
             border: 1px solid #e5e5e5;
-            padding: 14px 16px;
-            font-weight: 600;
-            font-size: 0.9rem;
+            padding: 12px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             text-align: left;
-            color: #333333;
         }
 
         .directory-table td {
             border: 1px solid #e5e5e5;
-            padding: 14px 16px;
-            font-size: 0.95rem;
+            padding: 12px;
             color: #222222;
-            vertical-align: top;
         }
 
-        .directory-table tr:hover td {
-            background-color: #fafafa;
-        }
-
-        .badge-status {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 2px 8px;
-            border: 1px solid #111111;
+        /* Stark Liability Warning Panel */
+        .stark-alert-panel {
+            border: 2px solid #111111;
             background-color: #ffffff;
-            color: #111111;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .stark-alert-panel h3 {
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
         }
 
         /* ==========================================================================
-           5. CONTRACT INTAKE FORM STYLING
+           4. INTENTIONALLY SIMPLE INTAKE FORM
            ========================================================================== */
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 8px;
-            color: #000000;
-            letter-spacing: 0.5px;
+            margin-bottom: 6px;
         }
 
         .form-control {
             width: 100%;
-            padding: 12px 16px;
-            font-size: 1rem;
+            padding: 10px 14px;
+            font-size: 0.95rem;
             background-color: #ffffff;
             border: 1px solid #cccccc;
             border-radius: 4px;
-            color: #111111;
-            transition: border-color 0.15s ease;
         }
 
         .form-control:focus {
@@ -322,105 +261,81 @@
         .form-checkbox {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 15px;
             cursor: pointer;
         }
 
         .form-checkbox input {
-            margin-top: 4px;
-            width: 16px;
-            height: 16px;
-            accent-color: #111111;
+            margin-top: 3px;
         }
 
         .form-checkbox span {
-            font-size: 0.9rem;
-            color: #333333;
-            user-select: none;
+            font-size: 0.85rem;
+            color: #444444;
         }
 
         .submit-btn {
             background-color: #111111;
             color: #ffffff;
             border: none;
-            padding: 16px 32px;
-            font-size: 0.95rem;
+            padding: 14px;
+            font-size: 0.9rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             cursor: pointer;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 15px;
             border-radius: 4px;
-            transition: background-color 0.15s ease;
         }
 
         .submit-btn:hover {
             background-color: #333333;
         }
 
-        /* Stark Liability Document Alert Box */
-        .stark-alert-panel {
-            border: 2px solid #111111;
-            background-color: #ffffff;
-            padding: 32px;
-            margin: 40px 0;
-            position: relative;
-        }
-
-        .stark-alert-panel h3 {
-            margin-top: 0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 1.2rem;
-        }
-
         /* ==========================================================================
-           6. RESPONSIVE DESIGN MEDIA QUERIES
+           5. RESPONSIVE CONTROLS
            ========================================================================== */
         @media (max-width: 900px) {
             aside {
                 width: 100%;
                 position: relative;
                 height: auto;
+                top: 33px;
                 border-right: none;
                 border-bottom: 1px solid #e5e5e5;
-                padding: 30px 20px;
+                padding: 20px;
             }
-
             .nav-menu {
                 flex-direction: row;
                 flex-wrap: wrap;
-                margin-top: 20px;
+                margin-top: 15px;
                 gap: 5px;
             }
-
-            .nav-item a {
-                padding: 8px 12px;
-            }
-
             main {
                 margin-left: 0;
-                padding: 40px 20px;
+                margin-top: 0;
+                padding: 30px 20px;
             }
-
             .grid-two-col {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ==========================================================================
-         SIDEBAR ELEMENT (PERSISTENT DIRECTORY CONTROL)
-         ========================================================================== -->
+    <!-- DISCLAIMER BANNER -->
+    <div class="global-disclaimer-banner">
+        ⚠️ OUT-OF-CHARACTER NOTICE: This is a purely fictional community lore page. No real services or facilities exist.
+    </div>
+
+    <!-- SIDEBAR ELEMENT -->
     <aside>
-        <div class="brand-zone">
+        <div>
             <div class="brand-title">The Laboratory</div>
-            <div class="brand-subtitle">Core Institutional Index</div>
+            <div class="brand-subtitle">Overview Portal</div>
         </div>
 
         <ul class="nav-menu">
@@ -429,178 +344,134 @@
             <li class="nav-item"><a href="#security-ops">03. Perimeter Defense</a></li>
             <li class="nav-item"><a href="#directory">04. Personnel Directory</a></li>
             <li class="nav-item"><a href="#liability-waiver">05. Legal Obligations</a></li>
-            <li class="nav-item"><a href="#intake-portal">06. Secure Authorization Form</a></li>
+            <li class="nav-item"><a href="#intake-portal">06. Intake Form</a></li>
         </ul>
 
-        <div class="sidebar-footer">
+        <div style="font-size: 0.75rem; color: #999999; border-top: 1px solid #e5e5e5; padding-top: 15px;">
             Document ID: LR-INDEX-2026<br>
-            Classification: Non-Governed Open-Access Registry
+            Classification: Public Lore File
         </div>
     </aside>
 
-    <!-- ==========================================================================
-         MAIN CONTENT INTERFACE
-         ========================================================================== -->
+    <!-- MAIN INTERFACE -->
     <main>
 
-        <!-- SECTION 1: FACILITY PROFILE -->
+        <!-- SECTION 1 -->
         <section id="introduction">
-            <div class="doc-meta">Registry Record // 01</div>
-            <h1>Facility Introduction & Corporate Mandate</h1>
-            <p class="lead-paragraph">The Laboratory is an independent, non-aligned, and un-monitored research and sandbox installation designed exclusively for the safe containment and unrestricted human observation of anomalies.</p>
+            <h1>Facility Introduction</h1>
+            <p class="lead-paragraph">The Laboratory specializes in the straightforward housing, containment, and unmonitored independent testing of anomalies.</p>
             
-            <p>Unlike standard government-funded operations or secretive global containment groups, The Laboratory operates under a policy of total institutional neutrality and straightforward accessibility. We have successfully gathered an expansive collection of the world's most absurd, volatile, complex, and unclassified anomalies within a single centralized physical perimeter.</p>
-
-            <p>Our operational strategy relies entirely on open commercialization. We do not engage in research grants or public funding. Instead, we open our active containment vaults directly to any private entity, corporate asset, independent team, or individual investor possessing the necessary capital parameters. We operate under a fundamental rule of non-judgment: your background, personal record, political alignment, or core intentions are irrelevant to management. Whether you intend to study these phenomena to engineer a global savior system or systematically organize the total destruction of the earth, our staff will neither evaluate nor query your motives.</p>
+            <ul class="bullet-list">
+                <li><strong>Absolute Neutrality:</strong> We do not ask or care about your background, credentials, or affiliations.</li>
+                <li><strong>Zero Intent Checking:</strong> Whether your ultimate goal is to save the earth or completely destroy it, we do not monitor or judge your motives.</li>
+                <li><strong>Open Access:</strong> If you possess the capital to secure an entry tier, the anomaly containment suites are completely at your disposal.</li>
+            </ul>
         </section>
 
-        <!-- SECTION 2: ACCESS REQUIREMENTS -->
+        <!-- SECTION 2 -->
         <section id="access-terms">
-            <div class="doc-meta">Registry Record // 02</div>
             <h2>Operational Access Parameters</h2>
-            <p>Admittance to active containment zones, baseline observation suites, and live testing chambers requires absolute compliance with standard operational business policies. Review the absolute requirements below:</p>
+            <p>Access parameters are completely transactional and strictly enforced:</p>
 
             <div class="grid-two-col">
                 <div class="outline-box">
-                    <h4>The Financial Parameter</h4>
-                    <p style="font-size: 0.95rem; margin-bottom: 0;">Access requires a non-negotiable transactional flat fee of <strong>$2,000,000 USD per individual, per entry</strong>. This fee grants absolute terminal access, physical keys to designated containment blocks, and uninterrupted autonomy to experiment with or interact with the assigned asset as desired.</p>
+                    <h4>The Fee</h4>
+                    <p style="font-size: 0.95rem; margin-bottom:0;"><strong>$2,000,000 USD</strong> per person, per entry. Grants total unmonitored isolation with your selected anomaly.</p>
                 </div>
                 <div class="outline-box">
-                    <h4>The Proprietary Boundary</h4>
-                    <p style="font-size: 0.95rem; margin-bottom: 0;">All contained anomalies, physical specimens, baseline anomalies, and resulting raw biological or material fragments remain the absolute, permanent property of the facility founders. Removing an anomaly from the facility parameters, attempting duplication, or conducting unauthorized external commercialization is completely prohibited.</p>
+                    <h4>The Rule</h4>
+                    <p style="font-size: 0.95rem; margin-bottom:0;">All assets remain the absolute property of the founders. <strong>No off-site extraction</strong>, reproduction, or selling allowed.</p>
                 </div>
             </div>
-
-            <p>The entry fee guarantees terminal access to the room and the mechanical systems containing the anomalies. It does not buy luxury service, catering, tracking guides, or specialized advisory crews. Clients pay specifically for pure, unhindered access.</p>
         </section>
 
-        <!-- SECTION 3: PERIMETER DEFENSE -->
+        <!-- SECTION 3 -->
         <section id="security-ops">
-            <div class="doc-meta">Registry Record // 03</div>
-            <h2>Security Architecture & Transit Logistics</h2>
-            <p>The mechanical containment layout within The Laboratory is engineered to operate passively and reliably; containment chambers are structurally fortified to guarantee that anomalies remain securely separate from general administrative corridors unless explicitly triggered or engaged by a testing party.</p>
-            
-            <p>Because structural engineering manages containment, our internal staff footprint remains exceptionally small, low-profile, and relaxed. You will not find highly armored security columns roaming our primary halls or tracking your movements.</p>
-
-            <p>To establish baseline self-preservation along our standard transit corridors and loading bays, every single guest is provided a complimentary, standard-issue personal defense firearm immediately upon completion of check-in. Perimeter security enforcement, strategic outer boundary control, and terminal validation procedures are managed independently by tactical assets contracted from the <strong>Anvil Mercenaries Group (AMG)</strong>, who report directly to the facility heads.</p>
+            <h2>Security &amp; Logistics</h2>
+            <ul class="bullet-list">
+                <li><strong>Passive Containment:</strong> Structural architecture holds the anomalies secure. Internal personnel environment is highly casual and relaxed.</li>
+                <li><strong>Self-Defense Asset:</strong> All authorized entries include a complimentary personal defense sidearm issued upon check-in.</li>
+                <li><strong>Perimeter Defense:</strong> Main checkpoints and physical outer boundaries are enforced by contracted agents from the <strong>Anvil Mercenaries Group (AMG)</strong>.</li>
+            </ul>
         </section>
 
-        <!-- SECTION 4: PERSONNEL DIRECTORY -->
+        <!-- SECTION 4 -->
         <section id="directory">
-            <div class="doc-meta">Registry Record // 04</div>
             <h2>Internal Personnel Directory</h2>
-            <p>The total staff framework of The Laboratory consists exclusively of five internal individuals (excluding contracted external AMG security agents). The leadership, regulations, and facility parameters are established and governed entirely by the dual founding partners. The complete structural directory is outlined below:</p>
+            <p>The facility is entirely owned, regulated, and coordinated by a 5-person structural network:</p>
 
             <table class="directory-table">
                 <thead>
                     <tr>
-                        <th style="width: 30%;">Name / Identifier</th>
-                        <th style="width: 35%;">Official Role</th>
-                        <th style="width: 35%;">Operational Directive</th>
+                        <th>Designation</th>
+                        <th>Role / Assignment</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><strong>Founder Z</strong></td>
-                        <td>Co-Head of Facility & Co-Owner</td>
-                        <td>Joint operational director, asset logistics coordinator, and co-author of core facility guidelines.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Founder Light</strong></td>
-                        <td>Co-Head of Facility & Co-Owner</td>
-                        <td>Joint operational director, architectural engineering lead, and co-author of core facility guidelines.</td>
-                    </tr>
-                    <tr>
-                        <td>Professor Ton</td>
-                        <td>Senior Research Analyst</td>
-                        <td>Technical analysis, diagnostic infrastructure maintenance, and data log validation.</td>
-                    </tr>
-                    <tr>
-                        <td>Doctor Galaxy Destroyer</td>
-                        <td>Facility Mental Therapist</td>
-                        <td>Full-time administrative behavioral management. Note: Personnel is a physical feline specimen (<em>Felis catus</em>).</td>
-                    </tr>
-                    <tr>
-                        <td>Min Kuznetsov</td>
-                        <td>Junior Researcher Intern</td>
-                        <td>General facility support, laboratory script logic management, and basic registry sorting.</td>
-                    </tr>
+                    <tr><td><strong>Founder Z</strong></td><td>Co-Owner / Joint Facility Director</td></tr>
+                    <tr><td><strong>Founder Light</strong></td><td>Co-Owner / Lead Systems &amp; Rule Architect</td></tr>
+                    <tr><td>Professor Ton</td><td>Research, Systems Diagnostic, &amp; Log Validation</td></tr>
+                    <tr><td>Doctor Galaxy Destroyer</td><td>Facility Mental Therapist (Literal Feline Furball)</td></tr>
+                    <tr><td>Min Kuznetsov</td><td>Junior Researcher Intern / Registry Sorter</td></tr>
                 </tbody>
             </table>
         </section>
 
-        <!-- SECTION 5: LEGAL OBLIGATIONS -->
+        <!-- SECTION 5 -->
         <section id="liability-waiver">
-            <div class="doc-meta">Registry Record // 05</div>
-            <h2>Non-Intervention Protocol & Liability Limitations</h2>
+            <h2>Non-Intervention &amp; Liability</h2>
             
-            <p>The containment units at The Laboratory are meticulously prepared to prevent external leakage or unprompted escape. However, the volatile and highly absurd nature of these anomalies dictates that your safety inside a live chamber rests entirely upon your own personal choices, operational discipline, and physical interactions.</p>
-
             <div class="stark-alert-panel">
-                <h3>Warning: Total Non-Intervention Mandate</h3>
-                <p>The Laboratory functions under absolute non-intervention constraints inside experimental sectors. The facility, its owners, and external AMG units retain absolutely zero obligation to defend, protect, guide, or launch tactical extractions for any client once an active testing sequence has been initialized.</p>
-                <br>
-                <p>By executing an access deposit, signing the documentation, and crossing the primary decontamination threshold, you explicitly verify that all occurrences, physical mishaps, or psychological impacts resulting from the anomalies fall entirely on you. <strong>Do not expect our staff to save you, and we do not expect you to be in need of saving.</strong></p>
+                <h3>Warning: You Are On Your Own</h3>
+                <p>The chambers keep anomalies in, but how they respond inside depends entirely on your own interactions. The Laboratory holds <strong>zero obligation to defend or rescue you</strong> in the event of an emergency.</p>
+                <p style="margin-top: 10px; font-weight: 700;">Do not expect us to save you, and we do not expect you to be in need of saving.</p>
             </div>
         </section>
 
-        <!-- SECTION 6: CLIENT INTAKE PORTAL -->
+        <!-- SECTION 6 -->
         <section id="intake-portal">
-            <div class="doc-meta">Registry Record // 06</div>
-            <h2>Secure Authorization & Intake Form</h2>
-            <p>If you possess the required clearing funds and accept our baseline non-intervention terms, fill out the terminal document fields below to generate an entry profile.</p>
+            <h2>Secure Intake Form</h2>
+            <p>Fill out the fields to simulate initialization parameters.</p>
 
             <div class="outline-box" style="background-color: #fafafa;">
-                <form id="intakeForm" onsubmit="processRegistration(event)">
+                <form onsubmit="processRegistration(event)">
                     <div class="grid-two-col">
                         <div class="form-group">
-                            <label for="clientName">Full Legal Name / Entity Identifier</label>
-                            <input type="text" id="clientName" class="form-control" placeholder="e.g., John Doe / Apex Corp" required>
+                            <label>Legal Identifier</label>
+                            <input type="text" id="clientName" class="form-control" placeholder="e.g., Lightragon" required>
                         </div>
                         <div class="form-group">
-                            <label for="clientFunding">Verified Transfer Method</label>
-                            <input type="text" id="clientFunding" class="form-control" placeholder="e.g., Cryptographic Ledger / Offshore Wire" required>
+                            <label>Transfer Method</label>
+                            <input type="text" class="form-control" placeholder="e.g., Wire Transfer" required>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="targetObjective">Intended Anomaly Application (Optional - Will Not Be Evaluated)</label>
-                        <input type="text" id="targetObjective" class="form-control" placeholder="e.g., Scientific Discovery / Terrestrial Demolition / Personal Amusement">
-                    </div>
-
-                    <label class="form-checkbox">
-                        <input type="checkbox" id="termsCheck" required>
-                        <span>I understand that the $2,000,000 entry fee guarantees access only. I recognize that the facility will not deploy emergency services, rescue teams, or protective tracking columns on my behalf under any circumstance. I assume full personal responsibility for my own survival.</span>
+                    <div class="form-checkbox">
+                        <input type="checkbox" required>
+                        <span>I confirm I understand this is a fictional lore page. I accept that the facility has zero liability and will not deploy emergency columns or rescue teams on my behalf.</span>
                     </label>
 
-                    <button type="submit" class="submit-btn">Initialize Authorization Profile & Acknowledge Terms</button>
+                    <button type="submit" class="submit-btn">Acknowledge Fictional Terms &amp; Submit</button>
                 </form>
             </div>
         </section>
 
+        <p style="text-align: center; color: #999999; font-size: 0.8rem; margin-top: 60px;">
+            Disclaimer: This page is an fictional roleplay/creative writing asset. All names, settings, companies, and anomalies mentioned are entirely made-up.
+        </p>
     </main>
 
-    <!-- ==========================================================================
-         7. DYNAMIC SCRIPT CONTROLS
-         ========================================================================== -->
+    <!-- DYNAMIC SCRIPT CONTROLS -->
     <script>
-        // Simple client form processing logic
         function processRegistration(event) {
             event.preventDefault();
-            
             const name = document.getElementById('clientName').value;
-            const check = document.getElementById('termsCheck').checked;
-            
-            if (check) {
-                alert(`AUTHORIZATION REGISTRY SUCCESSFUL\n\nEntity: ${name}\nAccess Tier: Authorized ($2,000,000 Fee Noted)\n\nProceed to checkpoint area. Collect your baseline sidearm from the on-duty AMG agent. Management wishes you a safe and productive session.`);
-            }
+            alert(`⚠️ FANTASY LORE NOTICE ⚠️\n\nProfile generated for "${name}".\n\nRemember: This is a 100% fictional simulation project. No actual payments, weapons, or entities exist. Thank you for participating in the roleplay!`);
         }
 
-        // Highlight navigation elements during scrolling actions
         window.addEventListener('scroll', () => {
             let sections = document.querySelectorAll('section');
             let navLinks = document.querySelectorAll('.nav-item');
-            
             sections.forEach((section, index) => {
                 let rect = section.getBoundingClientRect();
                 if (rect.top <= 120 && rect.bottom >= 120) {
