@@ -43,7 +43,7 @@
         }
 
         /* ==========================================================================
-           2. SIDEBAR NAVIGATION (ADAPTIVE MOBILE)
+           2. SIDEBAR NAVIGATION WITH BRAND LOGO (LOCATION 1)
            ========================================================================== */
         aside {
             width: 280px;
@@ -63,8 +63,15 @@
         .brand-header-block {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 12px;
             margin-bottom: 20px;
+        }
+
+        .sidebar-logo-img {
+            width: 65px;
+            height: auto;
+            display: block;
+            object-fit: contain;
         }
 
         .brand-title {
@@ -112,7 +119,7 @@
         }
 
         /* ==========================================================================
-           3. MAIN CONTAINER & TOP-RIGHT LOGO ACCENT
+           3. MAIN CONTAINER & TOP-RIGHT LOGO (LOCATION 2)
            ========================================================================== */
         main {
             margin-left: 280px;
@@ -148,7 +155,7 @@
             font-weight: 800;
             letter-spacing: -0.5px;
             margin-bottom: 20px;
-            max-width: 80%; /* Don't hit the logo on desktop */
+            max-width: 75%;
         }
 
         .lead-paragraph {
@@ -208,13 +215,6 @@
             background-color: #ffffff;
         }
 
-        .outline-box h4 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
         .stark-alert-panel {
             border: 2px solid #111111;
             background-color: #ffffff;
@@ -229,56 +229,145 @@
         }
 
         /* ==========================================================================
-           4. PERSONNEL PROFILE SLIDER & ACCORDIONS (PRECISE SYSTEM)
+           4. GAMIFIED ROTATING CHARACTER SELECTOR (GAME-UI STYLE)
            ========================================================================== */
-        .slider-wrapper {
+        .character-select-system {
+            background: #ffffff;
             border: 1px solid #e5e5e5;
             border-radius: 6px;
-            background: #ffffff;
             overflow: hidden;
             margin: 30px 0;
+            padding: 30px 0 20px 0;
         }
 
-        /* Active profile viewer card */
-        .active-card-display {
+        /* The horizontal rotation container track */
+        .roster-carousel-viewport {
+            position: relative;
+            width: 100%;
+            height: 200px;
             display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
             background: #fafafa;
             border-bottom: 1px solid #e5e5e5;
-            padding: 30px;
-            gap: 30px;
+        }
+
+        .roster-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
             align-items: center;
         }
 
-        .card-avatar-frame {
-            width: 140px;
-            height: 140px;
-            border: 1px solid #cccccc;
-            background-color: #ffffff;
+        /* Individual avatar cards in rotation space */
+        .avatar-node {
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            border: 2px solid #e5e5e5;
+            background: #ffffff;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s, border-color 0.3s, box-shadow 0.3s;
             padding: 10px;
+            z-index: 1;
+            opacity: 0.4;
         }
 
-        .card-avatar-frame img {
+        .avatar-node img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
         }
 
-        .card-meta-info {
-            flex-grow: 1;
+        /* Visual states based on dynamic position rules */
+        .avatar-node.center {
+            transform: translateX(0) scale(1.35);
+            opacity: 1;
+            z-index: 5;
+            border-color: #111111;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
         }
 
-        .card-meta-info h3 {
-            font-size: 1.5rem;
+        .avatar-node.left-1 {
+            transform: translateX(-140px) scale(0.95);
+            opacity: 0.7;
+            z-index: 3;
+        }
+
+        .avatar-node.right-1 {
+            transform: translateX(140px) scale(0.95);
+            opacity: 0.7;
+            z-index: 3;
+        }
+
+        .avatar-node.left-2 {
+            transform: translateX(-260px) scale(0.75);
+            opacity: 0.25;
+            z-index: 2;
+        }
+
+        .avatar-node.right-2 {
+            transform: translateX(260px) scale(0.75);
+            opacity: 0.25;
+            z-index: 2;
+        }
+
+        .avatar-node.hidden-node {
+            transform: translateX(0) scale(0.5);
+            opacity: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Navigation Controls Overlay */
+        .carousel-arrow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ffffff;
+            border: 1px solid #111111;
+            width: 40px;
+            height: 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+
+        .carousel-arrow-btn:hover {
+            background: #111111;
+            color: #ffffff;
+        }
+
+        .arrow-prev { left: 20px; }
+        .arrow-next { right: 20px; }
+
+        /* Focused Info Area (Directly updates below your turn) */
+        .focused-profile-details {
+            padding: 30px 30px 10px 30px;
+            text-align: center;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .focused-profile-details h3 {
+            font-size: 1.6rem;
             font-weight: 800;
-            color: #111111;
+            letter-spacing: -0.5px;
         }
 
-        .card-meta-info .role-badge {
+        .focused-profile-details .role-badge {
             display: inline-block;
             font-size: 0.75rem;
             text-transform: uppercase;
@@ -286,47 +375,19 @@
             letter-spacing: 0.5px;
             background: #111111;
             color: #ffffff;
-            padding: 2px 8px;
+            padding: 3px 10px;
             border-radius: 3px;
-            margin: 4px 0 12px 0;
+            margin: 6px 0 14px 0;
         }
 
-        /* Navigation Controls Below Card */
-        .slider-navigation-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 30px;
-            background: #ffffff;
-            border-bottom: 1px solid #e5e5e5;
+        .focused-profile-details .summary-text {
+            font-size: 1.05rem;
+            color: #555555;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .slider-btn {
-            background: #ffffff;
-            border: 1px solid #111111;
-            color: #111111;
-            padding: 8px 16px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.15s ease;
-        }
-
-        .slider-btn:hover {
-            background: #111111;
-            color: #ffffff;
-        }
-
-        .slider-counter {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #666666;
-            letter-spacing: 1px;
-        }
-
-        /* Interactive Collapsible Information Sections */
+        /* Accordion Structure */
         .collapsible-container {
             padding: 10px 20px;
             background: #ffffff;
@@ -370,7 +431,6 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.25s ease-out;
-            background: #ffffff;
         }
 
         .accordion-content-inner {
@@ -428,7 +488,6 @@
             font-size: 0.95rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             cursor: pointer;
             width: 100%;
             margin-top: 20px;
@@ -436,7 +495,7 @@
         }
 
         /* ==========================================================================
-           6. RESPONSIVE CONTROLS (STRICT MOBILE SUPPORT)
+           6. STRICTOR RESPONSIVE DESIGN (FLAWLESS RUN ON MOBILE SCREEN)
            ========================================================================== */
         @media (max-width: 900px) {
             aside {
@@ -473,24 +532,34 @@
             .grid-two-col {
                 grid-template-columns: 1fr;
             }
-            .active-card-display {
-                flex-direction: column;
-                text-align: center;
-                padding: 20px;
-            }
+            /* Scale down translation values to stay within small viewports */
+            .avatar-node.left-1 { transform: translateX(-85px) scale(0.85); opacity: 0.6; }
+            .avatar-node.right-1 { transform: translateX(85px) scale(0.85); opacity: 0.6; }
+            .avatar-node.left-2 { transform: translateX(-160px) scale(0.65); opacity: 0.15; }
+            .avatar-node.right-2 { transform: translateX(160px) scale(0.65); opacity: 0.15; }
+            .avatar-node.center { transform: translateX(0) scale(1.15); }
+            .carousel-arrow-btn { width: 34px; height: 34px; font-size: 0.95rem; }
+            .arrow-prev { left: 5px; }
+            .arrow-next { right: 5px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- DISCLAIMER BANNER -->
     <div class="global-disclaimer-banner">
         ⚠️ OUT-OF-CHARACTER NOTICE: This is a purely fictional community lore page. No real services or facilities exist.
     </div>
 
+    <!-- SIDEBAR ELEMENT -->
     <aside>
         <div class="brand-header-block">
-            <div class="brand-title">The Laboratory</div>
-            <div class="brand-subtitle">Overview Portal</div>
+            <!-- LOGO LOCATION 1: SIDEBAR TOP -->
+            <img src="1773232611901.png" alt="The Laboratory Logo" class="sidebar-logo-img">
+            <div>
+                <div class="brand-title">The Laboratory</div>
+                <div class="brand-subtitle">Overview Portal</div>
+            </div>
         </div>
 
         <ul class="nav-menu">
@@ -508,12 +577,15 @@
         </div>
     </aside>
 
+    <!-- MAIN INTERFACE -->
     <main>
         
+        <!-- LOGO LOCATION 2: TOP RIGHT CORNER ACCENT -->
         <div class="top-right-logo-container">
             <img src="1773232611901.png" alt="The Laboratory Logo" class="top-right-logo-img">
         </div>
 
+        <!-- SECTION 1 -->
         <section id="introduction">
             <h1>Facility Introduction</h1>
             <p class="lead-paragraph">Welcome to the official index portal. The Laboratory is a privately owned environment dedicated entirely to the straightforward housing, containment, and unmonitored testing of raw anomalies.</p>
@@ -521,10 +593,10 @@
             <ul class="bullet-list">
                 <li><strong>Policy of Absolute Neutrality:</strong> We operate entirely outside of corporate or governmental oversight. We do not evaluate your background, history, credentials, or past affiliations. Admittance is decided purely on transaction validation.</li>
                 <li><strong>Zero Intent Evaluation:</strong> Your core intentions are entirely your own business. Whether you are accessing our anomalies to discover a groundbreaking global savior system, or planning to systematically blueprint the absolute destruction of the earth, our staff will not bother to ask.</li>
-                <li><strong>Unrestricted Sandbox Access:</strong> Once admitted into your designated testing sector, you have the anomaly entirely to yourself. You are granted complete structural autonomy to test, observe, and experiment with the assets exactly as you see fit.</li>
             </ul>
         </section>
 
+        <!-- SECTION 2 -->
         <section id="access-terms">
             <h2>Operational Access Parameters</h2>
             <p>Admittance to active containment blocks is handled strictly on a commercial basis. Review our non-negotiable operational boundaries below:</p>
@@ -541,6 +613,7 @@
             </div>
         </section>
 
+        <!-- SECTION 3 -->
         <section id="security-ops">
             <h2>Security Architecture</h2>
             <p>The Laboratory approach to operations cuts out the bureaucratic weight of traditional containment networks. Our facility is designed to be highly straightforward:</p>
@@ -553,36 +626,39 @@
             </ul>
         </section>
 
+        <!-- SECTION 4 -->
         <section id="directory">
             <h2>Internal Personnel Hierarchy</h2>
-            <p>The entire laboratory structure is owned, regulated, and managed by a tight-knit core roster. Use the dynamic control module below to inspect staff responsibility parameters and supervisor lines.</p>
+            <p>The entire laboratory structure is owned, regulated, and managed by a tight-knit core roster. Click on any visible avatar card to spin the roster dashboard and update the tracking node logs below.</p>
 
-            <div class="slider-wrapper">
+            <!-- GAMIFIED DYNAMIC CAROUSEL SECTION -->
+            <div class="character-select-system">
                 
-                <div class="active-card-display">
-                    <div class="card-avatar-frame">
-                        <img id="staff-img" src="1773232611901.png" alt="Staff Portrait">
-                    </div>
-                    <div class="card-meta-info">
-                        <h3 id="staff-name">Founder Z</h3>
-                        <span id="staff-role" class="role-badge">Co-Owner / Joint Facility Director</span>
-                        <p id="staff-summary" style="margin: 0; font-size: 0.95rem; color: #555;">Loading description details...</p>
-                    </div>
-                </div>
-
-                <div class="slider-navigation-bar">
-                    <button class="slider-btn" onclick="navigateSlider(-1)">← Prev</button>
-                    <div id="slider-count" class="slider-counter">1 / 5</div>
-                    <button class="slider-btn" onclick="navigateSlider(1)">Next →</button>
-                </div>
-
-                <div class="collapsible-container">
+                <!-- Display Rotation viewport area -->
+                <div class="roster-carousel-viewport">
+                    <button class="carousel-arrow-btn arrow-prev" onclick="shiftRoster(-1)">←</button>
                     
+                    <div class="roster-track" id="dynamic-avatar-track">
+                        <!-- Elements rendered dynamically via javascript template pattern below -->
+                    </div>
+
+                    <button class="carousel-arrow-btn arrow-next" onclick="shiftRoster(1)">→</button>
+                </div>
+
+                <!-- Focused Member Card Metas -->
+                <div class="focused-profile-details">
+                    <h3 id="panel-name">Loading Profile...</h3>
+                    <span id="panel-role" class="role-badge">Roster Asset</span>
+                    <p id="panel-summary" class="summary-text">Loading baseline metadata values...</p>
+                </div>
+
+                <!-- Interactive Accordion Area -->
+                <div class="collapsible-container">
                     <div class="accordion-item" id="acc-assignment">
                         <button class="accordion-trigger" onclick="toggleAccordion('acc-assignment')">Core Assignment &amp; Scope</button>
                         <div class="accordion-content">
                             <div class="accordion-content-inner" id="text-assignment">
-                                Details loaded dynamically.
+                                Profile load pending...
                             </div>
                         </div>
                     </div>
@@ -591,16 +667,23 @@
                         <button class="accordion-trigger" onclick="toggleAccordion('acc-chain')">Command &amp; Supervision Hierarchy</button>
                         <div class="accordion-content">
                             <div class="accordion-content-inner" id="text-chain">
-                                Details loaded dynamically.
+                                Profile load pending...
                             </div>
                         </div>
                     </div>
-
                 </div>
+
             </div>
 
+            <!-- ==========================================================================
+               STAFF DATA INVENTORY LOG (EASY TO COPY AND PASTE TO ADD NEW CHARACTERS)
+               ========================================================================== */
+               Instructions: To add a new character, simply copy a complete "staff-data-node" 
+               block below, paste it directly at the bottom of this list, and update values.
+               ========================================================================== -->
             <div id="hidden-staff-source" style="display: none;">
                 
+                <!-- CHARACTER BLOCK 1: FOUNDER Z -->
                 <div class="staff-data-node" 
                      data-name="Founder Z" 
                      data-role="Co-Owner / Joint Facility Director"
@@ -610,6 +693,7 @@
                     <div class="store-chain">Holds equal power with Co-Owner Light. Both founders hold absolute veto authorization over operations. Acts as the primary supervisor for Professor Ton and Doctor Galaxy Destroyer.</div>
                 </div>
 
+                <!-- CHARACTER BLOCK 2: FOUNDER LIGHT -->
                 <div class="staff-data-node" 
                      data-name="Founder Light" 
                      data-role="Co-Owner / Lead Systems Architect"
@@ -619,6 +703,7 @@
                     <div class="store-chain">Holds equal power with Co-Owner Z. Both founders hold absolute veto authorization over operations. Acts as the direct immediate supervisor for intern Min Kuznetsov.</div>
                 </div>
 
+                <!-- CHARACTER BLOCK 3: PROFESSOR TON -->
                 <div class="staff-data-node" 
                      data-name="Professor Ton" 
                      data-role="Senior Research Analyst"
@@ -628,6 +713,7 @@
                     <div class="store-chain">Directly positioned under the supervision of Founder Z. Reports tasks and requests permissions to Founder Z. If Z is completely unreachable, Founder Light assumes command profile.</div>
                 </div>
 
+                <!-- CHARACTER BLOCK 4: DOCTOR GALAXY DESTROYER -->
                 <div class="staff-data-node" 
                      data-name="Doctor Galaxy Destroyer" 
                      data-role="Facility Mental Therapist"
@@ -637,6 +723,7 @@
                     <div class="store-chain">Directly positioned under the supervision of Founder Z. Reports tasks and requests permissions to Founder Z. If Z is completely unreachable, Founder Light assumes command profile.</div>
                 </div>
 
+                <!-- CHARACTER BLOCK 5: MIN KUZNETSOV -->
                 <div class="staff-data-node" 
                      data-name="Min Kuznetsov" 
                      data-role="Junior Researcher Intern"
@@ -649,22 +736,19 @@
             </div>
         </section>
 
+        <!-- SECTION 5 -->
         <section id="liability-waiver">
             <h2>Non-Intervention &amp; Liability Obligations</h2>
-            <p>Before initializing entry procedures, clients must completely understand their position within the facility parameters:</p>
-            
             <div class="stark-alert-panel">
                 <h3>Warning: Ultimate Personal Accountability</h3>
-                <p>The chambers are explicitly built to keep the anomalies in, but whether they cause severe physical harm or total termination depends entirely on how you choose to interact with them. If you do something stupid, or if a prior containment sequence goes wrong inside a chamber, things can get highly volatile fast.</p>
-                <p style="margin-top: 12px;">The Laboratory functions under absolute non-intervention constraints. The facility holds zero obligation to defend, protect, or launch emergency tactical extractions for you once your testing window begins. By completing the contract, you recognize that your survival is entirely your responsibility.</p>
+                <p>The Laboratory functions under absolute non-intervention constraints. The facility holds zero obligation to defend, protect, or launch emergency tactical extractions for you once your testing window begins. By completing the contract, you recognize that your survival is entirely your responsibility.</p>
                 <p style="margin-top: 15px; font-weight: 700; font-size: 1.1rem; border-top: 1px solid #111; padding-top: 12px;">Do not expect us to save you, and we do not expect you to be in need of saving.</p>
             </div>
         </section>
 
+        <!-- SECTION 6 -->
         <section id="intake-portal">
             <h2>Secure Intake Form</h2>
-            <p>Fill out the fields below to simulate initialization parameters and finalize entry logging.</p>
-
             <div class="outline-box" style="background-color: #fafafa;">
                 <form onsubmit="processRegistration(event)">
                     <div class="grid-two-col">
@@ -677,17 +761,10 @@
                             <input type="text" class="form-control" placeholder="e.g., Wire Transfer" required>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label>Intended Anomaly Application (Optional - Will Not Be Evaluated)</label>
-                        <input type="text" class="form-control" placeholder="e.g., Target practice / Theoretical testing">
-                    </div>
-
                     <div class="form-checkbox">
                         <input type="checkbox" required>
                         <span>I confirm I understand this is a fictional lore page. I explicitly accept that the facility has zero liability, maintains no active guards, and will not deploy emergency columns or rescue teams on my behalf under any circumstance.</span>
                     </label>
-
                     <button type="submit" class="submit-btn">Acknowledge Fictional Terms &amp; Submit Profile</button>
                 </form>
             </div>
@@ -698,16 +775,18 @@
         </p>
     </main>
 
+    <!-- DYNAMIC CONTROLS ENGINE -->
     <script>
-        // SLIDER ARCHITECTURE LOGIC
-        let currentStaffIndex = 0;
-        let staffDataset = [];
+        let currentFocusIndex = 0;
+        let staffRosterArray = [];
 
-        function compileStaffData() {
-            staffDataset = [];
-            const elements = document.querySelectorAll('.staff-data-node');
-            elements.forEach(node => {
-                staffDataset.push({
+        // Compile information nodes from HTML hidden layout storage
+        function initializeRosterData() {
+            staffRosterArray = [];
+            const dataNodes = document.querySelectorAll('.staff-data-node');
+            dataNodes.forEach((node, idx) => {
+                staffRosterArray.push({
+                    index: idx,
                     name: node.getAttribute('data-name'),
                     role: node.getAttribute('data-role'),
                     img: node.getAttribute('data-img'),
@@ -718,34 +797,79 @@
             });
         }
 
-        function renderCurrentStaff() {
-            if(staffDataset.length === 0) return;
-            const current = staffDataset[currentStaffIndex];
+        // Build HTML visual avatar nodes into track
+        function renderAvatarRoster() {
+            const track = document.getElementById('dynamic-avatar-track');
+            track.innerHTML = '';
             
-            document.getElementById('staff-name').innerText = current.name;
-            document.getElementById('staff-role').innerText = current.role;
-            document.getElementById('staff-img').setAttribute('src', current.img);
-            document.getElementById('staff-summary').innerText = current.summary;
-            document.getElementById('text-assignment').innerHTML = current.assignment;
-            document.getElementById('text-chain').innerHTML = current.hierarchy;
-            
-            document.getElementById('slider-count').innerText = `${currentStaffIndex + 1} / ${staffDataset.length}`;
-        }
-
-        function navigateSlider(direction) {
-            currentStaffIndex += direction;
-            if (currentStaffIndex >= staffDataset.length) currentStaffIndex = 0;
-            if (currentStaffIndex < 0) currentStaffIndex = staffDataset.length - 1;
-            renderCurrentStaff();
-            
-            // Close accordions during slide change for smooth presentation
-            document.querySelectorAll('.accordion-item').forEach(item => {
-                item.classList.remove('open');
-                item.querySelector('.accordion-content').style.maxHeight = null;
+            staffRosterArray.forEach((member, idx) => {
+                const node = document.createElement('div');
+                node.className = 'avatar-node';
+                node.setAttribute('onclick', `selectMember(${idx})`);
+                node.innerHTML = `<img src="${member.img}" alt="${member.name}">`;
+                track.appendChild(node);
             });
+            updateCarouselPositions();
         }
 
-        // ACCORDION TOGGLE INTERFACE LOGIC
+        // Calculate dynamic visibility classes to provide 3D selector feel
+        function updateCarouselPositions() {
+            const nodes = document.querySelectorAll('.avatar-node');
+            const total = staffRosterArray.length;
+
+            nodes.forEach((node, idx) => {
+                // Clear state styling
+                node.className = 'avatar-node';
+                
+                // Track relative positioning indices looping seamlessly
+                let diff = idx - currentFocusIndex;
+                
+                // Balance circular index wrap boundaries
+                if (diff < -total / 2) diff += total;
+                if (diff > total / 2) diff -= total;
+
+                if (diff === 0) {
+                    node.classList.add('center');
+                } else if (diff === 1) {
+                    node.classList.add('right-1');
+                } else if (diff === -1) {
+                    node.classList.add('left-1');
+                } else if (diff === 2) {
+                    node.classList.add('right-2');
+                } else if (diff === -2) {
+                    node.classList.add('left-2');
+                } else {
+                    node.classList.add('hidden-node');
+                }
+            });
+
+            // Update details block
+            const data = staffRosterArray[currentFocusIndex];
+            document.getElementById('panel-name').innerText = data.name;
+            document.getElementById('panel-role').innerText = data.role;
+            document.getElementById('panel-summary').innerText = data.summary;
+            document.getElementById('text-assignment').innerHTML = data.assignment;
+            document.getElementById('text-chain').innerHTML = data.hierarchy;
+        }
+
+        function shiftRoster(direction) {
+            currentFocusIndex += direction;
+            if (currentFocusIndex >= staffRosterArray.length) currentFocusIndex = 0;
+            if (currentFocusIndex < 0) currentFocusIndex = staffRosterArray.length - 1;
+            
+            // Auto close informational drop-downs on rotation update
+            resetAccordions();
+            updateCarouselPositions();
+        }
+
+        function selectMember(index) {
+            if (index === currentFocusIndex) return;
+            currentFocusIndex = index;
+            resetAccordions();
+            updateCarouselPositions();
+        }
+
+        // Accordion functionality controls
         function toggleAccordion(elementId) {
             const el = document.getElementById(elementId);
             const content = el.querySelector('.accordion-content');
@@ -759,17 +883,23 @@
             }
         }
 
-        // SIMULATED TRANSACTION PROCESSOR
+        function resetAccordions() {
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('open');
+                item.querySelector('.accordion-content').style.maxHeight = null;
+            });
+        }
+
         function processRegistration(event) {
             event.preventDefault();
             const name = document.getElementById('clientName').value;
-            alert(`⚠️ FANTASY LORE NOTICE ⚠️\n\nProfile generated for "${name}".\n\nRemember: This is a 100% fictional simulation project. No actual payments, weapons, or entities exist. Thank you for participating in the lore!`);
+            alert(`⚠️ FANTASY LORE NOTICE ⚠️\n\nProfile generated for "${name}".`);
         }
 
-        // RUN LOGIC INITIALIZERS
+        // Initialize setup hooks
         window.addEventListener('DOMContentLoaded', () => {
-            compileStaffData();
-            renderCurrentStaff();
+            initializeRosterData();
+            renderAvatarRoster();
         });
 
         window.addEventListener('scroll', () => {
