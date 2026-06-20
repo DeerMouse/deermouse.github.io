@@ -1,476 +1,615 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The Laboratory — Index</title>
-  <meta name="description" content="The Laboratory archive index built by Min." />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE LABORATORY — Institutional Archive & Access Portal</title>
+    <style>
+        /* ==========================================================================
+           1. CORE RESET & MONOCHROMATIC STYLING
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
 
-  <style>
-    :root{
-      /* Min's monochrome palette with subtle hazard accents */
-      --bg: #0e0f12;
-      --panel: #121418;
-      --panel-2:#15181d;
-      --ink: #e7e9ed;
-      --muted:#8c96a3;
-      --line: rgba(255,255,255,0.08);
-      --accent:#e6b422;   /* amber hazard note */
-      --accent-2:#6ee7b7; /* mint ok */
-      --danger:#ef4444;   /* red */
-      --warn:#f59e0b;     /* yellow amber */
-      --black:#aeb4bf;    /* for black class chip text */
-      --card:#14171c;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --r-lg: 16px;
-      --r-md: 12px;
-      --r-sm: 10px;
-      --ring: 0 0 0 2px rgba(230,180,34,.18);
-    }
-    [data-theme="light"]{
-      --bg:#f6f7fb;
-      --panel:#ffffff;
-      --panel-2:#eef1f6;
-      --ink:#0f141a;
-      --muted:#5b6574;
-      --line: rgba(0,0,0,0.08);
-      --accent:#b08900;
-      --accent-2:#118f6b;
-      --danger:#b91c1c;
-      --warn:#a16207;
-      --black:#374151;
-      --card:#ffffff;
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
-      --ring: 0 0 0 2px rgba(176,137,0,.18);
-    }
+        body {
+            background-color: #ffffff;
+            color: #111111;
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      background:
-        radial-gradient(1200px 800px at 85% -10%, rgba(230,180,34,.06), transparent 60%),
-        radial-gradient(1200px 900px at -10% 90%, rgba(110,231,183,.05), transparent 60%),
-        var(--bg);
-      color:var(--ink);
-    }
+        /* Custom Scrollbar for sleek administrative texture */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ffffff;
+            border-left: 1px solid #e5e5e5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cccccc;
+            border-radius: 0px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #999999;
+        }
 
-    .layout{
-      display:grid;
-      grid-template-columns: 280px 1fr;
-      grid-template-rows: 64px calc(100dvh - 64px);
-      min-height:100dvh;
-    }
-    header{
-      grid-column: 1/3;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:10px 16px; background: var(--panel-2);
-      border-bottom:1px solid var(--line); position:sticky; top:0; z-index:20;
-    }
-    .brand{display:flex; align-items:center; gap:12px;}
-    .mark{
-      width:36px; height:36px; border-radius:10px;
-      background:
-        conic-gradient(from 180deg, #20242b, #1a1f27, #2a2f38);
-      border:1px solid var(--line);
-      position:relative;
-    }
-    .mark:after{
-      content:""; position:absolute; inset:7px; border-radius:6px;
-      border:2px solid var(--accent); transform: rotate(8deg);
-      opacity:.85;
-    }
-    .brand h1{
-      margin:0; font-size:16px; letter-spacing:.12em; text-transform:uppercase; font-weight:800;
-    }
+        /* ==========================================================================
+           2. SIDEBAR NAVIGATION CONTROLS
+           ========================================================================== */
+        aside {
+            width: 280px;
+            background-color: #ffffff;
+            border-right: 1px solid #e5e5e5;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px 24px;
+            z-index: 100;
+        }
 
-    .btn{
-      border:1px solid var(--line); background:var(--panel); color:var(--ink);
-      border-radius:10px; padding:8px 12px; font-weight:600; cursor:pointer; transition:.18s;
-    }
-    .btn:hover{ transform: translateY(-1px); }
-    .btn:active{ transform: translateY(0); }
-    .btn.ghost{ background:transparent; }
-    .btn.primary{ border-color: rgba(230,180,34,.35); box-shadow: var(--shadow); }
-    .btn.inline-link{ display:inline-flex; align-items:center; gap:8px; text-decoration:none; }
+        .brand-zone {
+            margin-bottom: 40px;
+        }
 
-    aside{
-      border-right:1px solid var(--line); background:var(--panel);
-      padding:14px; position:sticky; top:64px; height: calc(100dvh - 64px); overflow:auto;
-    }
-    nav .label{
-      font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
-      margin:12px 8px 8px;
-    }
-    .nav{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px; }
-    .nav a{
-      display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);
-      padding:10px 12px; border-radius:10px; border:1px solid transparent;
-    }
-    .nav a:hover{ background:rgba(255,255,255,.03); border-color: var(--line); }
-    .nav a.active{ background:linear-gradient(180deg, rgba(230,180,34,.12), rgba(230,180,34,.05)); border-color: rgba(230,180,34,.35); }
+        .brand-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #000000;
+            margin-bottom: 4px;
+        }
 
-    main{ padding:18px; overflow:auto; }
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: #888888;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
 
-    .hero{
-      display:grid; grid-template-columns: 1.15fr 1fr; gap:14px; margin-bottom:14px;
-    }
-    .card{
-      background:var(--card); border:1px solid var(--line); border-radius: var(--r-lg);
-      padding:18px; box-shadow: var(--shadow);
-    }
-    .hero h2{ margin:0 0 6px 0; font-size:26px; }
-    .muted{ color:var(--muted); }
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+            margin-top: 20px;
+        }
 
-    .bar{
-      display:flex; gap:10px; align-items:center; margin-top:8px; flex-wrap:wrap;
-    }
-    .chip{
-      padding:6px 10px; border-radius:999px; border:1px solid var(--line); font-weight:700; font-size:11px; color:var(--muted);
-    }
+        .nav-item a {
+            display: block;
+            padding: 10px 14px;
+            color: #555555;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
 
-    .controls{
-      display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 0;
-    }
-    .search{
-      display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px;
-      background:var(--panel); border:1px solid var(--line); min-width:220px;
-    }
-    .search input{ flex:1; background:transparent; border:none; outline:none; color:var(--ink); }
-    .select{
-      background:var(--panel); border:1px solid var(--line); color:var(--ink);
-      border-radius:10px; padding:10px 12px;
-    }
+        .nav-item a:hover {
+            background-color: #f5f5f5;
+            color: #000000;
+            padding-left: 18px;
+        }
 
-    .grid{ display:grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap:12px; }
-    .col-12{ grid-column: span 12; }
+        .nav-item.active a {
+            background-color: #111111;
+            color: #ffffff;
+            font-weight: 600;
+        }
 
-    .lr-list{
-      display:grid; grid-template-columns: repeat( auto-fill, minmax(220px,1fr) ); gap:12px;
-      margin-top:10px;
-    }
-    .lr{
-      padding:14px; border-radius:14px; border:1px solid var(--line); background:var(--panel-2);
-      position:relative; transition:.18s; display:flex; flex-direction:column; gap:8px;
-    }
-    .lr:hover{ transform: translateY(-2px); box-shadow: var(--shadow); }
-    .lr h4{ margin:0; font-size:16px; letter-spacing:.3px; }
-    .lr .id{ font-size:12px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
-    .lr .status{
-      display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:800; letter-spacing:.06em;
-      padding:6px 8px; border-radius:999px; width:max-content; border:1px solid var(--line);
-    }
-    .s-yellow{ background: rgba(245,158,11,.12); color:#ffd482; border-color: rgba(245,158,11,.35); }
-    .s-red{ background: rgba(239,68,68,.12); color:#ff9aa0; border-color: rgba(239,68,68,.35); }
-    .s-black{ background: rgba(148,163,184,.12); color:#cfd5de; border-color: rgba(148,163,184,.35); }
-    .s-neutral{ background: rgba(107,114,128,.12); color:#c6cbd3; border-color: rgba(107,114,128,.35); }
-    .s-undef{ background: rgba(255,255,255,.06); color:var(--muted); border-color: var(--line); }
+        .sidebar-footer {
+            font-size: 0.75rem;
+            color: #999999;
+            line-height: 1.4;
+            border-top: 1px solid #e5e5e5;
+            padding-top: 20px;
+        }
 
-    .lr .open{
-      margin-top:auto;
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      padding:10px 12px; border:1px solid var(--line); border-radius:10px; color:var(--ink);
-      text-decoration:none; background:linear-gradient(180deg, rgba(255,255,255,.02), transparent);
-      font-weight:700;
-    }
-    .lr .open:hover{ box-shadow: var(--shadow); border-color: rgba(230,180,34,.35); }
+        /* ==========================================================================
+           3. MAIN CONTENT SYSTEM OVERVIEW
+           ========================================================================== */
+        main {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 80px 60px;
+            max-width: 1100px;
+        }
 
-    .footer{
-      margin-top:14px; padding:12px; border-top:1px solid var(--line); color:var(--muted); font-size:13px;
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-    }
+        section {
+            margin-bottom: 80px;
+            scroll-margin-top: 80px;
+        }
 
-    @media (max-width: 980px){
-      .layout{ grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
-      aside{ position:static; height:auto; border-right:none; border-bottom:1px solid var(--line); }
-      .hero{ grid-template-columns: 1fr; }
-    }
-  </style>
+        /* Typography Hierarchy */
+        .doc-meta {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666666;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .doc-meta::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #111111;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #000000;
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+
+        .lead-paragraph {
+            font-size: 1.25rem;
+            color: #444444;
+            margin-bottom: 40px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #111111;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #000000;
+            margin-top: 30px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: #222222;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* ==========================================================================
+           4. DATA TABLES & STRUCTURAL UI BLOCKS
+           ========================================================================== */
+        .grid-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 30px 0;
+        }
+
+        .outline-box {
+            border: 1px solid #e5e5e5;
+            padding: 24px;
+            border-radius: 4px;
+            background-color: #ffffff;
+        }
+
+        .outline-box h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .plain-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .plain-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 14px;
+            font-size: 1rem;
+            color: #222222;
+        }
+
+        .plain-list li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #888888;
+        }
+
+        /* Administrative Table Layout */
+        .directory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .directory-table th {
+            background-color: #fafafa;
+            border: 1px solid #e5e5e5;
+            padding: 14px 16px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: left;
+            color: #333333;
+        }
+
+        .directory-table td {
+            border: 1px solid #e5e5e5;
+            padding: 14px 16px;
+            font-size: 0.95rem;
+            color: #222222;
+            vertical-align: top;
+        }
+
+        .directory-table tr:hover td {
+            background-color: #fafafa;
+        }
+
+        .badge-status {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border: 1px solid #111111;
+            background-color: #ffffff;
+            color: #111111;
+        }
+
+        /* ==========================================================================
+           5. CONTRACT INTAKE FORM STYLING
+           ========================================================================== */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            color: #000000;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            color: #111111;
+            transition: border-color 0.15s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #111111;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .form-checkbox input {
+            margin-top: 4px;
+            width: 16px;
+            height: 16px;
+            accent-color: #111111;
+        }
+
+        .form-checkbox span {
+            font-size: 0.9rem;
+            color: #333333;
+            user-select: none;
+        }
+
+        .submit-btn {
+            background-color: #111111;
+            color: #ffffff;
+            border: none;
+            padding: 16px 32px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 4px;
+            transition: background-color 0.15s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #333333;
+        }
+
+        /* Stark Liability Document Alert Box */
+        .stark-alert-panel {
+            border: 2px solid #111111;
+            background-color: #ffffff;
+            padding: 32px;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .stark-alert-panel h3 {
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 1.2rem;
+        }
+
+        /* ==========================================================================
+           6. RESPONSIVE DESIGN MEDIA QUERIES
+           ========================================================================== */
+        @media (max-width: 900px) {
+            aside {
+                width: 100%;
+                position: relative;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #e5e5e5;
+                padding: 30px 20px;
+            }
+
+            .nav-menu {
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin-top: 20px;
+                gap: 5px;
+            }
+
+            .nav-item a {
+                padding: 8px 12px;
+            }
+
+            main {
+                margin-left: 0;
+                padding: 40px 20px;
+            }
+
+            .grid-two-col {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
 </head>
-<body data-theme="dark">
-  <div class="layout">
-    <header>
-      <div class="brand">
-        <div class="mark" aria-hidden="true"></div>
-        <h1>The Laboratory — Index</h1>
-      </div>
-      <div style="display:flex; gap:8px; align-items:center;">
-        <button class="btn ghost" id="theme" aria-label="Toggle theme">🌗 Theme</button>
-        <!-- Calculator button next to Theme -->
-        <a class="btn inline-link" id="calcBtn" href="calculator.html" aria-label="Open Laboratory Calculator">🧮 Calculator</a>
-        <a class="btn primary inline-link" href="https://github.com/" target="_blank" rel="noreferrer noopener">GitHub</a>
-      </div>
-    </header>
+<body>
 
+    <!-- ==========================================================================
+         SIDEBAR ELEMENT (PERSISTENT DIRECTORY CONTROL)
+         ========================================================================== -->
     <aside>
-      <nav>
-        <div class="label">Navigation</div>
-        <ul class="nav">
-          <li><a href="#/" class="active">Home</a></li>
-          <li><a href="#/anomalies">Anomaly Index</a></li>
-          <li><a href="#/notes">Notes</a></li>
-          <li><a href="#/about">About</a></li>
+        <div class="brand-zone">
+            <div class="brand-title">The Laboratory</div>
+            <div class="brand-subtitle">Core Institutional Index</div>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="#introduction">01. Facility Profile</a></li>
+            <li class="nav-item"><a href="#access-terms">02. Access Requirements</a></li>
+            <li class="nav-item"><a href="#security-ops">03. Perimeter Defense</a></li>
+            <li class="nav-item"><a href="#directory">04. Personnel Directory</a></li>
+            <li class="nav-item"><a href="#liability-waiver">05. Legal Obligations</a></li>
+            <li class="nav-item"><a href="#intake-portal">06. Secure Authorization Form</a></li>
         </ul>
 
-        <div class="label">Status Legend</div>
-        <div class="bar">
-          <span class="chip s-yellow">Yellow</span>
-          <span class="chip s-red">Red</span>
-          <span class="chip s-black">Black</span>
-          <span class="chip s-neutral">Neutralized</span>
-          <span class="chip s-undef">Undefined</span>
+        <div class="sidebar-footer">
+            Document ID: LR-INDEX-2026<br>
+            Classification: Non-Governed Open-Access Registry
         </div>
-
-        <div class="label">Built by</div>
-        <div class="chip">Min Kuznetzov (Intern)</div>
-      </nav>
     </aside>
 
-    <main id="app"></main>
-  </div>
+    <!-- ==========================================================================
+         MAIN CONTENT INTERFACE
+         ========================================================================== -->
+    <main>
 
-  <script>
-    // ---------- DATA (Minimal: index only; each LR opens its own file) ----------
-    // Known entries from your lore; others default to Undefined.
-    const KNOWN = {
-      "LR-001": { codename: "Serial Killer", status: "Red" },
-      "LR-002": { codename: "Wau Tak Jadi", status: "Yellow" },
-      "LR-003": { codename: "Orb Thingy", status: "Yellow" },
-      "LR-004": { codename: "Ghost Thingy", status: "Yellow" },
-      "LR-008": { codename: "The Introvert", status: "Yellow" },
-      "LR-015": { codename: "The Floor Is Lava", status: "Black" },
-      "LR-016": { codename: "—", status: "Neutralized" },
-      "LR-017": { codename: "Mother of Tundra", status: "Black" },
-      "LR-018": { codename: "Murderous Rat", status: "Neutralized" }
-      // LR-019 (Rendang Pak Munawer) not added yet → leave Undefined as requested
-    };
+        <!-- SECTION 1: FACILITY PROFILE -->
+        <section id="introduction">
+            <div class="doc-meta">Registry Record // 01</div>
+            <h1>Facility Introduction & Corporate Mandate</h1>
+            <p class="lead-paragraph">The Laboratory is an independent, non-aligned, and un-monitored research and sandbox installation designed exclusively for the safe containment and unrestricted human observation of anomalies.</p>
+            
+            <p>Unlike standard government-funded operations or secretive global containment groups, The Laboratory operates under a policy of total institutional neutrality and straightforward accessibility. We have successfully gathered an expansive collection of the world's most absurd, volatile, complex, and unclassified anomalies within a single centralized physical perimeter.</p>
 
-    // Build 001..030
-    const LR = Array.from({length:30}, (_,i)=>{
-      const n = (i+1).toString().padStart(3,'0');
-      const id = `LR-${n}`;
-      const known = KNOWN[id] || null;
-      return {
-        id,
-        codename: known?.codename || "Undefined",
-        status: known?.status || "Undefined",
-        href: `lr${n}.html`
-      };
-    });
-
-    // ---------- UTIL ----------
-    const $ = s => document.querySelector(s);
-    const $$ = s => Array.from(document.querySelectorAll(s));
-
-    function statusClass(s){
-      switch((s||"").toLowerCase()){
-        case "yellow": return "s-yellow";
-        case "red": return "s-red";
-        case "black": return "s-black";
-        case "neutralized": return "s-neutral";
-        default: return "s-undef";
-      }
-    }
-
-    function setTheme(next){
-      const root = document.body;
-      const curr = root.getAttribute('data-theme') || 'dark';
-      const fin = next || (curr === 'dark' ? 'light' : 'dark');
-      root.setAttribute('data-theme', fin);
-      localStorage.setItem('labTheme', fin);
-    }
-    const saved = localStorage.getItem('labTheme');
-    if(saved) document.body.setAttribute('data-theme', saved);
-
-    // ---------- PAGES ----------
-    function pageHome(){
-      return `
-        <section class="hero">
-          <div class="card">
-            <h2>Laboratory Archive Index</h2>
-            <p class="muted">A simple registry of LR files. Numbers reflect <em>discovery</em>, not strength. Built by Min to reduce confusion.</p>
-            <div class="bar">
-              <span class="chip">No Ethics Board</span>
-              <span class="chip">Test • Observe • Cross-Test</span>
-              <span class="chip">Do Not Sell or Release</span>
-            </div>
-            <div class="controls">
-              <a class="btn" href="#/anomalies">Open Anomaly Index</a>
-              <button class="btn ghost" id="quickAll">Show All (Grid)</button>
-              <a class="btn" href="calculator.html" aria-label="Open Laboratory Calculator from Home">🧮 Calculator</a>
-            </div>
-          </div>
-          <div class="card">
-            <h2 style="margin:0 0 6px 0;">Bulletin</h2>
-            <ul class="muted" style="margin:0 0 6px 18px;">
-              <li>LR-016 listed <strong>Neutralized</strong>. Details unavailable.</li>
-              <li>LR-017 remains <strong>Black</strong>. Door timing enforced.</li>
-              <li>Mirrors deployed east wing (temporary).</li>
-              <li>“Green Zone” removed from classification. Boring.</li>
-            </ul>
-            <div class="bar" style="margin-top:8px;">
-              <span class="chip">Clerk: Min</span>
-              <span class="chip">Mercenary: Mia</span>
-            </div>
-          </div>
+            <p>Our operational strategy relies entirely on open commercialization. We do not engage in research grants or public funding. Instead, we open our active containment vaults directly to any private entity, corporate asset, independent team, or individual investor possessing the necessary capital parameters. We operate under a fundamental rule of non-judgment: your background, personal record, political alignment, or core intentions are irrelevant to management. Whether you intend to study these phenomena to engineer a global savior system or systematically organize the total destruction of the earth, our staff will neither evaluate nor query your motives.</p>
         </section>
-        <section class="card">
-          <div class="controls">
-            <div class="search" style="flex:1">
-              <span>🔎</span>
-              <input id="q" placeholder="Search LR number or codename…" />
+
+        <!-- SECTION 2: ACCESS REQUIREMENTS -->
+        <section id="access-terms">
+            <div class="doc-meta">Registry Record // 02</div>
+            <h2>Operational Access Parameters</h2>
+            <p>Admittance to active containment zones, baseline observation suites, and live testing chambers requires absolute compliance with standard operational business policies. Review the absolute requirements below:</p>
+
+            <div class="grid-two-col">
+                <div class="outline-box">
+                    <h4>The Financial Parameter</h4>
+                    <p style="font-size: 0.95rem; margin-bottom: 0;">Access requires a non-negotiable transactional flat fee of <strong>$2,000,000 USD per individual, per entry</strong>. This fee grants absolute terminal access, physical keys to designated containment blocks, and uninterrupted autonomy to experiment with or interact with the assigned asset as desired.</p>
+                </div>
+                <div class="outline-box">
+                    <h4>The Proprietary Boundary</h4>
+                    <p style="font-size: 0.95rem; margin-bottom: 0;">All contained anomalies, physical specimens, baseline anomalies, and resulting raw biological or material fragments remain the absolute, permanent property of the facility founders. Removing an anomaly from the facility parameters, attempting duplication, or conducting unauthorized external commercialization is completely prohibited.</p>
+                </div>
             </div>
-            <select id="status" class="select" aria-label="Filter by status">
-              <option value="">All Status</option>
-              <option>Yellow</option>
-              <option>Red</option>
-              <option>Black</option>
-              <option>Neutralized</option>
-              <option>Undefined</option>
-            </select>
-          </div>
-          <div id="grid" class="lr-list"></div>
-        </section>
-        <div class="footer">
-          <span>© The Laboratory • Founders: Light & Ton</span>
-          <span>Built by Min. If broken, it wasn’t me.</span>
-        </div>
-      `;
-    }
 
-    function pageAnomalies(){
-      return `
-        <section class="card">
-          <h2 style="margin:0 0 8px 0;">Anomaly Index</h2>
-          <p class="muted">Select a file to open its dedicated page <code>(lr001.html … lr030.html)</code>.</p>
-          <div class="controls">
-            <div class="search" style="flex:1">
-              <span>🔎</span>
-              <input id="q" placeholder="Search LR number or codename…" />
+            <p>The entry fee guarantees terminal access to the room and the mechanical systems containing the anomalies. It does not buy luxury service, catering, tracking guides, or specialized advisory crews. Clients pay specifically for pure, unhindered access.</p>
+        </section>
+
+        <!-- SECTION 3: PERIMETER DEFENSE -->
+        <section id="security-ops">
+            <div class="doc-meta">Registry Record // 03</div>
+            <h2>Security Architecture & Transit Logistics</h2>
+            <p>The mechanical containment layout within The Laboratory is engineered to operate passively and reliably; containment chambers are structurally fortified to guarantee that anomalies remain securely separate from general administrative corridors unless explicitly triggered or engaged by a testing party.</p>
+            
+            <p>Because structural engineering manages containment, our internal staff footprint remains exceptionally small, low-profile, and relaxed. You will not find highly armored security columns roaming our primary halls or tracking your movements.</p>
+
+            <p>To establish baseline self-preservation along our standard transit corridors and loading bays, every single guest is provided a complimentary, standard-issue personal defense firearm immediately upon completion of check-in. Perimeter security enforcement, strategic outer boundary control, and terminal validation procedures are managed independently by tactical assets contracted from the <strong>Anvil Mercenaries Group (AMG)</strong>, who report directly to the facility heads.</p>
+        </section>
+
+        <!-- SECTION 4: PERSONNEL DIRECTORY -->
+        <section id="directory">
+            <div class="doc-meta">Registry Record // 04</div>
+            <h2>Internal Personnel Directory</h2>
+            <p>The total staff framework of The Laboratory consists exclusively of five internal individuals (excluding contracted external AMG security agents). The leadership, regulations, and facility parameters are established and governed entirely by the dual founding partners. The complete structural directory is outlined below:</p>
+
+            <table class="directory-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Name / Identifier</th>
+                        <th style="width: 35%;">Official Role</th>
+                        <th style="width: 35%;">Operational Directive</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Founder Z</strong></td>
+                        <td>Co-Head of Facility & Co-Owner</td>
+                        <td>Joint operational director, asset logistics coordinator, and co-author of core facility guidelines.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Founder Light</strong></td>
+                        <td>Co-Head of Facility & Co-Owner</td>
+                        <td>Joint operational director, architectural engineering lead, and co-author of core facility guidelines.</td>
+                    </tr>
+                    <tr>
+                        <td>Professor Ton</td>
+                        <td>Senior Research Analyst</td>
+                        <td>Technical analysis, diagnostic infrastructure maintenance, and data log validation.</td>
+                    </tr>
+                    <tr>
+                        <td>Doctor Galaxy Destroyer</td>
+                        <td>Facility Mental Therapist</td>
+                        <td>Full-time administrative behavioral management. Note: Personnel is a physical feline specimen (<em>Felis catus</em>).</td>
+                    </tr>
+                    <tr>
+                        <td>Min Kuznetsov</td>
+                        <td>Junior Researcher Intern</td>
+                        <td>General facility support, laboratory script logic management, and basic registry sorting.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- SECTION 5: LEGAL OBLIGATIONS -->
+        <section id="liability-waiver">
+            <div class="doc-meta">Registry Record // 05</div>
+            <h2>Non-Intervention Protocol & Liability Limitations</h2>
+            
+            <p>The containment units at The Laboratory are meticulously prepared to prevent external leakage or unprompted escape. However, the volatile and highly absurd nature of these anomalies dictates that your safety inside a live chamber rests entirely upon your own personal choices, operational discipline, and physical interactions.</p>
+
+            <div class="stark-alert-panel">
+                <h3>Warning: Total Non-Intervention Mandate</h3>
+                <p>The Laboratory functions under absolute non-intervention constraints inside experimental sectors. The facility, its owners, and external AMG units retain absolutely zero obligation to defend, protect, guide, or launch tactical extractions for any client once an active testing sequence has been initialized.</p>
+                <br>
+                <p>By executing an access deposit, signing the documentation, and crossing the primary decontamination threshold, you explicitly verify that all occurrences, physical mishaps, or psychological impacts resulting from the anomalies fall entirely on you. <strong>Do not expect our staff to save you, and we do not expect you to be in need of saving.</strong></p>
             </div>
-            <select id="status" class="select" aria-label="Filter by status">
-              <option value="">All Status</option>
-              <option>Yellow</option>
-              <option>Red</option>
-              <option>Black</option>
-              <option>Neutralized</option>
-              <option>Undefined</option>
-            </select>
-          </div>
-          <div id="grid" class="lr-list"></div>
         </section>
-        <div class="footer">
-          <span>Yellow = won’t kill you (until you do something). Red = will kill you. Black = might end everything.</span>
-          <span>Neutralized = removed. Undefined = not filed yet.</span>
-        </div>
-      `;
-    }
 
-    function pageNotes(){
-      return `
-        <section class="card">
-          <h2 style="margin:0 0 6px 0;">Notes</h2>
-          <ul class="muted" style="margin:0 0 6px 18px;">
-            <li>This page does not include anomaly content. Each LR has its own HTML file.</li>
-            <li>If a page isn’t ready yet, the index still links it (Undefined).</li>
-            <li>Min will fill content when the Founders stop yelling.</li>
-          </ul>
+        <!-- SECTION 6: CLIENT INTAKE PORTAL -->
+        <section id="intake-portal">
+            <div class="doc-meta">Registry Record // 06</div>
+            <h2>Secure Authorization & Intake Form</h2>
+            <p>If you possess the required clearing funds and accept our baseline non-intervention terms, fill out the terminal document fields below to generate an entry profile.</p>
+
+            <div class="outline-box" style="background-color: #fafafa;">
+                <form id="intakeForm" onsubmit="processRegistration(event)">
+                    <div class="grid-two-col">
+                        <div class="form-group">
+                            <label for="clientName">Full Legal Name / Entity Identifier</label>
+                            <input type="text" id="clientName" class="form-control" placeholder="e.g., John Doe / Apex Corp" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clientFunding">Verified Transfer Method</label>
+                            <input type="text" id="clientFunding" class="form-control" placeholder="e.g., Cryptographic Ledger / Offshore Wire" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="targetObjective">Intended Anomaly Application (Optional - Will Not Be Evaluated)</label>
+                        <input type="text" id="targetObjective" class="form-control" placeholder="e.g., Scientific Discovery / Terrestrial Demolition / Personal Amusement">
+                    </div>
+
+                    <label class="form-checkbox">
+                        <input type="checkbox" id="termsCheck" required>
+                        <span>I understand that the $2,000,000 entry fee guarantees access only. I recognize that the facility will not deploy emergency services, rescue teams, or protective tracking columns on my behalf under any circumstance. I assume full personal responsibility for my own survival.</span>
+                    </label>
+
+                    <button type="submit" class="submit-btn">Initialize Authorization Profile & Acknowledge Terms</button>
+                </form>
+            </div>
         </section>
-      `;
-    }
 
-    function pageAbout(){
-      return `
-        <section class="card">
-          <h2 style="margin:0 0 6px 0;">About</h2>
-          <p><strong>The Laboratory</strong> is a Roblox project by the Founders <em>Light</em> & <em>Ton</em>. It plays like an internal testing facility where anomalies (tagged as <code>LR-###</code>) are discovered, catalogued, and stress-tested. This website is the in-universe archive that mirrors what players see and use in-game.</p>
-          <ul>
-            <li><strong>Goal:</strong> Test, observe, and cross-test anomalies. There’s no Ethics Board—only results.</li>
-            <li><strong>Files & Codenames:</strong> Each anomaly owns a dedicated page (e.g., <code>lr001.html</code>) with procedures, notes, and cross-tests. The index here lists <em>discovery order</em>, not strength.</li>
-            <li><strong>Status System:</strong> <em>Yellow</em> (conditionally safe), <em>Red</em> (lethal), <em>Black</em> (existential), <em>Neutralized</em> (removed), <em>Undefined</em> (placeholder, not written yet).</li>
-            <li><strong>Roles (lore):</strong> Clerk <em>Min</em> maintains records; Mercenary <em>Mia</em> handles field work.</li>
-            <li><strong>Gameplay Loop:</strong> Discover → Contain → Document → Cross-test. Doors, timing, and environment setups matter (e.g., LR-017 door timing).</li>
-            <li><strong>Scope:</strong> Current public registry spans <code>LR-001</code> to <code>LR-030</code>. Some are blank on purpose to leave space for future updates.</li>
-          </ul>
-          <p class="muted">This index was assembled by Min Kuznetzov. Do not sell or release anomalies. Use the Calculator for quick in-run math (damage, timers, door cycles).</p>
-          <div class="controls">
-            <a class="btn" href="calculator.html" aria-label="Open Laboratory Calculator from About">🧮 Open Calculator</a>
-            <a class="btn" href="#/anomalies">Browse LR Files</a>
-          </div>
-        </section>
-      `;
-    }
+    </main>
 
-    // ---------- RENDER ----------
-    function renderList(filterQ="", filterStatus=""){
-      const root = $('#grid');
-      const q = (filterQ||"").trim().toLowerCase();
-      const items = LR.filter(x=>{
-        const matchQ = !q || (x.id.toLowerCase().includes(q) || x.codename.toLowerCase().includes(q));
-        const matchS = !filterStatus || x.status.toLowerCase() === filterStatus.toLowerCase();
-        return matchQ && matchS;
-      });
-      if(items.length===0){
-        root.innerHTML = `<div class="muted" style="padding:10px;">No matches.</div>`;
-        return;
-      }
-      root.innerHTML = items.map(x=>`
-        <article class="lr">
-          <div class="id">${x.id}</div>
-          <h4>${x.codename}</h4>
-          <span class="status ${statusClass(x.status)}">${x.status}</span>
-          <a class="open" href="${x.href}" aria-label="Open ${x.id} page">Open File →</a>
-        </article>
-      `).join('');
-    }
+    <!-- ==========================================================================
+         7. DYNAMIC SCRIPT CONTROLS
+         ========================================================================== -->
+    <script>
+        // Simple client form processing logic
+        function processRegistration(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('clientName').value;
+            const check = document.getElementById('termsCheck').checked;
+            
+            if (check) {
+                alert(`AUTHORIZATION REGISTRY SUCCESSFUL\n\nEntity: ${name}\nAccess Tier: Authorized ($2,000,000 Fee Noted)\n\nProceed to checkpoint area. Collect your baseline sidearm from the on-duty AMG agent. Management wishes you a safe and productive session.`);
+            }
+        }
 
-    function setActive(hash){
-      $$(".nav a").forEach(a=>{
-        a.classList.toggle('active', a.getAttribute('href') === hash);
-      });
-    }
-
-    function route(){
-      const hash = location.hash || "#/";
-      setActive(hash);
-      const app = $("#app");
-      if(hash === "#/" ){
-        app.innerHTML = pageHome();
-      } else if(hash === "#/anomalies"){
-        app.innerHTML = pageAnomalies();
-      } else if(hash === "#/notes"){
-        app.innerHTML = pageNotes();
-      } else if(hash === "#/about"){
-        app.innerHTML = pageAbout();
-      } else {
-        location.hash = "#/";
-        return;
-      }
-      // bind controls for current page
-      const q = $("#q");
-      const s = $("#status");
-      if(q && s){
-        renderList("", "");
-        q.addEventListener("input", ()=> renderList(q.value, s.value));
-        s.addEventListener("change", ()=> renderList(q.value, s.value));
-      }
-      const quick = $("#quickAll");
-      if(quick){
-        quick.addEventListener("click", ()=>{
-          location.hash = "#/anomalies";
+        // Highlight navigation elements during scrolling actions
+        window.addEventListener('scroll', () => {
+            let sections = document.querySelectorAll('section');
+            let navLinks = document.querySelectorAll('.nav-item');
+            
+            sections.forEach((section, index) => {
+                let rect = section.getBoundingClientRect();
+                if (rect.top <= 120 && rect.bottom >= 120) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    navLinks[index].classList.add('active');
+                }
+            });
         });
-      }
-    }
+    </script>
 
-    // Events
-    window.addEventListener('hashchange', route);
-    document.getElementById('theme').addEventListener('click', ()=>setTheme());
-
-    // Go
-    route();
-  </script>
 </body>
 </html>
