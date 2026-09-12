@@ -6,10 +6,9 @@
     <title>THE LABORATORY — Black Zone (Catastrophic Scale)</title>
     <style>
         /* ==========================================================================
-           1. LOGIK PEMBOLEH UBAH VISUAL (MOD GELAP KEKAL)
+           1. LOGIK PEMBOLEH UBAH VISUAL (MOD GELAP KEKAL & STATIK)
            ========================================================================== */
         :root {
-            /* Black Zone dipaksa menggunakan Mod Gelap (Tiada Light Mode) */
             --bg-primary: #050505; 
             --bg-secondary: #0a0a0a;
             --bg-banner: #000000;
@@ -35,6 +34,7 @@
 
         html {
             scroll-behavior: smooth;
+            height: 100%;
         }
 
         body {
@@ -44,6 +44,7 @@
             display: flex;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative; /* Untuk membolehkan lapisan statik TV menutupi body */
         }
 
         /* ==========================================================================
@@ -136,66 +137,69 @@
         }
 
         /* ==========================================================================
-           3. KESAN KOSMETIK GLITCH (DIKAWAL OLEH JAVASCRIPT)
+           3. KESAN KOSMETIK STATIK TV (LOW SIGNAL NOISE)
            ========================================================================== */
-        /* Gegaran skrin umum */
-        .mod-glitch-aktif {
-            animation: gegaran-skrin 5s infinite;
+        
+        /* Lapisan Filem Statik (TV Noise) yang menutup seluruh skrin */
+        #lapisan-statik-tv {
+            display: none; /* Disembunyikan sehingga pengguna tekan butang 'Glitch' */
+            position: fixed;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.15"/%3E%3C/svg%3E');
+            pointer-events: none; /* Supaya butang dan teks di belakang masih boleh diklik/dibaca */
+            z-index: 9000;
+            opacity: 0.8;
         }
 
-        @keyframes gegaran-skrin {
-            0%, 96%, 98%, 100% { transform: translate(0, 0); }
-            97% { transform: translate(-2px, 1px); }
-            99% { transform: translate(2px, -1px); }
+        /* Animasi Menggeletar Latar Belakang Statik */
+        .mod-glitch-aktif #lapisan-statik-tv {
+            display: block;
+            animation: anim-statik-tv 0.3s steps(4) infinite;
         }
 
-        /* Herotan teks (RGB Split) */
-        .mod-glitch-aktif .teks-glitch {
-            position: relative;
-            display: inline-block;
+        @keyframes anim-statik-tv {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-1%, 2%); }
+            50% { transform: translate(2%, -1%); }
+            75% { transform: translate(-2%, -2%); }
+            100% { transform: translate(1%, 1%); }
         }
 
-        .mod-glitch-aktif .teks-glitch::before,
-        .mod-glitch-aktif .teks-glitch::after {
-            content: attr(data-teks);
-            position: absolute;
+        /* Scanline TV Lama */
+        .garisan-imbas-tv {
+            display: none;
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-primary);
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 8999;
         }
 
-        .mod-glitch-aktif .teks-glitch::before {
-            left: 2px;
-            text-shadow: -2px 0 red;
-            clip: rect(24px, 550px, 90px, 0);
-            animation: herot-anim-1 3s infinite linear alternate-reverse;
+        .mod-glitch-aktif .garisan-imbas-tv {
+            display: block;
         }
 
-        .mod-glitch-aktif .teks-glitch::after {
-            left: -2px;
-            text-shadow: -2px 0 blue;
-            clip: rect(85px, 550px, 140px, 0);
-            animation: herot-anim-2 2.5s infinite linear alternate-reverse;
+        /* Kelipan (Flicker) pada teks tajuk utama secara rawak */
+        .mod-glitch-aktif .tajuk-flicker {
+            animation: animasi-flicker 4s infinite;
         }
 
-        @keyframes herot-anim-1 {
-            0% { clip: rect(10px, 9999px, 15px, 0); }
-            20% { clip: rect(40px, 9999px, 50px, 0); }
-            40% { clip: rect(80px, 9999px, 85px, 0); }
-            60% { clip: rect(20px, 9999px, 30px, 0); }
-            80% { clip: rect(60px, 9999px, 70px, 0); }
-            100% { clip: rect(5px, 9999px, 10px, 0); }
-        }
-
-        @keyframes herot-anim-2 {
-            0% { clip: rect(65px, 9999px, 70px, 0); }
-            20% { clip: rect(15px, 9999px, 20px, 0); }
-            40% { clip: rect(50px, 9999px, 60px, 0); }
-            60% { clip: rect(85px, 9999px, 95px, 0); }
-            80% { clip: rect(35px, 9999px, 45px, 0); }
-            100% { clip: rect(75px, 9999px, 80px, 0); }
+        @keyframes animasi-flicker {
+            0%, 9%, 11%, 19%, 21%, 69%, 71%, 100% { opacity: 1; text-shadow: none; }
+            10%, 20%, 70% { opacity: 0.5; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
         }
 
         /* ==========================================================================
@@ -401,22 +405,26 @@
 </head>
 <body>
 
-    <!-- 1. TINDANAN MODAL AMARAN KESIHATAN (Akan hilang lepas dijawab) -->
+    <!-- 1. TINDANAN MODAL AMARAN KESIHATAN -->
     <div id="skrin-amaran-kesihatan" class="lapisan-amaran-kesihatan">
         <div class="kotak-amaran-perubatan">
             <h2>⚠️ Visual Health Advisory ⚠️</h2>
-            <p>You are attempting to access highly restricted Black Zone documentation. The founders of The Laboratory have embedded cosmetic visual glitches, screen tearing, and flashing distortion effects into this terminal for "aesthetic" purposes.</p>
-            <p><strong>Medical Warning:</strong> For individuals with <em>Selaphobia</em> (intense psychological fear of flashing lights) or <em>Photosensitive Epilepsy</em>, these visual effects can trigger severe panic attacks, overwhelming dread, vertigo (The Bucha Effect), or seizures.</p>
-            <p class="teks-kecil">Do you require a safe viewing mode (disabling the founder's cosmetic glitches) to proceed?</p>
+            <p>You are attempting to access highly restricted Black Zone documentation. The founders of The Laboratory have embedded cosmetic low-signal TV static, film grain, and slight flicker effects into this terminal for "aesthetic" purposes.</p>
+            <p><strong>Medical Warning:</strong> For individuals with <em>Selaphobia</em> (intense psychological fear of flashing lights), flicker vertigo, or <em>Photosensitive Epilepsy</em>, these continuous static visual noise effects can trigger severe anxiety, disorientation, or seizures.</p>
+            <p class="teks-kecil">Do you require a safe, clean viewing mode (disabling the founder's cosmetic static) to proceed?</p>
             
             <div class="susunan-butang-kesihatan">
-                <button class="butang-selamat" onclick="aksesFasiliti(false)">Yes, I have these conditions (Disable Glitches)</button>
-                <button class="butang-glitch" onclick="aksesFasiliti(true)">No, I am physically safe (Enable Full Glitch Effects)</button>
+                <button class="butang-selamat" onclick="aksesFasiliti(false)">Yes, I have these conditions (Disable Static)</button>
+                <button class="butang-glitch" onclick="aksesFasiliti(true)">No, I am physically safe (Enable Signal Noise)</button>
             </div>
         </div>
     </div>
 
-    <!-- 2. KANDUNGAN HALAMAN SEBENAR (Terselindung di sebalik modal) -->
+    <!-- ELEMEN STATIK TV & SCANLINE -->
+    <div id="lapisan-statik-tv"></div>
+    <div class="garisan-imbas-tv"></div>
+
+    <!-- 2. KANDUNGAN HALAMAN SEBENAR -->
     <div class="banner-amaran-global">
         ⚠️ OUT-OF-CHARACTER NOTICE: This is a purely fictional community lore page. No real services or facilities exist.
     </div>
@@ -425,9 +433,9 @@
         <button class="tab-lipat-sidebar" onclick="togolLipatanSidebar()"></button>
 
         <div class="blok-pala-jenama">
-            <img src="1773232611901.png" alt="Logo The Laboratory" class="imej-logo-sidebar">
+            <img src="1773232611901.png" alt="Logo The Laboratory" class="imej-logo-sidebar tajuk-flicker">
             <div>
-                <div class="tajuk-jenama teks-glitch" data-teks="The Laboratory">The Laboratory</div>
+                <div class="tajuk-jenama tajuk-flicker">The Laboratory</div>
                 <div class="subtajuk-jenama">Black Zone Vault</div>
             </div>
         </div>
@@ -436,10 +444,8 @@
             <li class="item-navigasi"><a href="#pengenalan">01. Scale Parameters</a></li>
             <li class="item-navigasi"><a href="#protokol">02. Evacuation Protocol</a></li>
             <li class="item-navigasi"><a href="#direktori-anomali">03. LR Vault Directory</a></li>
-            <li class="item-navigasi"><a href="AnomalyLog.html">← Back to Directory</a></li>
+            <li class="item-navigasi"><a href="VaultDirectory.html">← Back to Directory</a></li>
         </ul>
-
-        <!-- Tiada Butang Mod Gelap/Terang, dipaksa kekal gelap -->
 
         <div style="font-size: 0.75rem; color: var(--text-light); border-top: 1px dashed var(--border-color); padding-top: 15px;">
             Document ID: BZ-RESTRICTED<br>
@@ -448,9 +454,8 @@
     </aside>
 
     <main>
-        <!-- SEKSYEN 1: PENGENALAN BLACK ZONE -->
         <section id="pengenalan">
-            <h1 class="teks-glitch" data-teks="The Black Zone">The Black Zone</h1>
+            <h1 class="tajuk-flicker">The Black Zone</h1>
             <p>Welcome to the Catastrophic Scale Sector. You are currently viewing highly classified profiles for entities that do not care about individual targets. If a containment breach occurs here, the resulting disaster will collapse the facility, warp the surrounding environment, and erase entire communities at large.</p>
             
             <p style="border-left: 4px solid var(--amaran-hitam); padding-left: 15px; color: var(--text-muted);">
@@ -458,32 +463,30 @@
             </p>
         </section>
 
-        <!-- SEKSYEN 2: PROTOKOL KAKITANGAN & AMARAN PENGASAS -->
         <section id="protokol">
-            <h2 class="teks-glitch" data-teks="Staff Evacuation Protocol">Staff Evacuation Protocol</h2>
+            <h2 class="tajuk-flicker">Staff Evacuation Protocol</h2>
             <p>Clients conducting tests in the Black Zone must understand that they are entirely alone. At the first sign of an environmental breach, The Laboratory's internal staff—including Junior Researchers and the AMG contractors stationed at the intake portal—are instructed to immediately evacuate the premises.</p>
             <p>They will not wait for you. They will not trigger an alarm on your behalf. They will simply lock the vault doors from the outside and leave the state.</p>
 
             <div class="kotak-amaran-pengasas">
-                <h4 class="teks-glitch" data-teks="Terminal Notice Regarding Founders Z &amp; Light">Terminal Notice Regarding Founders Z &amp; Light</h4>
+                <h4 class="tajuk-flicker">Terminal Notice Regarding Founders Z &amp; Light</h4>
                 <p>If you happen to observe Co-Founders <strong>Z</strong> or <strong>Light</strong> conducting their own experiments on a Black Zone entity, <strong>WE ARE BEGGING YOU NOT TO COPY WHATEVER THEY ARE DOING.</strong> Both founders are structurally insane. If confronted, they will casually inform you that they are "professionals." Do not believe them. You must remain at a distant physical range from their experimentation at all times to ensure your own survival.</p>
             </div>
         </section>
 
-        <!-- SEKSYEN 3: DIREKTORI PANEL ANOMALI (KOTAK GRID) -->
         <section id="direktori-anomali">
-            <h2 class="teks-glitch" data-teks="LR Vault Directory (Catastrophic)">LR Vault Directory (Catastrophic)</h2>
+            <h2 class="tajuk-flicker">LR Vault Directory (Catastrophic)</h2>
             
             <div class="grid-panel-anomali">
                 
                 <a href="#" class="kad-panel-benda-asing">
-                    <span class="id-label-benda teks-glitch" data-teks="LR-XXX">LR-XXX</span>
+                    <span class="id-label-benda tajuk-flicker">LR-XXX</span>
                     <h4 style="margin-bottom: 5px;">[Classified Subject]</h4>
                     <p style="font-size: 0.9rem; color: var(--text-muted);">Access full environmental breach parameters and community destruction metrics.</p>
                 </a>
 
                 <a href="#" class="kad-panel-benda-asing">
-                    <span class="id-label-benda teks-glitch" data-teks="LR-XXX">LR-XXX</span>
+                    <span class="id-label-benda tajuk-flicker">LR-XXX</span>
                     <h4 style="margin-bottom: 5px;">[Classified Subject]</h4>
                     <p style="font-size: 0.9rem; color: var(--text-muted);">Access full environmental breach parameters and community destruction metrics.</p>
                 </a>
@@ -493,7 +496,7 @@
 
         <!-- NOTA KOSMETIK GLITCH DI BAWAH -->
         <p style="text-align: center; color: var(--text-light); font-size: 0.8rem; margin-top: 60px; line-height: 1.7; border-top: 1px dashed var(--border-color); padding-top: 20px;">
-            <strong style="color: var(--text-muted);">System Note:</strong> Any visual distortion, screen tearing, or terminal glitching present on this page is a purely cosmetic modification injected into the code by Founders Z and Light to make the Black Zone look "cooler." It does not indicate an actual system failure.<br><br>
+            <strong style="color: var(--text-muted);">System Note:</strong> The low-signal TV static, scanlines, and terminal flickering present on this page are a purely cosmetic modification injected into the code by Founders Z and Light to make the Black Zone look "intense." It does not indicate an actual connection failure.<br><br>
             Disclaimer: This page is a fictional roleplay/creative writing asset. All names, settings, companies, and anomalies mentioned are entirely made-up.<br>
             <span style="font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.75rem; display: inline-block;">
                 System Ledger Interface // Encrypted Black Zone Network
@@ -502,18 +505,18 @@
     </main>
 
     <script>
-        // Fungsi Logik Keselamatan Glitch
-        function aksesFasiliti(hidupkanGlitch) {
+        // Fungsi Logik Keselamatan TV Static
+        function aksesFasiliti(hidupkanStatik) {
             // Sembunyikan skrin amaran
             document.getElementById('skrin-amaran-kesihatan').style.display = 'none';
             
             // Jika klien kata mereka selamat, hidupkan kelas glitch pada <body>
-            if (hidupkanGlitch === true) {
+            if (hidupkanStatik === true) {
                 document.body.classList.add('mod-glitch-aktif');
             }
         }
 
-        // Variabel Kawalan Sidebar Biasa
+        // Variabel Kawalan Sidebar
         function togolLipatanSidebar() {
             document.body.classList.toggle('sidebar-tertutup');
         }
