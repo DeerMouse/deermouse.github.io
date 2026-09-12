@@ -1,1 +1,736 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE LABORATORY — Yellow Zone (No Dead Zone)</title>
+    <style>
+        /* ==========================================================================
+           1. LOGIK PEMBOLEH UBAH VISUAL (THEMING & MONOCHROMATIC STYLING)
+           ========================================================================== */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #fafafa;
+            --bg-banner: #f5f5f5;
+            --text-main: #111111;
+            --text-muted: #555555;
+            --text-light: #888888;
+            --border-color: #e5e5e5;
+            --border-dark: #111111;
+            --box-shadow: rgba(0, 0, 0, 0.05);
+            --invert-value: 0;
+            --lebar-sidebar: 290px;
+            --amaran-kuning: #e6b800; /* Warna amaran khas untuk zon ini */
+        }
+
+        body.dark-theme {
+            --bg-primary: #121212;
+            --bg-secondary: #1c1c1c;
+            --bg-banner: #181818;
+            --text-main: #f5f5f5;
+            --text-muted: #b0b0b0;
+            --text-light: #777777;
+            --border-color: #2a2a2a;
+            --border-dark: #ffffff;
+            --box-shadow: rgba(0, 0, 0, 0.4);
+            --invert-value: 1;
+            --amaran-kuning: #ffcc00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Amaran Undang-undang Kekal (Persistent Legal Warning Header) */
+        .banner-amaran-global {
+            background-color: var(--bg-banner);
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2000;
+        }
+
+        /* Pengepala Navigasi Mudah Alih (Mobile Nav Header) */
+        .pengepala-nav-mudahalih {
+            display: none;
+            position: fixed;
+            top: 33px;
+            left: 0;
+            width: 100%;
+            height: 55px;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 0 20px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .butang-menu-mudahalih {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        /* ==========================================================================
+           2. PAPAN PEMUKA SIDEBAR BOLEH LIPAT (EXPANDABLE SIDEBAR)
+           ========================================================================== */
+        aside {
+            width: var(--lebar-sidebar);
+            background-color: var(--bg-primary);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: 33px;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px 24px;
+            z-index: 1500;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+        }
+
+        body.sidebar-tertutup aside {
+            transform: translateX(-100%);
+        }
+
+        /* Butang Togol Sidebar */
+        .tab-lipat-sidebar {
+            position: absolute;
+            top: 40px;
+            right: -24px;
+            width: 24px;
+            height: 48px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            box-shadow: 4px 0 8px rgba(0,0,0,0.03);
+            transition: background-color 0.2s, color 0.2s;
+            z-index: 10;
+        }
+
+        .tab-lipat-sidebar:hover {
+            background-color: var(--bg-secondary);
+            color: var(--text-main);
+        }
+
+        .tab-lipat-sidebar::after {
+            content: "◀";
+        }
+
+        body.sidebar-tertutup .tab-lipat-sidebar::after {
+            content: "▶";
+        }
+
+        .blok-pala-jenama {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .imej-logo-sidebar {
+            width: 60px;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            filter: invert(var(--invert-value));
+            transition: filter 0.3s ease;
+        }
+
+        .tajuk-jenama {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .subtajuk-jenama {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .menu-navigasi {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex-grow: 1;
+            margin-top: 15px;
+            overflow-y: auto;
+        }
+
+        .item-navigasi a {
+            display: block;
+            padding: 10px 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .item-navigasi a:hover {
+            background-color: var(--bg-secondary);
+            color: var(--text-main);
+        }
+
+        .item-navigasi.aktif a {
+            background-color: var(--text-main);
+            color: var(--bg-primary);
+            font-weight: 700;
+        }
+
+        .panel-togol-tema {
+            padding: 12px 0;
+            border-top: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+
+        .butang-togol {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .butang-togol:hover {
+            background: var(--text-main);
+            color: var(--bg-primary);
+        }
+
+        .lapisan-tutup-mudahalih {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.4);
+            z-index: 1400;
+        }
+
+        /* ==========================================================================
+           3. BEKAS UTAMA & RUANG KERJA (MAIN CONTAINER)
+           ========================================================================== */
+        main {
+            margin-left: var(--lebar-sidebar);
+            margin-top: 33px;
+            flex-grow: 1;
+            padding: 60px 50px 120px 50px;
+            max-width: 1200px;
+            position: relative;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.sidebar-tertutup main {
+            margin-left: 0;
+        }
+
+        .bekas-logo-atas-kanan {
+            position: absolute;
+            top: 55px;
+            right: 50px;
+            text-align: right;
+            z-index: 10;
+        }
+
+        .imej-logo-atas-kanan {
+            width: 80px;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            filter: invert(var(--invert-value));
+            transition: filter 0.3s ease;
+        }
+
+        section {
+            margin-bottom: 90px;
+            scroll-margin-top: 90px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+            max-width: 75%;
+        }
+
+        .perenggan-utama {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 25px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-dark);
+            transition: border-color 0.3s ease;
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        .senarai-titik {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .senarai-titik li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+        }
+
+        .senarai-titik li::before {
+            content: "▪";
+            position: absolute;
+            left: 0;
+            color: var(--text-main);
+            font-size: 0.8rem;
+            top: 2px;
+        }
+
+        .grid-dua-lajur {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .kotak-garis-luar {
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 4px;
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .kotak-garis-luar h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        /* Kotak Amaran Khusus untuk Zon Kuning */
+        .panel-amaran-kuning {
+            border: 2px solid var(--amaran-kuning);
+            background-color: var(--bg-primary);
+            padding: 30px;
+            margin: 35px 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .panel-amaran-kuning h3 {
+            text-transform: uppercase;
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+            color: var(--amaran-kuning);
+        }
+
+        /* Penggayaan Log Anomali / Lab Rat */
+        .kad-log-anomali {
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .kad-log-anomali:hover {
+            box-shadow: 0 4px 12px var(--box-shadow);
+            border-color: var(--border-dark);
+        }
+
+        .pala-log-anomali {
+            padding: 15px 20px;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .id-anomali {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .status-anomali {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 4px 8px;
+            background-color: var(--border-dark);
+            color: var(--bg-primary);
+            border-radius: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        .kandungan-log-anomali {
+            padding: 20px;
+        }
+
+        .kandungan-log-anomali h5 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            margin-top: 15px;
+        }
+
+        .kandungan-log-anomali h5:first-child {
+            margin-top: 0;
+        }
+
+        /* ==========================================================================
+           4. PERTANYAAN MEDIA MUDAH ALIH KOMPREHENSIF (MOBILE MEDIA QUERIES)
+           ========================================================================== */
+        @media (max-width: 960px) {
+            .pengepala-nav-mudahalih {
+                display: flex;
+            }
+
+            aside {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                height: 100vh;
+                transform: translateX(-100%);
+                box-shadow: 4px 0 25px rgba(0,0,0,0.15);
+                border-right: 1px solid var(--border-color);
+                border-bottom: none;
+                width: 280px;
+                padding: 40px 24px 24px 24px;
+            }
+
+            .tab-lipat-sidebar {
+                display: none;
+            }
+
+            body.menu-mudahalih-aktif aside {
+                transform: translateX(0);
+            }
+
+            body.menu-mudahalih-aktif .lapisan-tutup-mudahalih {
+                display: block;
+            }
+
+            main {
+                margin-left: 0 !important;
+                margin-top: 88px;
+                padding: 30px 20px 80px 20px;
+            }
+
+            .bekas-logo-atas-kanan {
+                position: static;
+                margin-bottom: 30px;
+                text-align: left;
+            }
+
+            .imej-logo-atas-kanan { width: 70px; }
+            h1 { font-size: 2rem; max-width: 100%; }
+            .grid-dua-lajur { grid-template-columns: 1fr; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BANNER AMARAN GLOBAL -->
+    <div class="banner-amaran-global">
+        ⚠️ OUT-OF-CHARACTER NOTICE: This is a purely fictional community lore page. No real services or facilities exist.
+    </div>
+
+    <!-- PENGEPALA NAVIGASI MUDAH ALIH -->
+    <div class="pengepala-nav-mudahalih">
+        <button class="butang-menu-mudahalih" onclick="togolMenuMudahAlih()">☰</button>
+        <div class="tajuk-jenama" style="font-size: 0.9rem; letter-spacing: 1px;">The Laboratory</div>
+        <div style="width: 24px;"></div>
+    </div>
+
+    <!-- LAPISAN TUTUP LATAR BELAKANG -->
+    <div class="lapisan-tutup-mudahalih" onclick="togolMenuMudahAlih()"></div>
+
+    <!-- MODUL PAPAN PEMUKA SIDEBAR UTAMA -->
+    <aside id="papanPemukaSidebar">
+        <button class="tab-lipat-sidebar" onclick="togolLipatanSidebar()" title="Togol Pandangan Ruang Kerja"></button>
+
+        <div class="blok-pala-jenama">
+            <img src="1773232611901.png" alt="Logo The Laboratory" class="imej-logo-sidebar">
+            <div>
+                <div class="tajuk-jenama">The Laboratory</div>
+                <div class="subtajuk-jenama">Yellow Zone Vault</div>
+            </div>
+        </div>
+
+        <ul class="menu-navigasi">
+            <li class="item-navigasi" id="nav-pengenalan"><a href="#pengenalan" onclick="tutupMudahAlihPadaNav()">01. Conceptual Overview</a></li>
+            <li class="item-navigasi" id="nav-falsafah"><a href="#falsafah" onclick="tutupMudahAlihPadaNav()">02. Sandbox Philosophy</a></li>
+            <li class="item-navigasi" id="nav-log-lr002"><a href="#log-lr002" onclick="tutupMudahAlihPadaNav()">03. Audit: LR-002</a></li>
+            <li class="item-navigasi" id="nav-log-lr010"><a href="#log-lr010" onclick="tutupMudahAlihPadaNav()">04. Audit: LR-010</a></li>
+            <li class="item-navigasi" id="nav-log-lr012"><a href="#log-lr012" onclick="tutupMudahAlihPadaNav()">05. Audit: LR-012</a></li>
+            <li class="item-navigasi" id="nav-kembali"><a href="TheLaboratory.html" onclick="tutupMudahAlihPadaNav()">← Back to Main Portal</a></li>
+        </ul>
+
+        <div class="panel-togol-tema">
+            <button class="butang-togol" onclick="togolTemaManual()">
+                <span>🌓</span> Toggle Light / Dark Mode
+            </button>
+        </div>
+
+        <div style="font-size: 0.75rem; color: var(--text-light); border-top: 1px solid var(--border-color); padding-top: 15px;">
+            Document ID: YZ-VAULT-2026<br>
+            Classification: Internal Log
+        </div>
+    </aside>
+
+    <!-- KANDUNGAN RUANG KERJA UTAMA -->
+    <main>
+        
+        <div class="bekas-logo-atas-kanan">
+            <img src="1773232611901.png" alt="Logo The Laboratory" class="imej-logo-atas-kanan">
+        </div>
+
+        <!-- SEKSYEN 1: PENGENALAN YELLOW ZONE -->
+        <section id="pengenalan">
+            <h1>The Yellow Zone</h1>
+            <p class="perenggan-utama">Officially classified within structural blueprints as the <strong>"No Dead Zone,"</strong> the Yellow Sector houses entities strictly vetted to lack the biological capacity or psychological intent to inflict fatal trauma upon a subject.</p>
+            
+            <div class="panel-amaran-kuning">
+                <h3>The Illusion of Safety</h3>
+                <p>Clients frequently misinterpret the "No Dead Zone" classification. Survival does not equate to safety. The lack of lethality within this sector arguably presents hazards far more terrifying than outright mortality. The entities housed here do not kill; instead, they alter, trap, and eternally incapacitate.</p>
+                <p style="margin-top: 15px; font-weight: 700; font-size: 1.1rem; border-top: 1px solid var(--amaran-kuning); padding-top: 12px;">Warning: A standard ballistic sidearm provided by the Anvil Mercenaries Group (AMG) is virtually useless against structural transfiguration.</p>
+            </div>
+
+            <p>If an anomaly permanently turns your flesh into solid stone, or weaves an unbreakable ethereal cage around your physical body, you will not die. However, you will never leave. Under the facility's strict non-intervention waiver, the founders—Z and Light—will not mount a rescue mission to extract you, nor will AMG contractors be dispatched to break your chains. You simply become a permanent fixture of the Yellow Zone's architecture.</p>
+        </section>
+
+        <!-- SEKSYEN 2: FALSAFAH LAB RAT (SANDBOX) -->
+        <section id="falsafah">
+            <h2>The "Lab Rat" Sandbox Philosophy</h2>
+            <p>Unlike traditional containment networks that seek to neutralize, weaponize, or exploit anomalies for profit and salvation, The Laboratory operates under a chillingly neutral paradigm. We do not extract value. We only facilitate curiosity.</p>
+            
+            <div class="grid-dua-lajur">
+                <div class="kotak-garis-luar">
+                    <h4>The "LR" Designation</h4>
+                    <p style="font-size: 0.95rem; margin-bottom:0;">Anomalies in this sector are designated with the <strong>"LR" (Lab Rat)</strong> prefix. This strips them of mythical reverence. They are not world-ending threats; they are raw property placed inside a sandbox for paying clients to poke, test, and observe without consequence.</p>
+                </div>
+                <div class="kotak-garis-luar">
+                    <h4>The Ultimate Reversal</h4>
+                    <p style="font-size: 0.95rem; margin-bottom:0;">Clients pay millions to be the scientists, viewing the anomalies as their "Lab Rats." Yet, the moment a client miscalculates and is permanently incapacitated by a non-lethal anomaly, the roles reverse. The human becomes the captive test variable.</p>
+                </div>
+            </div>
+            
+            <p>To our staff, eternal human suffering is merely another data variable in an ongoing experiment. The Yellow Zone is the ultimate playground because non-lethality allows for the longest possible window of uninterrupted experimentation. You can prod a puzzle box for hours, but if the puzzle box turns you into a statue, Junior Researcher Min Kuznetsov will merely log it as a successful curiosity metric.</p>
+        </section>
+
+        <!-- SEKSYEN 3: AUDIT LR-002 -->
+        <section id="log-lr002">
+            <h2>Containment Audit: LR-002</h2>
+            
+            <div class="kad-log-anomali">
+                <div class="pala-log-anomali">
+                    <span class="id-anomali">LR-002</span>
+                    <span class="status-anomali">Status: Active</span>
+                </div>
+                <div class="kandungan-log-anomali">
+                    <h5>Lethality Metric</h5>
+                    <p>Absolute Zero (0.0%). No physical tissue destruction observed in any test parameter.</p>
+                    
+                    <h5>Incapacitation Mechanism</h5>
+                    <p>LR-002 utilizes localized spatial folding to instantly manifest inescapable, heavy-gauge physical chaining around a target's limbs. The chains possess no keyholes, structural weaknesses, or thermal vulnerability. Once attached, they are permanent.</p>
+                    
+                    <h5>Staff Notes</h5>
+                    <p style="color: var(--text-muted); font-style: italic;">"Client #412 thought shooting it would break the lock. Instead, the entity just wrapped the gun in chains too. Client has been sitting in Sector 4 for three weeks now. I drop by sometimes to collect data on starvation timelines." — Min Kuznetsov.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEKSYEN 4: AUDIT LR-010 -->
+        <section id="log-lr010">
+            <h2>Containment Audit: LR-010</h2>
+            
+            <div class="kad-log-anomali">
+                <div class="pala-log-anomali">
+                    <span class="id-anomali">LR-010</span>
+                    <span class="status-anomali">Status: Active</span>
+                </div>
+                <div class="kandungan-log-anomali">
+                    <h5>Lethality Metric</h5>
+                    <p>Absolute Zero (0.0%). Biological functions are frozen, not terminated.</p>
+                    
+                    <h5>Incapacitation Mechanism</h5>
+                    <p>Rapid biological calcification. Upon tactile contact or severe provocation, LR-010 initiates an irreversible transfiguration process, converting organic cellular structure into high-density metamorphic stone. The subject's consciousness remains allegedly intact within the stone casing.</p>
+                    
+                    <h5>Staff Notes</h5>
+                    <p style="color: var(--text-muted); font-style: italic;">"We had to ask AMG contractors to bring in a forklift last Tuesday. A client got fully petrified right in front of the primary walkway and was blocking the janitorial carts. We just moved him to the corner of the room." — Professor Ton.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEKSYEN 5: AUDIT LR-012 -->
+        <section id="log-lr012">
+            <h2>Containment Audit: LR-012</h2>
+            
+            <div class="kad-log-anomali">
+                <div class="pala-log-anomali">
+                    <span class="id-anomali">LR-012</span>
+                    <span class="status-anomali">Status: Active</span>
+                </div>
+                <div class="kandungan-log-anomali">
+                    <h5>Lethality Metric</h5>
+                    <p>Absolute Zero (0.0%). The entity explicitly refuses to let subjects perish.</p>
+                    
+                    <h5>Incapacitation Mechanism</h5>
+                    <p>Conceptual cage trapping. LR-012 physically warps the architectural dimensions around the subject, creating an invisible, impenetrable cubic barrier. The subject can see the outside world perfectly, and clients can walk right past them, but the subject cannot cross the threshold. The barrier sustains the subject's baseline hydration and caloric needs indefinitely, ensuring they never succumb to natural death while trapped.</p>
+                    
+                    <h5>Staff Notes</h5>
+                    <p style="color: var(--text-muted); font-style: italic;">"It's the ultimate observation tank. Founder Z authorized a client to throw paint at it just to see what would happen. The paint hit the barrier and stained it blue. Now we have a blue, screaming box in the middle of the containment wing." — Founder Light.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- KREDIT KAKI (FOOTER) -->
+        <p style="text-align: center; color: var(--text-light); font-size: 0.8rem; margin-top: 60px; line-height: 1.7;">
+            Disclaimer: This page is a fictional roleplay/creative writing asset. All names, settings, companies, and anomalies mentioned are entirely made-up.<br>
+            <span style="font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.75rem; margin-top: 4px; display: inline-block; color: var(--text-muted);">
+                System Ledger Interface Version 2.1 // Yellow Zone Parameter Update by Junior Researcher Min Kuznetsov
+            </span>
+        </p>
+    </main>
+
+    <!-- KAWALAN SKRIP DINAMIK PAPAN PEMUKA -->
+    <script>
+        // Variabel Kawalan Sidebar
+        function togolLipatanSidebar() {
+            document.body.classList.toggle('sidebar-tertutup');
+        }
+
+        // Variabel Kawalan Mudah Alih
+        function togolMenuMudahAlih() {
+            document.body.classList.toggle('menu-mudahalih-aktif');
+        }
+
+        function tutupMudahAlihPadaNav() {
+            document.body.classList.remove('menu-mudahalih-aktif');
+        }
+
+        // Variabel Kawalan Tema
+        function mulakanPengesananTema() {
+            const jamSemasa = new Date().getHours();
+            if (jamSemasa < 6 || jamSemasa >= 18) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        }
+
+        function togolTemaManual() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        // Penjejak Tatalan Resolusi Tinggi (High Precision Scroll Spy)
+        function mulakanPenjejakTatalan() {
+            const senaraiSeksyen = document.querySelectorAll('section');
+            const itemMenu = document.querySelectorAll('.menu-navigasi .item-navigasi');
+
+            const tetapanPemerhati = {
+                root: null,
+                rootMargin: '-20% 0px -40% 0px',
+                threshold: 0
+            };
+
+            const pemerhatiTatalan = new IntersectionObserver((kemasukan) => {
+                kemasukan.forEach(entri => {
+                    if (entri.isIntersecting) {
+                        const idAktif = entri.target.getAttribute('id');
+                        
+                        itemMenu.forEach(item => {
+                            item.classList.remove('aktif');
+                            const sauhSasaran = item.querySelector('a').getAttribute('href');
+                            if (sauhSasaran === `#${idAktif}`) {
+                                item.classList.add('aktif');
+                            }
+                        });
+                    }
+                });
+            }, tetapanPemerhati);
+
+            senaraiSeksyen.forEach(seksyen => pemerhatiTatalan.observe(seksyen));
+        }
+
+        // Mulakan logik skrip semasa halaman dimuatkan
+        window.addEventListener('DOMContentLoaded', () => {
+            mulakanPengesananTema();
+            mulakanPenjejakTatalan();
+        });
+    </script>
+</body>
+</html>
