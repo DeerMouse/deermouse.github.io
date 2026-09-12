@@ -6,35 +6,23 @@
     <title>THE LABORATORY — Black Zone (Catastrophic Scale)</title>
     <style>
         /* ==========================================================================
-           1. LOGIK PEMBOLEH UBAH VISUAL (THEMING & MONOCHROMATIC STYLING)
+           1. LOGIK PEMBOLEH UBAH VISUAL (MOD GELAP KEKAL)
            ========================================================================== */
         :root {
-            --bg-primary: #ffffff;
-            --bg-secondary: #fafafa;
-            --bg-banner: #f5f5f5;
-            --text-main: #111111;
-            --text-muted: #555555;
-            --text-light: #888888;
-            --border-color: #e5e5e5;
-            --border-dark: #111111;
-            --box-shadow: rgba(0, 0, 0, 0.05);
-            --invert-value: 0;
-            --lebar-sidebar: 290px;
-            --amaran-hitam: #424242; /* Warna tema khusus untuk Black Zone */
-        }
-
-        body.dark-theme {
-            --bg-primary: #0a0a0a; /* Gelap pekat khas untuk mood Black Zone */
-            --bg-secondary: #141414;
-            --bg-banner: #111111;
-            --text-main: #e0e0e0;
-            --text-muted: #999999;
-            --text-light: #666666;
+            /* Black Zone dipaksa menggunakan Mod Gelap (Tiada Light Mode) */
+            --bg-primary: #050505; 
+            --bg-secondary: #0a0a0a;
+            --bg-banner: #000000;
+            --text-main: #d4d4d4;
+            --text-muted: #888888;
+            --text-light: #555555;
             --border-color: #222222;
-            --border-dark: #ffffff;
-            --box-shadow: rgba(0, 0, 0, 0.6);
+            --border-dark: #555555;
+            --box-shadow: rgba(0, 0, 0, 0.8);
             --invert-value: 1;
-            --amaran-hitam: #757575;
+            --lebar-sidebar: 290px;
+            --amaran-hitam: #424242; 
+            --amaran-merah: #ff3333;
         }
 
         * {
@@ -55,10 +43,164 @@
             line-height: 1.6;
             display: flex;
             min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
             overflow-x: hidden;
         }
 
+        /* ==========================================================================
+           2. TINDANAN AMARAN KESIHATAN (HEALTH WARNING MODAL)
+           ========================================================================== */
+        .lapisan-amaran-kesihatan {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000000;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .kotak-amaran-perubatan {
+            background-color: #0a0a0a;
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--amaran-merah);
+            padding: 40px;
+            max-width: 700px;
+            text-align: center;
+            border-radius: 6px;
+            box-shadow: 0 10px 40px rgba(255, 0, 0, 0.1);
+        }
+
+        .kotak-amaran-perubatan h2 {
+            color: var(--amaran-merah);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            border-bottom: none;
+        }
+
+        .kotak-amaran-perubatan p {
+            font-size: 1rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .kotak-amaran-perubatan .teks-kecil {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .susunan-butang-kesihatan {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .butang-selamat {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--text-muted);
+            color: var(--text-main);
+            padding: 15px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .butang-selamat:hover {
+            background-color: var(--text-muted);
+            color: #000;
+        }
+
+        .butang-glitch {
+            background-color: var(--amaran-merah);
+            border: 1px solid var(--amaran-merah);
+            color: #fff;
+            padding: 15px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .butang-glitch:hover {
+            opacity: 0.8;
+        }
+
+        /* ==========================================================================
+           3. KESAN KOSMETIK GLITCH (DIKAWAL OLEH JAVASCRIPT)
+           ========================================================================== */
+        /* Gegaran skrin umum */
+        .mod-glitch-aktif {
+            animation: gegaran-skrin 5s infinite;
+        }
+
+        @keyframes gegaran-skrin {
+            0%, 96%, 98%, 100% { transform: translate(0, 0); }
+            97% { transform: translate(-2px, 1px); }
+            99% { transform: translate(2px, -1px); }
+        }
+
+        /* Herotan teks (RGB Split) */
+        .mod-glitch-aktif .teks-glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .mod-glitch-aktif .teks-glitch::before,
+        .mod-glitch-aktif .teks-glitch::after {
+            content: attr(data-teks);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+        }
+
+        .mod-glitch-aktif .teks-glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 red;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: herot-anim-1 3s infinite linear alternate-reverse;
+        }
+
+        .mod-glitch-aktif .teks-glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 blue;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: herot-anim-2 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes herot-anim-1 {
+            0% { clip: rect(10px, 9999px, 15px, 0); }
+            20% { clip: rect(40px, 9999px, 50px, 0); }
+            40% { clip: rect(80px, 9999px, 85px, 0); }
+            60% { clip: rect(20px, 9999px, 30px, 0); }
+            80% { clip: rect(60px, 9999px, 70px, 0); }
+            100% { clip: rect(5px, 9999px, 10px, 0); }
+        }
+
+        @keyframes herot-anim-2 {
+            0% { clip: rect(65px, 9999px, 70px, 0); }
+            20% { clip: rect(15px, 9999px, 20px, 0); }
+            40% { clip: rect(50px, 9999px, 60px, 0); }
+            60% { clip: rect(85px, 9999px, 95px, 0); }
+            80% { clip: rect(35px, 9999px, 45px, 0); }
+            100% { clip: rect(75px, 9999px, 80px, 0); }
+        }
+
+        /* ==========================================================================
+           4. STRUKTUR ASAS (SIDEBAR & MAIN)
+           ========================================================================== */
         .banner-amaran-global {
             background-color: var(--bg-banner);
             color: var(--text-muted);
@@ -73,37 +215,13 @@
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 2000;
-        }
-
-        .pengepala-nav-mudahalih {
-            display: none;
-            position: fixed;
-            top: 33px;
-            left: 0;
-            width: 100%;
-            height: 55px;
-            background-color: var(--bg-primary);
-            border-bottom: 1px solid var(--border-color);
             z-index: 1000;
-            padding: 0 20px;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .butang-menu-mudahalih {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 5px;
         }
 
         aside {
             width: var(--lebar-sidebar);
             background-color: var(--bg-primary);
-            border-right: 1px solid var(--border-color);
+            border-right: 1px dashed var(--border-color);
             position: fixed;
             top: 33px;
             bottom: 0;
@@ -113,7 +231,7 @@
             justify-content: space-between;
             padding: 30px 24px;
             z-index: 1500;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         body.sidebar-tertutup aside {
@@ -127,7 +245,7 @@
             width: 24px;
             height: 48px;
             background-color: var(--bg-primary);
-            border: 1px solid var(--border-color);
+            border: 1px dashed var(--border-color);
             border-left: none;
             border-radius: 0 8px 8px 0;
             cursor: pointer;
@@ -136,23 +254,11 @@
             justify-content: center;
             color: var(--text-muted);
             font-size: 0.7rem;
-            box-shadow: 4px 0 8px rgba(0,0,0,0.03);
-            transition: background-color 0.2s, color 0.2s;
             z-index: 10;
         }
 
-        .tab-lipat-sidebar:hover {
-            background-color: var(--bg-secondary);
-            color: var(--text-main);
-        }
-
-        .tab-lipat-sidebar::after {
-            content: "◀";
-        }
-
-        body.sidebar-tertutup .tab-lipat-sidebar::after {
-            content: "▶";
-        }
+        .tab-lipat-sidebar::after { content: "◀"; }
+        body.sidebar-tertutup .tab-lipat-sidebar::after { content: "▶"; }
 
         .blok-pala-jenama {
             display: flex;
@@ -165,21 +271,13 @@
             width: 60px;
             height: auto;
             display: block;
-            object-fit: contain;
-            filter: invert(var(--invert-value));
-            transition: filter 0.3s ease;
+            filter: invert(1);
         }
 
         .tajuk-jenama {
             font-size: 1.1rem;
             font-weight: 800;
             letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .subtajuk-jenama {
-            font-size: 0.75rem;
-            color: var(--text-light);
             text-transform: uppercase;
         }
 
@@ -190,7 +288,6 @@
             gap: 4px;
             flex-grow: 1;
             margin-top: 15px;
-            overflow-y: auto;
         }
 
         .item-navigasi a {
@@ -201,59 +298,12 @@
             font-size: 0.85rem;
             font-weight: 600;
             border-radius: 4px;
-            transition: all 0.15s ease;
+            transition: background-color 0.15s ease;
         }
 
         .item-navigasi a:hover {
             background-color: var(--bg-secondary);
             color: var(--text-main);
-        }
-
-        .item-navigasi.aktif a {
-            background-color: var(--text-main);
-            color: var(--bg-primary);
-            font-weight: 700;
-        }
-
-        .panel-togol-tema {
-            padding: 12px 0;
-            border-top: 1px solid var(--border-color);
-            margin-bottom: 10px;
-        }
-
-        .butang-togol {
-            width: 100%;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 10px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .butang-togol:hover {
-            background: var(--text-main);
-            color: var(--bg-primary);
-        }
-
-        .lapisan-tutup-mudahalih {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0,0,0,0.4);
-            z-index: 1400;
         }
 
         main {
@@ -263,33 +313,11 @@
             padding: 60px 50px 120px 50px;
             max-width: 1200px;
             position: relative;
-            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: margin-left 0.3s ease;
         }
 
         body.sidebar-tertutup main {
             margin-left: 0;
-        }
-
-        .bekas-logo-atas-kanan {
-            position: absolute;
-            top: 55px;
-            right: 50px;
-            text-align: right;
-            z-index: 10;
-        }
-
-        .imej-logo-atas-kanan {
-            width: 80px;
-            height: auto;
-            display: block;
-            object-fit: contain;
-            filter: invert(var(--invert-value));
-            transition: filter 0.3s ease;
-        }
-
-        section {
-            margin-bottom: 90px;
-            scroll-margin-top: 90px;
         }
 
         h1 {
@@ -297,13 +325,6 @@
             font-weight: 800;
             letter-spacing: -0.5px;
             margin-bottom: 20px;
-            max-width: 75%;
-        }
-
-        .perenggan-utama {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            margin-bottom: 35px;
         }
 
         h2 {
@@ -314,29 +335,12 @@
             margin-bottom: 25px;
             padding-bottom: 8px;
             border-bottom: 2px solid var(--border-dark);
-            transition: border-color 0.3s ease;
         }
 
         p {
             font-size: 1.05rem;
             color: var(--text-main);
             margin-bottom: 20px;
-        }
-
-        /* Amaran Khusus Black Zone */
-        .panel-amaran-hitam {
-            border: 2px solid var(--amaran-hitam);
-            background-color: var(--bg-primary);
-            padding: 30px;
-            margin: 35px 0;
-            transition: background-color 0.3s ease;
-        }
-
-        .panel-amaran-hitam h3 {
-            text-transform: uppercase;
-            font-size: 1.15rem;
-            margin-bottom: 12px;
-            color: var(--amaran-hitam);
         }
 
         /* Amaran Pengasas (Founder Warning Box) */
@@ -358,12 +362,6 @@
             color: var(--text-main);
         }
 
-        .kotak-amaran-pengasas p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 0;
-        }
-
         /* ==========================================================================
            MODULAR ANOMALY PANELS (SISTEM GRID)
            ========================================================================== */
@@ -377,273 +375,148 @@
         .kad-panel-benda-asing {
             display: flex;
             flex-direction: column;
-            border: 1px solid var(--border-color);
+            border: 1px dashed var(--border-color);
             background-color: var(--bg-secondary);
             border-radius: 6px;
             text-decoration: none;
             color: var(--text-main);
-            overflow: hidden;
-            transition: all 0.25s ease;
+            padding: 20px;
+            transition: border-color 0.25s ease;
         }
 
         .kad-panel-benda-asing:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px var(--box-shadow);
             border-color: var(--amaran-hitam);
-        }
-
-        .pala-panel-benda-asing {
-            padding: 12px 18px;
-            background-color: var(--bg-primary);
-            border-bottom: 1px dashed var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background-color: #111;
         }
 
         .id-label-benda {
             font-size: 1.1rem;
             font-weight: 800;
             letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: inline-block;
         }
 
-        .status-badge-benda {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            padding: 4px 8px;
-            background-color: var(--amaran-hitam);
-            color: #ffffff;
-            border-radius: 3px;
-            letter-spacing: 0.5px;
-        }
-
-        .kandungan-panel-benda {
-            padding: 20px 18px;
-        }
-
-        .kandungan-panel-benda h4 {
-            font-size: 1.05rem;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        .kandungan-panel-benda p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 0;
-            line-height: 1.5;
-        }
-
-        @media (max-width: 960px) {
-            .pengepala-nav-mudahalih { display: flex; }
-            aside {
-                position: fixed; top: 0; bottom: 0; left: 0; height: 100vh;
-                transform: translateX(-100%); box-shadow: 4px 0 25px rgba(0,0,0,0.15);
-                border-right: 1px solid var(--border-color); border-bottom: none;
-                width: 280px; padding: 40px 24px 24px 24px;
-            }
-            .tab-lipat-sidebar { display: none; }
-            body.menu-mudahalih-aktif aside { transform: translateX(0); }
-            body.menu-mudahalih-aktif .lapisan-tutup-mudahalih { display: block; }
-            main { margin-left: 0 !important; margin-top: 88px; padding: 30px 20px 80px 20px; }
-            .bekas-logo-atas-kanan { position: static; margin-bottom: 30px; text-align: left; }
-            .imej-logo-atas-kanan { width: 70px; }
-            h1 { font-size: 2rem; max-width: 100%; }
-            .grid-panel-anomali { grid-template-columns: 1fr; }
-        }
     </style>
 </head>
 <body>
 
+    <!-- 1. TINDANAN MODAL AMARAN KESIHATAN (Akan hilang lepas dijawab) -->
+    <div id="skrin-amaran-kesihatan" class="lapisan-amaran-kesihatan">
+        <div class="kotak-amaran-perubatan">
+            <h2>⚠️ Visual Health Advisory ⚠️</h2>
+            <p>You are attempting to access highly restricted Black Zone documentation. The founders of The Laboratory have embedded cosmetic visual glitches, screen tearing, and flashing distortion effects into this terminal for "aesthetic" purposes.</p>
+            <p><strong>Medical Warning:</strong> For individuals with <em>Selaphobia</em> (intense psychological fear of flashing lights) or <em>Photosensitive Epilepsy</em>, these visual effects can trigger severe panic attacks, overwhelming dread, vertigo (The Bucha Effect), or seizures.</p>
+            <p class="teks-kecil">Do you require a safe viewing mode (disabling the founder's cosmetic glitches) to proceed?</p>
+            
+            <div class="susunan-butang-kesihatan">
+                <button class="butang-selamat" onclick="aksesFasiliti(false)">Yes, I have these conditions (Disable Glitches)</button>
+                <button class="butang-glitch" onclick="aksesFasiliti(true)">No, I am physically safe (Enable Full Glitch Effects)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. KANDUNGAN HALAMAN SEBENAR (Terselindung di sebalik modal) -->
     <div class="banner-amaran-global">
         ⚠️ OUT-OF-CHARACTER NOTICE: This is a purely fictional community lore page. No real services or facilities exist.
     </div>
 
-    <div class="pengepala-nav-mudahalih">
-        <button class="butang-menu-mudahalih" onclick="togolMenuMudahAlih()">☰</button>
-        <div class="tajuk-jenama" style="font-size: 0.9rem; letter-spacing: 1px;">The Laboratory</div>
-        <div style="width: 24px;"></div>
-    </div>
-
-    <div class="lapisan-tutup-mudahalih" onclick="togolMenuMudahAlih()"></div>
-
     <aside id="papanPemukaSidebar">
-        <button class="tab-lipat-sidebar" onclick="togolLipatanSidebar()" title="Togol Pandangan Ruang Kerja"></button>
+        <button class="tab-lipat-sidebar" onclick="togolLipatanSidebar()"></button>
 
         <div class="blok-pala-jenama">
             <img src="1773232611901.png" alt="Logo The Laboratory" class="imej-logo-sidebar">
             <div>
-                <div class="tajuk-jenama">The Laboratory</div>
+                <div class="tajuk-jenama teks-glitch" data-teks="The Laboratory">The Laboratory</div>
                 <div class="subtajuk-jenama">Black Zone Vault</div>
             </div>
         </div>
 
         <ul class="menu-navigasi">
-            <li class="item-navigasi" id="nav-pengenalan"><a href="#pengenalan" onclick="tutupMudahAlihPadaNav()">01. Scale Parameters</a></li>
-            <li class="item-navigasi" id="nav-protokol"><a href="#protokol" onclick="tutupMudahAlihPadaNav()">02. Staff Evacuation Protocol</a></li>
-            <li class="item-navigasi" id="nav-direktori-anomali"><a href="#direktori-anomali" onclick="tutupMudahAlihPadaNav()">03. LR Vault Directory</a></li>
-            <li class="item-navigasi" id="nav-kembali"><a href="VaultDirectory.html" onclick="tutupMudahAlihPadaNav()">← Back to Directory</a></li>
+            <li class="item-navigasi"><a href="#pengenalan">01. Scale Parameters</a></li>
+            <li class="item-navigasi"><a href="#protokol">02. Evacuation Protocol</a></li>
+            <li class="item-navigasi"><a href="#direktori-anomali">03. LR Vault Directory</a></li>
+            <li class="item-navigasi"><a href="VaultDirectory.html">← Back to Directory</a></li>
         </ul>
 
-        <div class="panel-togol-tema">
-            <button class="butang-togol" onclick="togolTemaManual()">
-                <span>🌓</span> Toggle Light / Dark Mode
-            </button>
-        </div>
+        <!-- Tiada Butang Mod Gelap/Terang, dipaksa kekal gelap -->
 
-        <div style="font-size: 0.75rem; color: var(--text-light); border-top: 1px solid var(--border-color); padding-top: 15px;">
-            Document ID: BZ-VAULT-2026<br>
-            Classification: Internal Log
+        <div style="font-size: 0.75rem; color: var(--text-light); border-top: 1px dashed var(--border-color); padding-top: 15px;">
+            Document ID: BZ-RESTRICTED<br>
+            Clearance: Top Tier Secret
         </div>
     </aside>
 
     <main>
-        
-        <div class="bekas-logo-atas-kanan">
-            <img src="1773232611901.png" alt="Logo The Laboratory" class="imej-logo-atas-kanan">
-        </div>
-
         <!-- SEKSYEN 1: PENGENALAN BLACK ZONE -->
         <section id="pengenalan">
-            <h1>The Black Zone</h1>
-            <p class="perenggan-utama">Welcome to the Catastrophic Scale Sector. You are currently viewing profiles for entities that do not care about individual targets. If a containment breach occurs here, the resulting disaster will collapse the facility, warp the surrounding environment, and erase entire communities at large.</p>
+            <h1 class="teks-glitch" data-teks="The Black Zone">The Black Zone</h1>
+            <p>Welcome to the Catastrophic Scale Sector. You are currently viewing highly classified profiles for entities that do not care about individual targets. If a containment breach occurs here, the resulting disaster will collapse the facility, warp the surrounding environment, and erase entire communities at large.</p>
             
-            <div class="panel-amaran-hitam">
-                <h3>Warning: Zero Contingency</h3>
-                <p>The Red Zone targets you; the Black Zone targets the structural reality around you. We do not recommend initiating physical testing or direct observation on any entity housed in this sector. However, because you have paid the entry fee, experimentation is still legally permitted.</p>
-                <p style="margin-top: 15px; font-weight: 700; font-size: 1.1rem; border-top: 1px solid var(--amaran-hitam); padding-top: 12px;">Be advised: If a catastrophic chain reaction begins, there is nothing you can do, and there is nowhere you can hide.</p>
-            </div>
+            <p style="border-left: 4px solid var(--amaran-hitam); padding-left: 15px; color: var(--text-muted);">
+                The Red Zone targets you; the Black Zone targets the structural reality around you. We do not recommend initiating physical testing or direct observation on any entity housed in this sector. However, because you have paid the entry fee, experimentation is still legally permitted. Be advised: If a catastrophic chain reaction begins, there is nothing you can do, and there is nowhere you can hide.
+            </p>
         </section>
 
         <!-- SEKSYEN 2: PROTOKOL KAKITANGAN & AMARAN PENGASAS -->
         <section id="protokol">
-            <h2>Staff Evacuation Protocol</h2>
+            <h2 class="teks-glitch" data-teks="Staff Evacuation Protocol">Staff Evacuation Protocol</h2>
             <p>Clients conducting tests in the Black Zone must understand that they are entirely alone. At the first sign of an environmental breach, The Laboratory's internal staff—including Junior Researchers and the AMG contractors stationed at the intake portal—are instructed to immediately evacuate the premises.</p>
             <p>They will not wait for you. They will not trigger an alarm on your behalf. They will simply lock the vault doors from the outside and leave the state.</p>
 
             <div class="kotak-amaran-pengasas">
-                <h4>Terminal Notice Regarding Founders Z &amp; Light</h4>
+                <h4 class="teks-glitch" data-teks="Terminal Notice Regarding Founders Z &amp; Light">Terminal Notice Regarding Founders Z &amp; Light</h4>
                 <p>If you happen to observe Co-Founders <strong>Z</strong> or <strong>Light</strong> conducting their own experiments on a Black Zone entity, <strong>WE ARE BEGGING YOU NOT TO COPY WHATEVER THEY ARE DOING.</strong> Both founders are structurally insane. If confronted, they will casually inform you that they are "professionals." Do not believe them. You must remain at a distant physical range from their experimentation at all times to ensure your own survival.</p>
             </div>
         </section>
 
-        <!-- SEKSYEN 3: DIREKTORI PANEL ANOMALI (KOTAK GRID UNTUK BLACK ZONE) -->
+        <!-- SEKSYEN 3: DIREKTORI PANEL ANOMALI (KOTAK GRID) -->
         <section id="direktori-anomali">
-            <h2>LR Vault Directory (Catastrophic)</h2>
-            <p>Select an active Lab Rat (LR) profile below to review its specific area-of-effect scale, environmental hazard metrics, and passive containment parameters.</p>
+            <h2 class="teks-glitch" data-teks="LR Vault Directory (Catastrophic)">LR Vault Directory (Catastrophic)</h2>
             
-            <!-- SISTEM GRID: SALIN kod di bawah untuk menambah anomali baru -->
             <div class="grid-panel-anomali">
                 
-                <!-- BLOK PANEL 1 -->
                 <a href="#" class="kad-panel-benda-asing">
-                    <div class="pala-panel-benda-asing">
-                        <span class="id-label-benda">LR-XXX</span>
-                        <span class="status-badge-benda">Catastrophic</span>
-                    </div>
-                    <div class="kandungan-panel-benda">
-                        <h4>[Classified Subject]</h4>
-                        <p>Click here to access full environmental breach parameters and community destruction metrics.</p>
-                    </div>
+                    <span class="id-label-benda teks-glitch" data-teks="LR-XXX">LR-XXX</span>
+                    <h4 style="margin-bottom: 5px;">[Classified Subject]</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Access full environmental breach parameters and community destruction metrics.</p>
                 </a>
 
-                <!-- BLOK PANEL 2 -->
                 <a href="#" class="kad-panel-benda-asing">
-                    <div class="pala-panel-benda-asing">
-                        <span class="id-label-benda">LR-XXX</span>
-                        <span class="status-badge-benda">Catastrophic</span>
-                    </div>
-                    <div class="kandungan-panel-benda">
-                        <h4>[Classified Subject]</h4>
-                        <p>Click here to access full environmental breach parameters and community destruction metrics.</p>
-                    </div>
-                </a>
-
-                 <!-- BLOK PANEL 3 -->
-                 <a href="#" class="kad-panel-benda-asing">
-                    <div class="pala-panel-benda-asing">
-                        <span class="id-label-benda">LR-XXX</span>
-                        <span class="status-badge-benda">Catastrophic</span>
-                    </div>
-                    <div class="kandungan-panel-benda">
-                        <h4>[Classified Subject]</h4>
-                        <p>Click here to access full environmental breach parameters and community destruction metrics.</p>
-                    </div>
+                    <span class="id-label-benda teks-glitch" data-teks="LR-XXX">LR-XXX</span>
+                    <h4 style="margin-bottom: 5px;">[Classified Subject]</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Access full environmental breach parameters and community destruction metrics.</p>
                 </a>
 
             </div>
-            <!-- TAMAT SISTEM GRID -->
-
         </section>
 
-        <p style="text-align: center; color: var(--text-light); font-size: 0.8rem; margin-top: 60px; line-height: 1.7;">
+        <!-- NOTA KOSMETIK GLITCH DI BAWAH -->
+        <p style="text-align: center; color: var(--text-light); font-size: 0.8rem; margin-top: 60px; line-height: 1.7; border-top: 1px dashed var(--border-color); padding-top: 20px;">
+            <strong style="color: var(--text-muted);">System Note:</strong> Any visual distortion, screen tearing, or terminal glitching present on this page is a purely cosmetic modification injected into the code by Founders Z and Light to make the Black Zone look "cooler." It does not indicate an actual system failure.<br><br>
             Disclaimer: This page is a fictional roleplay/creative writing asset. All names, settings, companies, and anomalies mentioned are entirely made-up.<br>
-            <span style="font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.75rem; margin-top: 4px; display: inline-block; color: var(--text-muted);">
-                System Ledger Interface Version 2.1 // Black Zone Parameter Update by Junior Researcher Min Kuznetsov
+            <span style="font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.75rem; display: inline-block;">
+                System Ledger Interface // Encrypted Black Zone Network
             </span>
         </p>
     </main>
 
     <script>
-        function togolLipatanSidebar() {
-            document.body.classList.toggle('sidebar-tertutup');
-        }
-
-        function togolMenuMudahAlih() {
-            document.body.classList.toggle('menu-mudahalih-aktif');
-        }
-
-        function tutupMudahAlihPadaNav() {
-            document.body.classList.remove('menu-mudahalih-aktif');
-        }
-
-        function mulakanPengesananTema() {
-            const jamSemasa = new Date().getHours();
-            if (jamSemasa < 6 || jamSemasa >= 18) {
-                document.body.classList.add('dark-theme');
-            } else {
-                document.body.classList.remove('dark-theme');
+        // Fungsi Logik Keselamatan Glitch
+        function aksesFasiliti(hidupkanGlitch) {
+            // Sembunyikan skrin amaran
+            document.getElementById('skrin-amaran-kesihatan').style.display = 'none';
+            
+            // Jika klien kata mereka selamat, hidupkan kelas glitch pada <body>
+            if (hidupkanGlitch === true) {
+                document.body.classList.add('mod-glitch-aktif');
             }
         }
 
-        function togolTemaManual() {
-            document.body.classList.toggle('dark-theme');
+        // Variabel Kawalan Sidebar Biasa
+        function togolLipatanSidebar() {
+            document.body.classList.toggle('sidebar-tertutup');
         }
-
-        function mulakanPenjejakTatalan() {
-            const senaraiSeksyen = document.querySelectorAll('section');
-            const itemMenu = document.querySelectorAll('.menu-navigasi .item-navigasi');
-
-            const tetapanPemerhati = {
-                root: null,
-                rootMargin: '-20% 0px -40% 0px',
-                threshold: 0
-            };
-
-            const pemerhatiTatalan = new IntersectionObserver((kemasukan) => {
-                kemasukan.forEach(entri => {
-                    if (entri.isIntersecting) {
-                        const idAktif = entri.target.getAttribute('id');
-                        
-                        itemMenu.forEach(item => {
-                            item.classList.remove('aktif');
-                            const sauhSasaran = item.querySelector('a').getAttribute('href');
-                            if (sauhSasaran === `#${idAktif}`) {
-                                item.classList.add('aktif');
-                            }
-                        });
-                    }
-                });
-            }, tetapanPemerhati);
-
-            senaraiSeksyen.forEach(seksyen => pemerhatiTatalan.observe(seksyen));
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            mulakanPengesananTema();
-            mulakanPenjejakTatalan();
-        });
     </script>
 </body>
 </html>
