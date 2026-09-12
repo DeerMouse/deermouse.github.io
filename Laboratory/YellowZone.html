@@ -323,28 +323,6 @@
             margin-bottom: 20px;
         }
 
-        .grid-dua-lajur {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin: 20px 0;
-        }
-
-        .kotak-garis-luar {
-            border: 1px solid var(--border-color);
-            padding: 24px;
-            border-radius: 4px;
-            background-color: var(--bg-primary);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .kotak-garis-luar h4 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
         .panel-amaran-kuning {
             border: 2px solid var(--amaran-kuning);
             background-color: var(--bg-primary);
@@ -376,7 +354,7 @@
             border: 1px solid var(--border-color);
             background-color: var(--bg-secondary);
             border-radius: 6px;
-            text-decoration: none; /* Hilangkan garis bawah link */
+            text-decoration: none;
             color: var(--text-main);
             overflow: hidden;
             transition: all 0.25s ease;
@@ -385,7 +363,7 @@
         .kad-panel-benda-asing:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 16px var(--box-shadow);
-            border-color: var(--amaran-kuning); /* Bertukar kuning bila di-hover */
+            border-color: var(--amaran-kuning);
         }
 
         .pala-panel-benda-asing {
@@ -479,7 +457,6 @@
 
             .imej-logo-atas-kanan { width: 70px; }
             h1 { font-size: 2rem; max-width: 100%; }
-            .grid-dua-lajur { grid-template-columns: 1fr; gap: 15px; }
             .grid-panel-anomali { grid-template-columns: 1fr; }
         }
     </style>
@@ -510,9 +487,8 @@
         </div>
 
         <ul class="menu-navigasi">
-            <li class="item-navigasi" id="nav-pengenalan"><a href="#pengenalan" onclick="tutupMudahAlihPadaNav()">01. Conceptual Overview</a></li>
-            <li class="item-navigasi" id="nav-falsafah"><a href="#falsafah" onclick="tutupMudahAlihPadaNav()">02. Sandbox Philosophy</a></li>
-            <li class="item-navigasi" id="nav-direktori-anomali"><a href="#direktori-anomali" onclick="tutupMudahAlihPadaNav()">03. Vault Directory</a></li>
+            <li class="item-navigasi" id="nav-pengenalan"><a href="#pengenalan" onclick="tutupMudahAlihPadaNav()">01. Sector Parameters</a></li>
+            <li class="item-navigasi" id="nav-direktori-anomali"><a href="#direktori-anomali" onclick="tutupMudahAlihPadaNav()">02. LR Vault Directory</a></li>
             <li class="item-navigasi" id="nav-kembali"><a href="TheLaboratory.html" onclick="tutupMudahAlihPadaNav()">← Back to Main Portal</a></li>
         </ul>
 
@@ -534,43 +510,24 @@
             <img src="1773232611901.png" alt="Logo The Laboratory" class="imej-logo-atas-kanan">
         </div>
 
-        <!-- SEKSYEN 1: PENGENALAN YELLOW ZONE -->
+        <!-- SEKSYEN 1: PENGENALAN RINGKAS YELLOW ZONE -->
         <section id="pengenalan">
             <h1>The Yellow Zone</h1>
-            <p class="perenggan-utama">Officially classified within structural blueprints as the <strong>"No Dead Zone,"</strong> the Yellow Sector houses entities strictly vetted to lack the biological capacity or psychological intent to inflict fatal trauma upon a subject.</p>
+            <p class="perenggan-utama">Welcome to the "No Dead Zone." All entities (Lab Rats) classified under this operational sector possess a 0.0% lethality metric. They lack the biological capacity or psychological intent to inflict fatal trauma upon human targets.</p>
             
             <div class="panel-amaran-kuning">
-                <h3>The Illusion of Safety</h3>
-                <p>Clients frequently misinterpret the "No Dead Zone" classification. Survival does not equate to safety. The lack of lethality within this sector arguably presents hazards far more terrifying than outright mortality. The entities housed here do not kill; instead, they alter, trap, and eternally incapacitate.</p>
-                <p style="margin-top: 15px; font-weight: 700; font-size: 1.1rem; border-top: 1px solid var(--amaran-kuning); padding-top: 12px;">Warning: A standard ballistic sidearm provided by the Anvil Mercenaries Group (AMG) is virtually useless against structural transfiguration.</p>
+                <h3>Warning: The Illusion of Safety</h3>
+                <p>Do not mistake a non-lethal classification for safety. The lack of lethality within this sector presents hazards far more permanent than mortality. Yellow Zone anomalies do not kill; they alter, trap, transfigure, and eternally incapacitate.</p>
+                <p style="margin-top: 15px; font-weight: 700; font-size: 1.1rem; border-top: 1px solid var(--amaran-kuning); padding-top: 12px;">Standard ballistic sidearms provided by the Anvil Mercenaries Group (AMG) are entirely ineffective against spatial or structural transfiguration.</p>
             </div>
 
-            <p>If an anomaly permanently turns your flesh into solid stone, or weaves an unbreakable ethereal cage around your physical body, you will not die. However, you will never leave. Under the facility's strict non-intervention waiver, the founders—Z and Light—will not mount a rescue mission to extract you, nor will AMG contractors be dispatched to break your chains. You simply become a permanent fixture of the Yellow Zone's architecture.</p>
+            <p>If you are permanently petrified, encased in an unbreakable ethereal cage, or biologically altered beyond human recognition, The Laboratory assumes zero liability. As stated in your entry waiver, AMG contractors will not mount an extraction, and founders Z and Light will not intervene. You will simply become a permanent fixture of the Yellow Zone's architecture.</p>
         </section>
 
-        <!-- SEKSYEN 2: FALSAFAH LAB RAT (SANDBOX) -->
-        <section id="falsafah">
-            <h2>The "Lab Rat" Sandbox Philosophy</h2>
-            <p>Unlike traditional containment networks that seek to neutralize, weaponize, or exploit anomalies for profit and salvation, The Laboratory operates under a chillingly neutral paradigm. We do not extract value. We only facilitate curiosity.</p>
-            
-            <div class="grid-dua-lajur">
-                <div class="kotak-garis-luar">
-                    <h4>The "LR" Designation</h4>
-                    <p style="font-size: 0.95rem; margin-bottom:0;">Anomalies in this sector are designated with the <strong>"LR" (Lab Rat)</strong> prefix. This strips them of mythical reverence. They are not world-ending threats; they are raw property placed inside a sandbox for paying clients to poke, test, and observe without consequence.</p>
-                </div>
-                <div class="kotak-garis-luar">
-                    <h4>The Ultimate Reversal</h4>
-                    <p style="font-size: 0.95rem; margin-bottom:0;">Clients pay millions to be the scientists, viewing the anomalies as their "Lab Rats." Yet, the moment a client miscalculates and is permanently incapacitated by a non-lethal anomaly, the roles reverse. The human becomes the captive test variable.</p>
-                </div>
-            </div>
-            
-            <p>To our staff, eternal human suffering is merely another data variable in an ongoing experiment. The Yellow Zone is the ultimate playground because non-lethality allows for the longest possible window of uninterrupted experimentation. You can prod a puzzle box for hours, but if the puzzle box turns you into a statue, Junior Researcher Min Kuznetsov will merely log it as a successful curiosity metric.</p>
-        </section>
-
-        <!-- SEKSYEN 3: DIREKTORI PANEL ANOMALI (UNTUK MASA DEPAN) -->
+        <!-- SEKSYEN 2: DIREKTORI PANEL ANOMALI (UNTUK MASA DEPAN) -->
         <section id="direktori-anomali">
-            <h2>Yellow Zone Vault Directory</h2>
-            <p>Select a Lab Rat (LR) file below to access detailed incapacitation metrics, trigger conditions, and staff notes. <em>(System Note: Roster updates pending facility validation).</em></p>
+            <h2>LR Vault Directory</h2>
+            <p>Select an active Lab Rat (LR) profile below to review its specific incapacitation metrics, trigger boundaries, and staff observations.</p>
             
             <!-- SISTEM GRID: Anda boleh SALIN (copy) blok 'kad-panel-benda-asing' di bawah dan TAMPAL (paste) berulang kali untuk menambah fail baharu. Ia akan tersusun secara automatik. -->
             <div class="grid-panel-anomali">
@@ -579,11 +536,11 @@
                 <a href="#" class="kad-panel-benda-asing">
                     <div class="pala-panel-benda-asing">
                         <span class="id-label-benda">LR-XXX</span>
-                        <span class="status-badge-benda">Pending Data</span>
+                        <span class="status-badge-benda">Data Pending</span>
                     </div>
                     <div class="kandungan-panel-benda">
-                        <h4>[Classified Entity Title]</h4>
-                        <p>Click here to access the full containment log, survival protocols, and facility staff notes.</p>
+                        <h4>[Classified Subject]</h4>
+                        <p>Click here to access full incapacitation mechanics and spatial containment rules.</p>
                     </div>
                 </a>
 
@@ -591,11 +548,11 @@
                 <a href="#" class="kad-panel-benda-asing">
                     <div class="pala-panel-benda-asing">
                         <span class="id-label-benda">LR-XXX</span>
-                        <span class="status-badge-benda">Pending Data</span>
+                        <span class="status-badge-benda">Data Pending</span>
                     </div>
                     <div class="kandungan-panel-benda">
-                        <h4>[Classified Entity Title]</h4>
-                        <p>Click here to access the full containment log, survival protocols, and facility staff notes.</p>
+                        <h4>[Classified Subject]</h4>
+                        <p>Click here to access full incapacitation mechanics and spatial containment rules.</p>
                     </div>
                 </a>
 
@@ -603,11 +560,11 @@
                  <a href="#" class="kad-panel-benda-asing">
                     <div class="pala-panel-benda-asing">
                         <span class="id-label-benda">LR-XXX</span>
-                        <span class="status-badge-benda">Pending Data</span>
+                        <span class="status-badge-benda">Data Pending</span>
                     </div>
                     <div class="kandungan-panel-benda">
-                        <h4>[Classified Entity Title]</h4>
-                        <p>Click here to access the full containment log, survival protocols, and facility staff notes.</p>
+                        <h4>[Classified Subject]</h4>
+                        <p>Click here to access full incapacitation mechanics and spatial containment rules.</p>
                     </div>
                 </a>
 
